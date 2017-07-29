@@ -1,0 +1,14 @@
+html
+  head
+    title= title
+  body
+    h1= message
+    p ABC
+    h2(style={color:'red'}) DEF
+    h2= info
+    form(action = 'http://127.0.0.1:3000/process_get', method = 'get')
+      div.input
+              span.label Title
+              input(id = 'first_name', type='text', name='first_name')
+      div.actions
+              input(id = 'submit',type='submit', value='SUBMIT')
