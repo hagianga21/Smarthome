@@ -9,6 +9,7 @@
   "author": "Truong Ha Giang",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "node-fetch": "^1.7.1"
   }
 }
