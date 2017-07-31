@@ -1,4 +1,5 @@
 #include <ESP8266WiFi.h>
+#include <ArduinoJson.h>
 
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
@@ -33,31 +34,55 @@ void setup() {
   Serial.println(host);
   WiFiClient client;
   const int httpPort = 3000;
+  
+  
+  //Get link
   if (!client.connect(host, httpPort)) { 
     Serial.println("Khong ket noi duoc");
     return;
   }
-
-  /*client.print(String("GET /process_get?first_name=") + "def" +" HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
-               "Connection: close\r\n\r\n");
-  */
   client.print(String("GET /") + url +" HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Connection: close\r\n\r\n");             
   delay(500);
   Serial.println("OK"); 
-  /*
+  delay(500);
+
+  //ReadJSON
+  if (!client.connect(host, httpPort)) { 
+    Serial.println("Khong ket noi duoc");
+    return;
+  }
+  client.print(String("GET /") + "state" +" HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
+               "Connection: close\r\n\r\n");
+
+  unsigned long timeout = millis();
+  while (client.available() == 0) {
+    if (millis() - timeout > 5000) {
+      Serial.println(">>> Client Timeout !");
+      client.stop();
+      return;
+    }
+  }  
+          
   while (client.available()) {
     String line = client.readStringUntil('\R');
-    Serial.print(line);
+    String result = line.substring(118);
+    int size = result.length()+1;
+    char json[size];
+    result.toCharArray(json, size);
+    StaticJsonBuffer<200> jsonBuffer;
+    JsonObject& json_parsed = jsonBuffer.parseObject(json);
+    if (strcmp(json_parsed["led1"], "on") == 0) { 
+          Serial.println("LED1 ON");
+    }
+    if (strcmp(json_parsed["led2"], "off") == 0) { 
+          Serial.println("LED2 OFF");
+    }
   }
-  Serial.println();
-  */
-  
+  Serial.println("closing connection");
 }
-
-
 
 void loop() {
 ;

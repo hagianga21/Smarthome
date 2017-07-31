@@ -21,10 +21,15 @@ function FetchData(){
 }
 
 
+
 app.get('/', function (req, res) {
     res.render('index', { title: 'Hey', message: 'Hello there!',info: a})
 });
 
+app.get('/state', function (req, res) {
+    var obj = { "led1":"on","led2":"off"};
+    res.end(JSON.stringify(obj));
+});
 
 app.get('/process_get', function (req, res) {
    response = {
@@ -33,6 +38,6 @@ app.get('/process_get', function (req, res) {
    a = req.query.first_name;
    console.log(response);
    res.end(JSON.stringify(response));
-})
+});
 
 app.listen(3000)
