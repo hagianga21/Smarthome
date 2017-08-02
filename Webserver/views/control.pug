@@ -1,0 +1,14 @@
+html
+  head= title
+  body
+  form(action = 'http://127.0.0.1:3000/led1', method = 'post')
+    button(
+      id = 'LED1', 
+      type='submit') LED1
+
+  form(action = 'http://127.0.0.1:3000/led2', method = 'post')
+    button(
+      id = 'LED2', 
+      type='submit') LED2
+    script 
+      include control.js  
