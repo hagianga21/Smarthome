@@ -1,0 +1,24 @@
+Removed Pin From Net: NetName=12V Pin=C31-2
+Removed Pin From Net: NetName=12V Pin=UN3-1
+Removed Member From Class: ClassName=Slave_CA Member=SW?
+Added Component: Designator=D1(LED-0805 RED)
+Added Component: Designator=D?(DO-41)
+Added Component: Designator=R18(DIEN TRO 0805)
+Added Component: Designator=S?(SPDT)
+Added Pin To Net: NetName=GND Pin=D1-2
+Added Pin To Net: NetName=VCC Pin=R18-2
+Added Pin To Net: NetName=12V Pin=S?-2
+Added Pin To Net: NetName=NetC31_2 Pin=C31-2
+Added Pin To Net: NetName=NetC31_2 Pin=D?-2
+Added Pin To Net: NetName=NetC31_2 Pin=UN3-1
+Added Net: Name=NetC31_2
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=R18-1
+Added Net: Name=NetD1_1
+Added Pin To Net: NetName=NetD?_1 Pin=D?-1
+Added Pin To Net: NetName=NetD?_1 Pin=S?-1
+Added Net: Name=NetD?_1
+Added Member To Class: ClassName=Slave_CA Member=Component D1 LED
+Added Member To Class: ClassName=Slave_CA Member=Component D? Diode 1N4007
+Added Member To Class: ClassName=Slave_CA Member=Component R18 RES_SMD_0805
+Added Member To Class: ClassName=Slave_CA Member=Component S? Switch SPDT

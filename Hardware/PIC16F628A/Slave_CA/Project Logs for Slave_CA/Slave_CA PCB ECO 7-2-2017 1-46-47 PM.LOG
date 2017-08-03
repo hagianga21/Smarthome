@@ -1,0 +1,80 @@
+Removed Pin From Net: NetName=GND Pin=C5-1
+Removed Pin From Net: NetName=BUTTON2 Pin=C5-2
+Removed Pin From Net: NetName=GND Pin=C6-1
+Removed Pin From Net: NetName=BUTTON3 Pin=C6-2
+Removed Pin From Net: NetName=TXD Pin=IC2-1
+Removed Pin From Net: NetName=RXD Pin=IC2-4
+Removed Pin From Net: NetName=BUTTON2 Pin=R5-1
+Removed Pin From Net: NetName=VCC Pin=R5-2
+Removed Pin From Net: NetName=BUTTON3 Pin=R6-1
+Removed Pin From Net: NetName=VCC Pin=R6-2
+Removed Pin From Net: NetName=12V Pin=S?-2
+Removed Pin From Net: NetName=GND Pin=SW2-1
+Removed Pin From Net: NetName=BUTTON2 Pin=SW2-2
+Removed Pin From Net: NetName=GND Pin=SW2-3
+Removed Pin From Net: NetName=BUTTON2 Pin=SW2-4
+Removed Pin From Net: NetName=GND Pin=SW3-1
+Removed Pin From Net: NetName=BUTTON3 Pin=SW3-2
+Removed Pin From Net: NetName=GND Pin=SW3-3
+Removed Pin From Net: NetName=BUTTON3 Pin=SW3-4
+Removed Pin From Net: NetName=GND Pin=SW71-3
+Removed Pin From Net: NetName=MCLR Pin=SW71-4
+Removed Pin From Net: NetName=GND Pin=SW72-3
+Removed Pin From Net: NetName=BUTTON1 Pin=SW72-4
+Removed Member From Class: ClassName=Slave_CA Member=C5
+Removed Member From Class: ClassName=Slave_CA Member=C6
+Removed Member From Class: ClassName=Slave_CA Member=R5
+Removed Member From Class: ClassName=Slave_CA Member=R6
+Removed Member From Class: ClassName=Slave_CA Member=S?
+Removed Member From Class: ClassName=Slave_CA Member=SW2
+Removed Member From Class: ClassName=Slave_CA Member=SW3
+Change Component DesignItemId : Designator=SW71 Old DesignItemId=SW4 New DesignItemId=SW-4PIN-BIG
+Change Component DesignItemId : Designator=SW72 Old DesignItemId=SW4 New DesignItemId=SW-4PIN-BIG
+Change Component Footprint: Designator=SW71 Old Footprint=SW4 New Footprint=SW-4P-B
+Change Component Footprint: Designator=SW72 Old Footprint=SW4 New Footprint=SW-4P-B
+Change Component Comment : Designator=SW71 Old Comment=SW New Comment=SW-4P-B
+Change Component Comment : Designator=SW72 Old Comment=SW New Comment=SW-4P-B
+Change Component Designator: OldDesignator=D1 NewDesignator=D31
+Change Component Designator: OldDesignator=D? NewDesignator=D32
+Change Component Designator: OldDesignator=R18 NewDesignator=R31
+Added Component: Designator=C73(CAP_SMD_0805)
+Added Component: Designator=C74(CAP_SMD_0805)
+Added Component: Designator=R73(DIEN TRO 0805)
+Added Component: Designator=R74(DIEN TRO 0805)
+Added Component: Designator=SW1(SW_Bapbenh)
+Added Component: Designator=SW73(SW-4P-B)
+Added Component: Designator=SW74(SW-4P-B)
+Added Pin To Net: NetName=GND Pin=C73-1
+Added Pin To Net: NetName=BUTTON2 Pin=C73-2
+Added Pin To Net: NetName=GND Pin=C74-1
+Added Pin To Net: NetName=BUTTON3 Pin=C74-2
+Added Pin To Net: NetName=RXD Pin=IC2-1
+Added Pin To Net: NetName=TXD Pin=IC2-4
+Added Pin To Net: NetName=BUTTON2 Pin=R73-1
+Added Pin To Net: NetName=VCC Pin=R73-2
+Added Pin To Net: NetName=BUTTON3 Pin=R74-1
+Added Pin To Net: NetName=VCC Pin=R74-2
+Added Pin To Net: NetName=12V Pin=SW1-1
+Added Pin To Net: NetName=MCLR Pin=SW71-3
+Added Pin To Net: NetName=GND Pin=SW71-4
+Added Pin To Net: NetName=BUTTON1 Pin=SW72-3
+Added Pin To Net: NetName=GND Pin=SW72-4
+Added Pin To Net: NetName=GND Pin=SW73-1
+Added Pin To Net: NetName=BUTTON2 Pin=SW73-2
+Added Pin To Net: NetName=BUTTON2 Pin=SW73-3
+Added Pin To Net: NetName=GND Pin=SW73-4
+Added Pin To Net: NetName=GND Pin=SW74-1
+Added Pin To Net: NetName=BUTTON3 Pin=SW74-2
+Added Pin To Net: NetName=BUTTON3 Pin=SW74-3
+Added Pin To Net: NetName=GND Pin=SW74-4
+Change Net Name : Old Net Name=NetD1_1 New Net Name=NetD31_1
+Added Pin To Net: NetName=NetD32_1 Pin=D32-1
+Added Pin To Net: NetName=NetD32_1 Pin=SW1-2
+Added Net: Name=NetD32_1
+Added Member To Class: ClassName=Slave_CA Member=Component C73 Capacitor Ceramic
+Added Member To Class: ClassName=Slave_CA Member=Component C74 Capacitor Ceramic
+Added Member To Class: ClassName=Slave_CA Member=Component R73 RES_SMD_0805
+Added Member To Class: ClassName=Slave_CA Member=Component R74 RES_SMD_0805
+Added Member To Class: ClassName=Slave_CA Member=Component SW1 SW_BapBenh
+Added Member To Class: ClassName=Slave_CA Member=Component SW73 SW-4P-B
+Added Member To Class: ClassName=Slave_CA Member=Component SW74 SW-4P-B

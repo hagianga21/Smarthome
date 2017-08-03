@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=GND Pin=SW71-1
+Removed Pin From Net: NetName=MCLR Pin=SW71-2
+Removed Pin From Net: NetName=MCLR Pin=SW71-3
+Removed Pin From Net: NetName=GND Pin=SW71-4
+Removed Member From Class: ClassName=Slave_CA Member=SW71
+Added Component: Designator=SW7(SW4)
+Added Pin To Net: NetName=GND Pin=SW7-1
+Added Pin To Net: NetName=MCLR Pin=SW7-2
+Added Pin To Net: NetName=GND Pin=SW7-3
+Added Pin To Net: NetName=MCLR Pin=SW7-4
+Added Member To Class: ClassName=Slave_CA Member=Component SW7

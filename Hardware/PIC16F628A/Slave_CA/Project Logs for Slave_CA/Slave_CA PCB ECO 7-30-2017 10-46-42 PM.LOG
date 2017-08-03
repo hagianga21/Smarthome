@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=RXD Pin=P?-1
+Removed Pin From Net: NetName=TXD Pin=P?-2
+Removed Pin From Net: NetName=SEC Pin=P?-3
+Removed Member From Class: ClassName=Slave_CA Member=P?
