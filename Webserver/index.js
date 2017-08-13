@@ -12,6 +12,8 @@ var obj = {};
 obj.led1 = "on";
 obj.led2 = "on";
 
+/*
+// Fetch data
 function FetchData(){
     fetch('http://192.168.122.26/mrbs_sourcecode/API/Demo/APIController.php')
         .then(function(res) {
@@ -22,7 +24,7 @@ function FetchData(){
         })
 
 }
-
+*/
 
 
 app.get('/', function (req, res) {
@@ -48,6 +50,8 @@ app.post('/led2', function (req, res) {
 app.get('/state', function (req, res) {
     res.end(JSON.stringify(obj));
 });
+
+
 
 app.get('/process_get', function (req, res) {
    response = {
