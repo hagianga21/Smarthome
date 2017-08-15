@@ -1,14 +1,25 @@
 html
   head= title
   body
-  form(action = 'http://127.0.0.1:3000/led1', method = 'post')
+  h1 PHÒNG 1
+  h2 THIẾT BỊ 1
+  form(action = '/thietbi1', method = 'post')
     button(
-      id = 'LED1', 
-      type='submit') LED1
+      id = 'TB1', 
+      type='submit')= thietbi1state
 
-  form(action = 'http://127.0.0.1:3000/led2', method = 'post')
+  h2 THIẾT BỊ 2
+  form(action = '/thietbi2', method = 'post')
     button(
-      id = 'LED2', 
-      type='submit') LED2
-    script 
-      include control.js  
+      id = 'TB2', 
+      type='submit')= thietbi2state
+
+  h2 THIẾT BỊ 3
+  form(action = '/thietbi3', method = 'post')
+    button(
+      id = 'TB3', 
+      type='submit')= thietbi3state  
+     
+  h1 PHÒNG 2
+
+  h1 PHÒNG 3
