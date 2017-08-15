@@ -33,7 +33,7 @@ void setup() {
   Serial.print("Ket noi toi web ");
   Serial.println(host);
   WiFiClient client;
-  const int httpPort = 3000;
+  const int httpPort = 9000;
   
   
   //Get link
@@ -74,11 +74,11 @@ void setup() {
     result.toCharArray(json, size);
     StaticJsonBuffer<200> jsonBuffer;
     JsonObject& json_parsed = jsonBuffer.parseObject(json);
-    if (strcmp(json_parsed["led1"], "on") == 0) { 
-          Serial.println("LED1 ON");
+    if (strcmp(json_parsed["thietbi1"], "on") == 0) { 
+          Serial.println("Thiet bi 1 ON");
     }
-    if (strcmp(json_parsed["led2"], "off") == 0) { 
-          Serial.println("LED2 OFF");
+    if (strcmp(json_parsed["thietbi1"], "off") == 0) { 
+          Serial.println("Thiet bi 1 OFF");
     }
   }
   Serial.println("closing connection");

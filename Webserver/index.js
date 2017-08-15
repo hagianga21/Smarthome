@@ -53,7 +53,6 @@ app.get('/', function (req, res) {
 
 app.get('/control', function (req, res) {
     res.render('control', {
-        title: 'SMART HOME CONTROL PAGE', 
         thietbi1state: (obj.thietbi1 === "on") ? 'ON' : 'OFF',
         thietbi2state: (obj.thietbi2 === "on") ? 'ON' : 'OFF',
         thietbi3state: (obj.thietbi3 === "on") ? 'ON' : 'OFF',

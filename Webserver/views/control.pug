@@ -1,25 +1,33 @@
 html
-  head= title
   body
-  h1 PHÒNG 1
-  h2 THIẾT BỊ 1
-  form(action = '/thietbi1', method = 'post')
-    button(
-      id = 'TB1', 
-      type='submit')= thietbi1state
-
-  h2 THIẾT BỊ 2
-  form(action = '/thietbi2', method = 'post')
-    button(
-      id = 'TB2', 
-      type='submit')= thietbi2state
-
-  h2 THIẾT BỊ 3
-  form(action = '/thietbi3', method = 'post')
-    button(
-      id = 'TB3', 
-      type='submit')= thietbi3state  
-     
-  h1 PHÒNG 2
-
-  h1 PHÒNG 3
+    h1 SMARTHOME CONTROL PAGE
+    h2 PHÒNG 1
+    
+    form(action = '/thietbi1', method = 'post')
+      h3(style = "float:left; margin-left: 10px") THIẾT BỊ 1
+      button(
+        id = 'TB1', 
+        type='submit',
+        style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
+      )= thietbi1state
+    br
+    
+    form(action = '/thietbi2', method = 'post')
+      h3(style = "float:left; margin-left: 10px") THIẾT BỊ 2
+      button(
+        id = 'TB2', 
+        type='submit',
+        style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
+        )= thietbi2state
+    br      
+    
+    form(action = '/thietbi3', method = 'post')
+      h3(style = "float:left; margin-left: 10px") THIẾT BỊ 3
+      button(
+        id = 'TB3', 
+        type='submit',
+        style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
+        )= thietbi3state  
+    br  
+    h2 PHÒNG 2
+    h2 PHÒNG 3
