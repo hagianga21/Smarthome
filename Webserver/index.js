@@ -12,10 +12,10 @@ app.set('view engine', 'pug')
 app.set("views", path.join(__dirname, "views"));
 
 var a = 0;
-var obj = {};
-obj.thietbi1 = "off";
-obj.thietbi2 = "off";
-obj.thietbi3 = "off";
+var deviceState = {};
+deviceState.device1 = "off";
+deviceState.device2 = "off";
+deviceState.device3 = "off";
 
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
@@ -53,34 +53,46 @@ app.get('/', function (req, res) {
 
 app.get('/control', function (req, res) {
     res.render('control', {
-        thietbi1state: (obj.thietbi1 === "on") ? 'ON' : 'OFF',
-        thietbi2state: (obj.thietbi2 === "on") ? 'ON' : 'OFF',
-        thietbi3state: (obj.thietbi3 === "on") ? 'ON' : 'OFF',
+        device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
+        device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
+        device3state: (deviceState.device3 === "on") ? 'ON' : 'OFF',
     })
 });
 
 
-// Post ve trang thai thiet bi 1
-app.post('/thietbi1', function (req, res) {
-    obj.thietbi1 = (obj.thietbi1 === "on") ? "off" : "on";
+
+// Post ve trang thai các thiết bị
+app.post('/device1', function (req, res) {
+    deviceState.device1 = (deviceState.device1 === "on") ? "off" : "on";
     res.redirect('/control');
 });
-// Post ve trang thai thiet bi 2
-app.post('/thietbi2', function (req, res) {
-    obj.thietbi2 = (obj.thietbi2 === "on") ? "off" : "on";
+app.post('/device2', function (req, res) {
+    deviceState.device2 = (deviceState.device2 === "on") ? "off" : "on";
+    res.redirect('/control');
+});
+app.post('/device3', function (req, res) {
+    deviceState.device3 = (deviceState.device3 === "on") ? "off" : "on";
     res.redirect('/control');
 });
 
-app.post('/thietbi3', function (req, res) {
-    obj.thietbi3 = (obj.thietbi3 === "on") ? "off" : "on";
-    res.redirect('/control');
-});
-
-
+//Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {
-    res.end(JSON.stringify(obj));
+    res.end(JSON.stringify(deviceState));
 });
 
+//Trang hẹn giờ
+app.get('/setTime', function (req, res) {
+    res.render('setTime')
+});
+app.get('/submitTheTime', function(req,res){
+    response = {
+      device:req.query.device,
+      setTimeOn:req.query.setTimeOn,
+      setTimeOff:req.query.setTimeOff,
+   };
+   console.log(response);
+   res.end(JSON.stringify(response));
+});
 
 /*
 app.get('/process_get', function (req, res) {

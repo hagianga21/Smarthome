@@ -74,10 +74,10 @@ void setup() {
     result.toCharArray(json, size);
     StaticJsonBuffer<200> jsonBuffer;
     JsonObject& json_parsed = jsonBuffer.parseObject(json);
-    if (strcmp(json_parsed["thietbi1"], "on") == 0) { 
+    if (strcmp(json_parsed["device1"], "on") == 0) { 
           Serial.println("Thiet bi 1 ON");
     }
-    if (strcmp(json_parsed["thietbi1"], "off") == 0) { 
+    if (strcmp(json_parsed["device1"], "off") == 0) { 
           Serial.println("Thiet bi 1 OFF");
     }
   }

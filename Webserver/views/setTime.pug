@@ -1,0 +1,25 @@
+html
+  body
+    h1 SMARTHOME SET TIME FOR DEVICES PAGE
+    form(action ='/submitTheTime' , method = 'get')
+      h2 Choose device
+      select(name= 'device')
+        option(value= 'device1') A
+        option(value= 'device2') B
+      h2 Set time when turn device on
+      input(type= 'time',
+            name= 'setTimeOn',       
+            )
+      h2 Set time when turn device off
+      input(type= 'time',
+            name= 'setTimeOff',       
+            )      
+      br
+      br
+      br      
+      button(
+        id = 'TB1', 
+        type='submit',
+        style = "width: 70px; height: 40px",
+      ) Set Time
+    
