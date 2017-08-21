@@ -1,11 +1,8 @@
 html
   body
     h1 SMARTHOME SET TIME FOR DEVICES PAGE
-    form(action ='/submitTheTime' , method = 'get')
-      h2 Choose device
-      select(name= 'device')
-        option(value= 'device1') A
-        option(value= 'device2') B
+    form(action ='/submitTheTimeDevice1' , method = 'get')
+      h2 DEVICE 1
       h2 Set time when turn device on
       input(type= 'time',
             name= 'setTimeOn',       

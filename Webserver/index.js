@@ -12,11 +12,14 @@ app.set('view engine', 'pug')
 app.set("views", path.join(__dirname, "views"));
 
 var a = 0;
+
 var deviceState = {};
 deviceState.device1 = "off";
 deviceState.device2 = "off";
 deviceState.device3 = "off";
 
+deviceState.device1TimeOn = "";
+deviceState.device1TimeOff = "";
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
 // Fetch data
@@ -84,14 +87,17 @@ app.get('/state', function (req, res) {
 app.get('/setTime', function (req, res) {
     res.render('setTime')
 });
-app.get('/submitTheTime', function(req,res){
+
+app.get('/submitTheTimeDevice1', function(req,res){
     response = {
-      device:req.query.device,
       setTimeOn:req.query.setTimeOn,
       setTimeOff:req.query.setTimeOff,
    };
+   deviceState.device1TimeOn = response.setTimeOn;
+   deviceState.device1TimeOff = response.setTimeOff;
    console.log(response);
-   res.end(JSON.stringify(response));
+   res.redirect('/control');
+   //res.end(JSON.stringify(response));
 });
 
 /*
