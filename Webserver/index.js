@@ -12,7 +12,6 @@ app.set('view engine', 'pug')
 app.set("views", path.join(__dirname, "views"));
 
 var a = 0;
-
 var deviceState = {};
 deviceState.device1 = "off";
 deviceState.device2 = "off";
@@ -84,8 +83,8 @@ app.get('/state', function (req, res) {
 });
 
 //Trang hẹn giờ
-app.get('/setTime', function (req, res) {
-    res.render('setTime')
+app.get('/setTimeDevice1', function (req, res) {
+    res.render('setTimeDevice1')
 });
 
 app.get('/submitTheTimeDevice1', function(req,res){

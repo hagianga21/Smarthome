@@ -8,8 +8,13 @@ html
       button(
         id = 'TB1', 
         type='submit',
-        style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
+        style = "float:left; width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
       )= device1state
+    form(action = '/setTimeDevice1', method = 'get')
+      button( 
+        type='submit',
+        style = "width: 80px; height: 40px; margin-top: 15px; margin-left: 10px",
+      ) SET TIME
     br
     
     form(action = '/device2', method = 'post')
