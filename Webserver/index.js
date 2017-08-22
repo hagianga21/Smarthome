@@ -77,6 +77,11 @@ app.post('/device3', function (req, res) {
     res.redirect('/control');
 });
 
+//Đọc trạng thái về từ hệ thống
+app.get('/readStateFromSystem', function (req, res) {
+    deviceState.device1 = req.query.device1;
+ });
+
 //Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {
     res.end(JSON.stringify(deviceState));
