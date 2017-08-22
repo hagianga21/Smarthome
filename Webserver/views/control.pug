@@ -13,9 +13,9 @@ html
     form(action = '/setTimeDevice1', method = 'get')
       button( 
         type='submit',
-        style = "width: 80px; height: 40px; margin-top: 15px; margin-left: 10px",
+        style = "width: 80px; height: 40px; margin-top: 15px; margin-left: 10px"
       ) SET TIME
-    br
+    
     
     form(action = '/device2', method = 'post')
       h3(style = "float:left; margin-left: 10px") THIẾT BỊ 2
@@ -24,7 +24,7 @@ html
         type='submit',
         style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
         )= device2state
-    br      
+         
     
     form(action = '/device3', method = 'post')
       h3(style = "float:left; margin-left: 10px") THIẾT BỊ 3
@@ -33,6 +33,6 @@ html
         type='submit',
         style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",
         )= device3state  
-    br  
+      
     h2 PHÒNG 2
     h2 PHÒNG 3

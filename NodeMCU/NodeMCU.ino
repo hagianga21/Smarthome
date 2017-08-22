@@ -6,13 +6,11 @@ const char* password = "tumotdenchin";
 
 const char* host = "192.168.100.20";
 
-String url = "process_get";
+String url = "device1";
 void setup() {
   Serial.begin(115200);
   delay(10);
   // We start by connecting to a WiFi network
-  url += "?first_name=";
-  url += "Phan_Thanh_Hoang";
   Serial.println();
   Serial.println();
   Serial.print("Connecting to ");
@@ -36,12 +34,12 @@ void setup() {
   const int httpPort = 9000;
   
   
-  //Get link
+  //Control Led
   if (!client.connect(host, httpPort)) { 
     Serial.println("Khong ket noi duoc");
     return;
   }
-  client.print(String("GET /") + url +" HTTP/1.1\r\n" +
+  client.print(String("POST /") + url +" HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Connection: close\r\n\r\n");             
   delay(500);
