@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var pug = require('pug');
+var exphbs  = require('express-handlebars');
 var fetch = require('node-fetch');
 /*
 //khai bao cho mongodb
@@ -8,8 +9,8 @@ var MongoClient = require('mongodb').MongoClient;
 assert = require('assert');
 */
 const path = require('path');
-app.set('view engine', 'pug')
-app.set("views", path.join(__dirname, "views"));
+app.set('view engine', 'handlebars')
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 
 var a = 0;
 var deviceState = {};
@@ -49,9 +50,18 @@ MongoClient.connect('mongodb://localhost:27017/m101', function(err, db){
 //Neu tat mongodb roi thi mo bang lenh : mongod --dbpath=/data/db
 */
 
+/*
 app.get('/', function (req, res) {
     res.render('index', { title: 'Hey', message: 'Hello there!',info: a})
 });
+*/
+
+app.get('/', function (req, res) {
+    res.render('home',{
+        a : 'smart home page'
+    });
+});
+
 
 app.get('/control', function (req, res) {
     res.render('control', {

@@ -1,0 +1,32 @@
+<h1> SMARTHOME CONTROL PAGE</h1>
+<h2> PHÒNG 1 </h2>
+
+<form action = "/device1", method = "post">
+    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 1 </h3>
+    <button type="submit" style = "float:left; width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
+        {{device1state}}
+    </button>
+</form>
+
+<form action = "/setTimeDevice1", method = "get">
+    <button type="submit" style = "width: 80px; height: 40px; margin-top: 15px; margin-left: 10px",>
+        SET TIME
+    </button>
+</form>
+<br>
+<form action = "/device2", method = "post">
+    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 2 </h3>
+    <button type="submit" style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
+        {{device2state}}
+    </button>
+</form>    
+<br>
+<form action = "/device3", method = "post">
+    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 3 </h3>
+    <button type="submit" style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
+        {{device3state}}
+    </button>
+</form>    
+
+<h2> PHÒNG 2 </h2>  
+<h2> PHÒNG 3 </h2>    
