@@ -11,6 +11,7 @@ assert = require('assert');
 const path = require('path');
 app.set('view engine', 'handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 var a = 0;
 var deviceState = {};
@@ -57,9 +58,7 @@ app.get('/', function (req, res) {
 */
 
 app.get('/', function (req, res) {
-    res.render('home',{
-        a : 'smart home page'
-    });
+    res.render('home');
 });
 
 
