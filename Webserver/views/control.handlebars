@@ -1,32 +1,107 @@
-<h1> SMARTHOME CONTROL PAGE</h1>
-<h2> PHÒNG 1 </h2>
+<!-- /. NAV SIDE  -->
+<nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
 
-<form action = "/device1", method = "post">
-    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 1 </h3>
-    <button type="submit" style = "float:left; width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
-        {{device1state}}
-    </button>
-</form>
+            <li>
+                <a href="home"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-list-alt"></i> Control<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="active-menu">ALL ROOMS</a>
+                    </li>
+                    <li>
+                        <a href="#">ROOM 1</a>
+                    </li>
+                    <li>
+                        <a href="#">ROOM 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
+            </li>
+            <li>
+                <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+            </li>
+            
+            <li>
+                <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /. NAV SIDE  -->      
+<div id="page-wrapper" >
+    <style>
+        img.alarmClockIcon{
+            width: 30px;
+            height: 30px;
+        }
+        button.buttonSetTime{
+            width: 50px; 
+            height: 40px; 
+            margin-top: 15px; 
+            margin-left: 10px;
+        }
+        button.changeState{
+            float:left; 
+            width: 70px; 
+            height: 40px;
+            margin-top: 15px; 
+            margin-left: 30px
+        }
+    </style>   
+    <h2> SMARTHOME CONTROL PAGE</h2>
+    <br>
+    <h3> PHÒNG 1 </h3>
 
-<form action = "/setTimeDevice1", method = "get">
-    <button type="submit" style = "width: 80px; height: 40px; margin-top: 15px; margin-left: 10px",>
-        SET TIME
-    </button>
-</form>
-<br>
-<form action = "/device2", method = "post">
-    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 2 </h3>
-    <button type="submit" style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
-        {{device2state}}
-    </button>
-</form>    
-<br>
-<form action = "/device3", method = "post">
-    <h3 style = "float:left; margin-left: 10px"> THIẾT BỊ 3 </h3>
-    <button type="submit" style = "width: 70px; height: 40px; margin-top: 15px; margin-left: 40px",>
-        {{device3state}}
-    </button>
-</form>    
+    <form action = "/device1", method = "post">
+        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 1 </h4>
+        <button type="submit" class ="changeState">
+            {{device1state}}
+        </button>
+    </form>
 
-<h2> PHÒNG 2 </h2>  
-<h2> PHÒNG 3 </h2>    
+    <form action = "/setTimeDevice1", method = "get">
+        <button type="submit" class ="buttonSetTime">
+            <img src="./img/alarmclock.png" class ="alarmClockIcon">
+        </button>
+    </form>
+
+    <form action = "/device2", method = "post">
+        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 2 </h4>
+        <button type="submit" class ="changeState">
+            {{device2state}}
+        </button>
+    </form>    
+    <form action = "/setTimeDevice1", method = "get">
+        <button type="submit" class ="buttonSetTime">
+            <img src="./img/alarmclock.png" class ="alarmClockIcon">
+        </button>
+    </form>
+
+    <form action = "/device3", method = "post">
+        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 3 </h4>
+        <button type="submit" class ="changeState">
+            {{device3state}}
+        </button>
+    </form>
+    <form action = "/setTimeDevice1", method = "get">
+        <button type="submit" class ="buttonSetTime">
+            <img src="./img/alarmclock.png" class ="alarmClockIcon">
+        </button>
+    </form>    
+    <br>
+    <h3> PHÒNG 2 </h3>  
+    <h3> PHÒNG 3 </h3>    
+
+</div>

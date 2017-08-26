@@ -1,112 +1,115 @@
-<style>
-body {background-color: white;}
-div.dateAndTimeBorder{
-    float:left;
-    width:  350px;
-    height: 136px;
-    margin-top: 2cm;
-    margin-left: 2cm;
-    border: 3px solid #77D353;
-}
-div.indoorTempMid{
-    float:left;
-    width:  135px;
-    height: 170px;
-    margin-top: 3cm;
-    margin-left: 1.5cm;
-    border: 1px solid #8492A6;
-}
-div.boxTitleIndoor{
-    width:  134px;
-    height: 60px;
-    text-align: center;
-    background-color: #13CE66;
-    border: 1px solid #8492A6;
-}
-p.textTitleIndoor{
-    font-size: 130%;
-    font-weight: bold;
-    color:#47525E;
-}
-img.logo {
-    width:150px;
-    height:150px;
-    left:84px;
-    top:35px;
-    margin-top: 1.5cm;
-    margin-left: 1cm;
-}
-img.houseoverview{
-    float:left;
-    margin-left: 2cm;
-    margin-top: 2cm;
-    width:600px;
-    height:400px;
-}
-img.temperatureicon{
-    width:  20px;
-    height: 30px;
-    margin-left: 10px;
-    margin-top: 0.1cm;
-}
-img.humidityicon{
-    width:  20px;
-    height: 30px;
-    margin-left: 10px;
-    margin-top: 0.1cm;
-}
-h1.titlesmarthome{
-    font-size: 350%;
-    margin-top: 2cm;
-    margin-left: 2cm;
-}
-</style>
-</head>
-<body onLoad = "startDateAndTime()">
-    <div style = "float:left">
-        <img src="./img/logoBK.png" class ="logo">
+<!-- /. NAV SIDE  -->
+<nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
+
+            <li>
+                <a class="active-menu"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-list-alt"></i> Control<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="control">ALL ROOMS</a>
+                    </li>
+                    <li>
+                        <a href="#">ROOM 1</a>
+                    </li>
+                    <li>
+                        <a href="#">ROOM 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
+            </li>
+            <li>
+                <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+            </li>
+            
+            <li>
+                <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+            </li>
+        </ul>
     </div>
-
-    <div style = "float:left">
-        <h1 class = "titlesmarthome">SMART HOME</h1>
-    </div>
-
-    <div class = "dateAndTimeBorder">
-        <h1 id = "date"></h1>
-        <h1 id = "time"></h1>
-    </div>
-
-    <div>
-        <img src="/img/houseoverview.jpg" class ="houseoverview">
-    </div>
-
-    <div class = "indoorTempMid">
-        <div class = "boxTitleIndoor"><p class = "textTitleIndoor">INDOOR</p></div>
-        <div>
-            <img src="./img/temperature.jpg" class ="temperatureicon">
-            <p style = "display:inline">{{outsideTemperature}} độ C</p>
-        </div>
-        <div>
-            <img src="./img/humidity.jpg" class ="humidityicon">
-            <p style = "display:inline">{{outsideHHumidity}}%</p>
-        </div>
-    </div>
-
-
-
-<script>
-    function startDateAndTime(){
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById("date").innerHTML = "DATE: " + today.toDateString();
-        document.getElementById("time").innerHTML = "TIME: " + h + ":" + m + ":" + s;
+</nav>
+<!-- /. PAGE WRAPPER  --> 
+<div id="page-wrapper" >
+    <style>
+    div.indoorTempMid{
+        float:left;
+        width:  135px;
+        height: 170px;
+        margin-top: 3cm;
+        margin-left: 1.5cm;
+        border: 1px solid #8492A6;
     }
-    function checkTime(i) {
-    if (i < 10) {i = "0" + i};
-    return i;
+    div.boxTitleIndoor{
+        width:  134px;
+        height: 60px;
+        text-align: center;
+        background-color: #13CE66;
+        border: 1px solid #8492A6;
     }
-</script>
+    p.textTitleIndoor{
+        font-size: 130%;
+        font-weight: bold;
+        color:#47525E;
+    }
+    img.logo {
+        width:100px;
+        height:100px;
+    }
+    img.houseoverview{
+        float:left;
+        margin-left: 1cm;
+        margin-top: 1cm;
+        width:500px;
+        height:267px;
+    }
+    img.temperatureicon{
+        width:  20px;
+        height: 30px;
+        margin-left: 10px;
+        margin-top: 0.1cm;
+    }
+    img.humidityicon{
+        width:  20px;
+        height: 30px;
+        margin-left: 10px;
+        margin-top: 0.1cm;
+    }
+    h1.titlesmarthome{
+        font-size: 250%;
+        margin-top: 1cm;
+        margin-left: 3.5cm;
+    }
+    </style>
+    </head>
+    <body>
+        <div style = "float:left">
+            <img src="./img/logoBK.png" class ="logo">
+        </div>
+
+        <div>
+            <h1 class = "titlesmarthome">SMART HOME</h1>
+        </div>
+
+        <div class = "indoorTempMid">
+            <div class = "boxTitleIndoor"><p class = "textTitleIndoor">INDOOR</p></div>
+            <div>
+                <img src="./img/temperature.jpg" class ="temperatureicon">
+                <p style = "display:inline">{{outsideTemperature}} độ C</p>
+            </div>
+            <div>
+                <img src="./img/humidity.jpg" class ="humidityicon">
+                <p style = "display:inline">{{outsideHHumidity}}%</p>
+            </div>
+        </div>
+</div>
