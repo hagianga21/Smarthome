@@ -41,58 +41,60 @@
 </nav>
 <!-- /. PAGE WRAPPER  --> 
 <div id="page-wrapper" >
-    <style>
-    div.indoorTempMid{
-        float:left;
-        width:  135px;
-        height: 170px;
-        margin-top: 3cm;
-        margin-left: 1.5cm;
-        border: 1px solid #8492A6;
-    }
-    div.boxTitleIndoor{
-        width:  134px;
-        height: 60px;
-        text-align: center;
-        background-color: #13CE66;
-        border: 1px solid #8492A6;
-    }
-    p.textTitleIndoor{
-        font-size: 130%;
-        font-weight: bold;
-        color:#47525E;
-    }
-    img.logo {
-        width:100px;
-        height:100px;
-    }
-    img.houseoverview{
-        float:left;
-        margin-left: 1cm;
-        margin-top: 1cm;
-        width:500px;
-        height:267px;
-    }
-    img.temperatureicon{
-        width:  20px;
-        height: 30px;
-        margin-left: 10px;
-        margin-top: 0.1cm;
-    }
-    img.humidityicon{
-        width:  20px;
-        height: 30px;
-        margin-left: 10px;
-        margin-top: 0.1cm;
-    }
-    h1.titlesmarthome{
-        font-size: 250%;
-        margin-top: 1cm;
-        margin-left: 3.5cm;
-    }
-    </style>
-    </head>
-    <body>
+    <div id="page-inner">
+        <style>
+        img.logo {
+            width:100px;
+            height:100px;
+        }
+        img.houseoverview{
+            float:left;
+            margin-left: 1cm;
+            margin-top: 1cm;
+            width:500px;
+            height:267px;
+        }
+        h1.titlesmarthome{
+            font-size: 250%;
+            margin-top: 1cm;
+            margin-left: 3.5cm;
+        }
+        div.boxDistance{
+            margin-top: 1.5cm;
+        }
+        div.box{
+            position: relative;
+	        text-align: center;
+	        width: 120px;
+	        height: 120px;
+	        margin: 20px auto 10px auto;
+        }
+        div.box .letterInsideGasdetectionBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideGasdetectionBox}};
+        }
+        div.box .letterInsideHumandetectionBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideHumandetectionBox}};
+        }
+        div.box .letterInsideSecurityBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideSecurityBox}};
+        }
+        </style>
+
         <div style = "float:left">
             <img src="./img/logoBK.png" class ="logo">
         </div>
@@ -100,16 +102,66 @@
         <div>
             <h1 class = "titlesmarthome">SMART HOME</h1>
         </div>
-
-        <div class = "indoorTempMid">
-            <div class = "boxTitleIndoor"><p class = "textTitleIndoor">INDOOR</p></div>
-            <div>
-                <img src="./img/temperature.jpg" class ="temperatureicon">
-                <p style = "display:inline">{{outsideTemperature}} độ C</p>
-            </div>
-            <div>
-                <img src="./img/humidity.jpg" class ="humidityicon">
-                <p style = "display:inline">{{outsideHHumidity}}%</p>
+        
+        <div class = "boxDistance">
+            <div class="col-xs-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>Temparature</h4>
+                        <div class="easypiechart" id="easypiechart-red" data-percent="{{insideTemperature}}" ><span class="percent">{{insideTemperature}} &#8451;</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class = "boxDistance">
+            <div class="col-xs-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>Humidity</h4>
+                        <div class="easypiechart" id="easypiechart-blue" data-percent="{{insideHumidity}}" ><span class="percent">{{insideHumidity}} %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "boxDistance">
+            <div class="col-xs-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>Gas Detection</h4>
+                        <div class="box"><span class="letterInsideGasdetectionBox">NO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "boxDistance">
+            <div class="col-xs-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>Human</h4>
+                        <div class="box"><span class="letterInsideHumandetectionBox">YES</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "boxDistance">
+            <div class="col-xs-6 col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-body easypiechart-panel">
+                        <h4>Security</h4>
+                        <div class="box"><span class="letterInsideSecurityBox">Unarmed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>    
 </div>

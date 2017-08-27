@@ -57,7 +57,13 @@ app.get('/', function (req, res) {
 */
 
 app.get('/home', function (req, res) {
-    res.render('home');
+    res.render('home',{
+        insideTemperature: 36,
+        insideHumidity: 66,
+        letterInsideGasdetectionBox : "red",
+        letterInsideHumandetectionBox: "green",
+        letterInsideSecurityBox: "red",
+    });
 });
 
 
