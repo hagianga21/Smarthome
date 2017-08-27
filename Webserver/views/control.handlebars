@@ -7,18 +7,10 @@
                 <a href="home"><i class="fa fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
-                <a href="#"><i class="fa fa-list-alt"></i> Control<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="active-menu">ALL ROOMS</a>
-                    </li>
-                    <li>
-                        <a href="#">ROOM 1</a>
-                    </li>
-                    <li>
-                        <a href="#">ROOM 2</a>
-                    </li>
-                </ul>
+                <a class="active-menu"><i class="fa fa-list-alt"></i> Control</a>
+            </li>
+            <li>
+                <a href="camera"><i class="fa fa-camera"></i> Camera</a>
             </li>
             <li>
                 <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
@@ -46,62 +38,111 @@
             width: 30px;
             height: 30px;
         }
+        div.box{
+            position: relative;
+	        text-align: center;
+	        width: 100px;
+	        height: 60px;
+	        margin: 20px auto 10px auto;
+        }
+        div.box .letterInsideButtonState1 {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 18px;
+            width: 100px;
+            color: {{device1ButtonColor}};
+            border: none;
+            background-color: white;
+        }
+
+        div.box .letterInsideButtonState2 {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 18px;
+            width: 100px;
+            color: {{device2ButtonColor}};
+            border: none;
+            background-color: white;
+        }
+
+        div.box .letterInsideButtonState3 {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 18px;
+            width: 100px;
+            color: {{device3ButtonColor}};
+            border: none;
+            background-color: white;
+        }
+
         button.buttonSetTime{
+            float: right;
             width: 50px; 
             height: 40px; 
             margin-top: 15px; 
-            margin-left: 10px;
-        }
-        button.changeState{
-            float:left; 
-            width: 70px; 
-            height: 40px;
-            margin-top: 15px; 
-            margin-left: 30px
+            border: none;
+            background-color: white;
         }
     </style>   
     <h2> SMARTHOME CONTROL PAGE</h2>
     <br>
-    <h3> PHÒNG 1 </h3>
+    <h3 style="margin-bottom: 15px"> PHÒNG 1 </h3>
 
-    <form action = "/device1", method = "post">
-        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 1 </h4>
-        <button type="submit" class ="changeState">
-            {{device1state}}
-        </button>
-    </form>
+    <div class="col-xs-6 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <form action = "/device1", method = "post">
+                    <h4> THIẾT BỊ 1 </h4>
+                    <div class="box">
+                        <button type="submit" class="letterInsideButtonState1">{{device1state}}</button>
+                    </div>
+                </form>
+                <form action = "/setTimeDevice1", method = "get">
+                    <button type="submit" class ="buttonSetTime">
+                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-xs-6 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <form action = "/device2", method = "post">
+                    <h4> THIẾT BỊ 2 </h4>
+                    <div class="box">
+                        <button type="submit" class="letterInsideButtonState2">{{device2state}}</button>
+                    </div>
+                </form>
+                <form action = "/setTimeDevice1", method = "get">
+                    <button type="submit" class ="buttonSetTime">
+                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <form action = "/setTimeDevice1", method = "get">
-        <button type="submit" class ="buttonSetTime">
-            <img src="./img/alarmclock.png" class ="alarmClockIcon">
-        </button>
-    </form>
-
-    <form action = "/device2", method = "post">
-        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 2 </h4>
-        <button type="submit" class ="changeState">
-            {{device2state}}
-        </button>
-    </form>    
-    <form action = "/setTimeDevice1", method = "get">
-        <button type="submit" class ="buttonSetTime">
-            <img src="./img/alarmclock.png" class ="alarmClockIcon">
-        </button>
-    </form>
-
-    <form action = "/device3", method = "post">
-        <h4 style = "float:left; margin-left: 10px"> THIẾT BỊ 3 </h4>
-        <button type="submit" class ="changeState">
-            {{device3state}}
-        </button>
-    </form>
-    <form action = "/setTimeDevice1", method = "get">
-        <button type="submit" class ="buttonSetTime">
-            <img src="./img/alarmclock.png" class ="alarmClockIcon">
-        </button>
-    </form>    
-    <br>
-    <h3> PHÒNG 2 </h3>  
-    <h3> PHÒNG 3 </h3>    
+    <div class="col-xs-6 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <form action = "/device3", method = "post">
+                    <h4> THIẾT BỊ 3 </h4>
+                    <div class="box">
+                        <button type="submit" class="letterInsideButtonState3">{{device3state}}</button>
+                    </div>
+                </form>
+                <form action = "/setTimeDevice1", method = "get">
+                    <button type="submit" class ="buttonSetTime">
+                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </div>

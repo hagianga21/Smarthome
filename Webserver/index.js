@@ -72,10 +72,11 @@ app.get('/control', function (req, res) {
         device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
         device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
         device3state: (deviceState.device3 === "on") ? 'ON' : 'OFF',
+        device1ButtonColor: (deviceState.device1 === "on") ? "green" : "red",
+        device2ButtonColor: (deviceState.device2 === "on") ? "green" : "red",
+        device3ButtonColor: (deviceState.device3 === "on") ? "green" : "red",
     })
 });
-
-
 
 // Post ve trang thai các thiết bị
 app.post('/device1', function (req, res) {
@@ -128,4 +129,9 @@ app.get('/process_get', function (req, res) {
    res.end(JSON.stringify(response));
 });
 */
+
+app.get('/camera', function (req, res) {
+    res.render('camera');
+});
+
 app.listen(9000)
