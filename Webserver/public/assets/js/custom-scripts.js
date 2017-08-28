@@ -20,7 +20,6 @@
                     $('div.sidebar-collapse').removeClass('collapse')
                 }
             });
-
             /* MORRIS BAR CHART
 			-----------------------------------------*/
             Morris.Bar({
@@ -57,10 +56,10 @@
                 xkey: 'y',
                 ykeys: ['a', 'b'],
                 labels: ['Series A', 'Series B'],
-				 barColors: [
-    '#A6A6A6','#1cc09f',
-    '#A8E9DC' 
-  ],
+				barColors: [
+                    '#A6A6A6','#1cc09f',
+                    '#A8E9DC' 
+                ],
                 hideHover: 'auto',
                 resize: true
             });
@@ -180,7 +179,7 @@
       fillOpacity: 0.6,
       hideHover: 'auto',
       behaveLikeLine: true,
-      resize: true,
+      resize: false,
       pointFillColors:['#ffffff'],
       pointStrokeColors: ['black'],
       lineColors:['gray','#1cc09f']

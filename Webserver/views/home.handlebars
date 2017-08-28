@@ -94,7 +94,20 @@
         <div>
             <h1 class = "titlesmarthome">SMART HOME</h1>
         </div>
-        
+
+        <div class = "boxDistance">
+            <div class="col-md-10 col-sm-12 col-xs-12">                     
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Area Chart
+                    </div>
+                    <div class="panel-body">
+                        <div id="graph"></div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
         <div class = "boxDistance">
             <div class="col-xs-6 col-md-2">
                 <div class="panel panel-default">
@@ -153,7 +166,30 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>                
+
+        
         
     </div>    
 </div>
+
+
+<script>
+    Morris.Area({
+    element: 'graph',
+    data: [
+        {x: '2010 Q4', y: 3, z: 7},
+        {x: '2011 Q1', y: 3, z: 4},
+        {x: '2011 Q2', y: null, z: 1},
+        {x: '2011 Q3', y: 2, z: 5},
+        {x: '2011 Q4', y: 8, z: 2},
+        {x: '2012 Q1', y: 4, z: 4}
+    ],
+    xkey: 'x',
+    ykeys: ['y', 'z'],
+    labels: ['Y', 'Z'],
+    hideHover: 'auto'
+    }).on('click', function(i, row){
+    console.log(i, row);
+    });
+</script>

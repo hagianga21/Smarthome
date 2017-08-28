@@ -12,6 +12,8 @@ const path = require('path');
 app.set('view engine', 'handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 var a = 0;
 var deviceState = {};
 deviceState.device1 = "off";

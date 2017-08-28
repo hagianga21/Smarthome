@@ -1,29 +1,11 @@
-/*======================================================================================
-Copyright (c) 2013, Olly Smith
-All rights reserved.
+/* @license
+morris.js v0.5.0
+Copyright 2014 Olly Smith All rights reserved.
+Licensed under the BSD-2-Clause License.
+*/
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
 
-    1. Redistributions of source code must retain the above copyright notice, this
-list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright notice,
-this list of conditions and the following disclaimer in the documentation
-and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-============================================*/
-
-(function () {
+(function() {
   var $, Morris, minutesSpecHelper, secondsSpecHelper,
     __slice = [].slice,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
@@ -100,7 +82,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         this.el = $(options.element);
       }
       if ((this.el == null) || this.el.length === 0) {
-        //throw new Error("Graph container element not found");
+        throw new Error("Graph container element not found");
       }
       if (this.el.css('position') === 'static') {
         this.el.css('position', 'relative');
@@ -145,8 +127,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         var offset, touch;
         touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
         offset = _this.el.offset();
-        _this.fire('hover', touch.pageX - offset.left, touch.pageY - offset.top);
-        return touch;
+        return _this.fire('hovermove', touch.pageX - offset.left, touch.pageY - offset.top);
       });
       this.el.bind('click', function(evt) {
         var offset;
@@ -178,6 +159,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
           return _this.timeoutId = window.setTimeout(_this.resizeHandler, 100);
         });
       }
+      this.el.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
       if (this.postInit) {
         this.postInit();
       }
@@ -681,9 +663,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 
     Hover.prototype.update = function(html, x, y) {
-      this.html(html);
-      this.show();
-      return this.moveTo(x, y);
+      if (!html) {
+        return this.hide();
+      } else {
+        this.html(html);
+        this.show();
+        return this.moveTo(x, y);
+      }
     };
 
     Hover.prototype.html = function(content) {
@@ -762,7 +748,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       xLabels: 'auto',
       xLabelFormat: null,
       xLabelMargin: 24,
-      continuousLine: true,
       hideHover: false
     };
 
@@ -868,7 +853,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     };
 
     Line.prototype.generatePaths = function() {
-      var c, coords, i, r, smooth;
+      var coords, i, r, smooth;
       return this.paths = (function() {
         var _i, _ref, _ref1, _results;
         _results = [];
@@ -889,19 +874,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             }
             return _results1;
           }).call(this);
-          if (this.options.continuousLine) {
-            coords = (function() {
-              var _j, _len, _results1;
-              _results1 = [];
-              for (_j = 0, _len = coords.length; _j < _len; _j++) {
-                c = coords[_j];
-                if (c.y !== null) {
-                  _results1.push(c);
-                }
-              }
-              return _results1;
-            })();
-          }
           if (coords.length > 1) {
             _results.push(Morris.Line.createPath(coords, smooth, this.bottom));
           } else {
@@ -1512,11 +1484,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     };
 
     Bar.prototype.drawSeries = function() {
-      var barWidth, bottom, groupWidth, idx, lastTop, left, leftPadding, numBars, row, sidx, size, top, ypos, zeroPos;
+      var barWidth, bottom, groupWidth, idx, lastTop, left, leftPadding, numBars, row, sidx, size, spaceLeft, top, ypos, zeroPos;
       groupWidth = this.width / this.options.data.length;
-      numBars = this.options.stacked != null ? 1 : this.options.ykeys.length;
+      numBars = this.options.stacked ? 1 : this.options.ykeys.length;
       barWidth = (groupWidth * this.options.barSizeRatio - this.options.barGap * (numBars - 1)) / numBars;
-      leftPadding = groupWidth * (1 - this.options.barSizeRatio) / 2;
+      if (this.options.barSize) {
+        barWidth = Math.min(barWidth, this.options.barSize);
+      }
+      spaceLeft = groupWidth - barWidth * numBars - this.options.barGap * (numBars - 1);
+      leftPadding = spaceLeft / 2;
       zeroPos = this.ymin <= 0 && this.ymax >= 0 ? this.transY(0) : null;
       return this.bars = (function() {
         var _i, _len, _ref, _results;
@@ -1544,6 +1520,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                   left += sidx * (barWidth + this.options.barGap);
                 }
                 size = bottom - top;
+                if (this.options.verticalGridCondition && this.options.verticalGridCondition(row.x)) {
+                  this.drawBar(this.left + idx * groupWidth, this.top, groupWidth, Math.abs(this.top - this.bottom), this.options.verticalGridColor, this.options.verticalGridOpacity, this.options.barRadius);
+                }
                 if (this.options.stacked) {
                   top -= lastTop;
                 }
