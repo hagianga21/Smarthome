@@ -1,0 +1,136 @@
+<!-- /. NAV SIDE  -->
+<nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
+
+            <li>
+                <a href="home"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="control"><i class="fa fa-list-alt"></i> Control</a>
+            </li>
+            <li>
+                <a href="camera"><i class="fa fa-camera"></i> Camera</a>
+            </li>
+            <li>
+                <a class="active-menu"><i class="fa fa-bar-chart-o"></i> Charts</a>
+            </li>
+            <li>
+                <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+            </li>
+            
+            <li>
+                <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /. PAGE WRAPPER  --> 
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <style>
+        img.logo {
+            width:100px;
+            height:100px;
+        }
+        img.houseoverview{
+            float:left;
+            margin-left: 1cm;
+            margin-top: 1cm;
+            width:500px;
+            height:267px;
+        }
+        h1.titlesmarthome{
+            font-size: 250%;
+            margin-top: 1cm;
+            margin-left: 3.5cm;
+        }
+        div.boxDistance{
+            margin-top: 1.5cm;
+        }
+        div.box{
+            position: relative;
+	        text-align: center;
+	        width: 120px;
+	        height: 120px;
+	        margin: 20px auto 10px auto;
+        }
+        div.box .letterInsideGasdetectionBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideGasdetectionBox}};
+        }
+        div.box .letterInsideHumandetectionBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideHumandetectionBox}};
+        }
+        div.box .letterInsideSecurityBox {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 38px;
+            width: 120px;
+            color: {{letterInsideSecurityBox}};
+        }
+        </style>
+
+        <div style = "float:left">
+            <img src="./img/logoBK.png" class ="logo">
+        </div>
+
+        <div>
+            <h1 class = "titlesmarthome">SMART HOME</h1>
+        </div>
+
+        <div class = "boxDistance">
+            <div class="col-md-10 col-sm-12 col-xs-12">                     
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Area Chart
+                    </div>
+                    <div class="panel-body">
+                        <div id="graph"></div>
+                    </div>
+                </div>            
+            </div>
+        </div>        
+    </div>    
+</div>
+
+
+<script>
+    Morris.Area({
+    element: 'graph',
+    data: [
+        {x: '2010 Q4', y: 3, z: 7},
+        {x: '2011 Q1', y: 3, z: 4},
+        {x: '2011 Q2', y: null, z: 1},
+        {x: '2011 Q3', y: 2, z: 5},
+        {x: '2011 Q4', y: 8, z: 2},
+        {x: '2012 Q1', y: 4, z: 4}
+    ],
+    xkey: 'x',
+    ykeys: ['y', 'z'],
+    labels: ['Y', 'Z'],
+    hideHover: 'auto'
+    }).on('click', function(i, row){
+    console.log(i, row);
+    });
+</script>
+
+
+
+	

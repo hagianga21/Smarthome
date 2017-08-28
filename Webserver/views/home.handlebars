@@ -13,7 +13,7 @@
                 <a href="camera"><i class="fa fa-camera"></i> Camera</a>
             </li>
             <li>
-                <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
+                <a href="chart"><i class="fa fa-bar-chart-o"></i> Charts</a>
             </li>
             <li>
                 <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
@@ -96,21 +96,7 @@
         </div>
 
         <div class = "boxDistance">
-            <div class="col-md-10 col-sm-12 col-xs-12">                     
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Area Chart
-                    </div>
-                    <div class="panel-body">
-                        <div id="graph"></div>
-                    </div>
-                </div>            
-            </div>
-        </div>
-
-
-        <div class = "boxDistance">
-            <div class="col-md-10 col-sm-12 col-xs-12">                     
+            <div class="col-md-12 col-sm-12 col-xs-12">                     
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Area Chart
@@ -187,27 +173,6 @@
     </div>    
 </div>
 
-
-<script>
-    Morris.Area({
-    element: 'graph',
-    data: [
-        {x: '2010 Q4', y: 3, z: 7},
-        {x: '2011 Q1', y: 3, z: 4},
-        {x: '2011 Q2', y: null, z: 1},
-        {x: '2011 Q3', y: 2, z: 5},
-        {x: '2011 Q4', y: 8, z: 2},
-        {x: '2012 Q1', y: 4, z: 4}
-    ],
-    xkey: 'x',
-    ykeys: ['y', 'z'],
-    labels: ['Y', 'Z'],
-    hideHover: 'auto'
-    }).on('click', function(i, row){
-    console.log(i, row);
-    });
-</script>
-
 <script type="text/javascript">
 	window.onload = function () {
 
@@ -215,8 +180,14 @@
 
 		var chart = new CanvasJS.Chart("chartContainer",{
 			title :{
-				text: "Live Random Data"
-			},			
+				text: "Live Power Consumption"
+			},
+            axisY:{
+                title: "Power (W)"
+            },
+            axisX:{
+                title: "Time"
+            },			
 			data: [{
 				type: "line",
 				dataPoints: dps 

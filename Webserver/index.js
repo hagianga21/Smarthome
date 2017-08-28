@@ -136,4 +136,8 @@ app.get('/camera', function (req, res) {
     res.render('camera');
 });
 
+app.get('/chart', function (req, res) {
+    res.render('chart');
+});
+
 app.listen(9000)
