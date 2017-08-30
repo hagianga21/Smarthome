@@ -3,6 +3,7 @@ var app = express();
 var pug = require('pug');
 var exphbs  = require('express-handlebars');
 var fetch = require('node-fetch');
+var bodyParser = require('body-parser');
 /*
 //khai bao cho mongodb
 var MongoClient = require('mongodb').MongoClient;
@@ -12,9 +13,14 @@ const path = require('path');
 app.set('view engine', 'handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 var a = 0;
+var username = "giang";
+var password = "admin"; 
 var deviceState = {};
 deviceState.device1 = "off";
 deviceState.device2 = "off";
@@ -57,6 +63,23 @@ app.get('/', function (req, res) {
     res.render('index', { title: 'Hey', message: 'Hello there!',info: a})
 });
 */
+
+app.get('/', function (req, res) {
+    res.render('login');
+});
+
+app.post('/login', function(req,res){
+    if(req.body.username === username  && req.body.password === password){
+        console.log("OK");
+
+        res.redirect('/home');
+    }
+    else {
+        console.log("Fail");
+        res.redirect('/');
+    }
+});
+
 
 app.get('/home', function (req, res) {
     res.render('home',{
