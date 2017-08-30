@@ -33,28 +33,32 @@
 </nav>
 <!-- /. PAGE WRAPPER  --> 
 <div id="page-wrapper" >
-    <div id="page-inner">
+    <div id="page-inner" >
         
-        <div class = "boxDistance">
-            <div class="col-md-5">                     
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h1>LOGIN</h1>
-                    </div>
-                    <div class="panel-body">
-                        <form action = "/login", method = "post">
-                            <label>User name</label>
-                            <input class="form-control" id="username" name="username">
-                            <br>
-                            <label>Password</label>
-                            <input class="form-control" id="password" name="password">
-                            <br>
-                            <button type="submit" class="btn btn-success btn-lg"> LOGIN </button>
-                        </form>
-                    </div>
-                </div>            
+        
+            <div class = "boxDistance">
+                <div class="col-md-5" style = "margin-left: 30%; margin-top: 10%">                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div align="center"><h1 style = "font-weight:bold">Login</h1></div>
+                        </div>
+                        <div class="panel-body">
+                            <form action = "/login", method = "post">
+                                <br>
+                                <label>User name</label>
+                                <input class="form-control" id="username" name="username" placeholder="Username">
+                                <br>
+                                <label>Password</label>
+                                <input class="form-control" id="password" name="password" placeholder="Password">
+                                <br>
+                                <div align="center">
+                                    <button type="submit" class="btn btn-success btn-lg"> LOGIN </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>            
+                </div>
             </div>
-        </div>
         
         
     </div>    
