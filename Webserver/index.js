@@ -19,8 +19,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 var a = 0;
+//Login variables
 var username = "giang";
 var password = "admin"; 
+var loginflag = false;
+
 var deviceState = {};
 deviceState.device1 = "off";
 deviceState.device2 = "off";
@@ -69,13 +72,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
+    loginflag = false;
     res.render('login');
 });
 
 app.post('/logincheck', function(req,res){
     if(req.body.username === username  && req.body.password === password){
         console.log("OK");
-
+        loginflag = true;
         res.redirect('/home');
     }
     else {
@@ -86,25 +90,33 @@ app.post('/logincheck', function(req,res){
 
 
 app.get('/home', function (req, res) {
-    res.render('home',{
-        insideTemperature: 36,
-        insideHumidity: 66,
-        letterInsideGasdetectionBox : "red",
-        letterInsideHumandetectionBox: "green",
-        letterInsideSecurityBox: "red",
-    });
+    if(loginflag === true){
+        res.render('home',{
+            insideTemperature: 36,
+            insideHumidity: 66,
+            letterInsideGasdetectionBox : "red",
+            letterInsideHumandetectionBox: "green",
+            letterInsideSecurityBox: "red",
+        });
+    }
+    else 
+        res.redirect('/');
 });
 
 
 app.get('/control', function (req, res) {
-    res.render('control', {
-        device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
-        device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
-        device3state: (deviceState.device3 === "on") ? 'ON' : 'OFF',
-        device1ButtonColor: (deviceState.device1 === "on") ? "green" : "red",
-        device2ButtonColor: (deviceState.device2 === "on") ? "green" : "red",
-        device3ButtonColor: (deviceState.device3 === "on") ? "green" : "red",
-    })
+    if(loginflag === true){
+        res.render('control', {
+            device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
+            device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
+            device3state: (deviceState.device3 === "on") ? 'ON' : 'OFF',
+            device1ButtonColor: (deviceState.device1 === "on") ? "green" : "red",
+            device2ButtonColor: (deviceState.device2 === "on") ? "green" : "red",
+            device3ButtonColor: (deviceState.device3 === "on") ? "green" : "red",
+        })
+    }
+    else 
+        res.redirect('/');
 });
 
 // Post ve trang thai các thiết bị
@@ -160,11 +172,20 @@ app.get('/process_get', function (req, res) {
 */
 
 app.get('/camera', function (req, res) {
-    res.render('camera');
+    if(loginflag === true){
+        res.render('camera');
+    }
+    else
+        res.redirect('/');
+
 });
 
 app.get('/chart', function (req, res) {
-    res.render('chart');
+    if(loginflag === true){
+        res.render('chart');
+    }
+    else
+        res.redirect('/');
 });
 
 app.listen(9000)
