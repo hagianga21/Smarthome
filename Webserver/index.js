@@ -22,7 +22,10 @@ var a = 0;
 //Login variables
 var username = "giang";
 var password = "admin"; 
-var loginflag = false;
+var loginFlag = false;
+
+var checkChangedFlag = {};
+checkChangedFlag.changedFlagStatus = "false";
 
 var deviceState = {};
 deviceState.device1 = "off";
@@ -72,14 +75,14 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-    loginflag = false;
+    loginFlag = false;
     res.render('login');
 });
 
 app.post('/logincheck', function(req,res){
     if(req.body.username === username  && req.body.password === password){
         console.log("OK");
-        loginflag = true;
+        loginFlag = true;
         res.redirect('/home');
     }
     else {
@@ -90,7 +93,7 @@ app.post('/logincheck', function(req,res){
 
 
 app.get('/home', function (req, res) {
-    if(loginflag === true){
+    if(loginFlag === true){
         res.render('home',{
             insideTemperature: 36,
             insideHumidity: 66,
@@ -105,7 +108,7 @@ app.get('/home', function (req, res) {
 
 
 app.get('/control', function (req, res) {
-    if(loginflag === true){
+    if(loginFlag === true){
         res.render('control', {
             device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
             device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
@@ -122,6 +125,7 @@ app.get('/control', function (req, res) {
 // Post ve trang thai các thiết bị
 app.post('/device1', function (req, res) {
     deviceState.device1 = (deviceState.device1 === "on") ? "off" : "on";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
 app.post('/device2', function (req, res) {
@@ -141,6 +145,10 @@ app.get('/readStateFromSystem', function (req, res) {
 //Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {
     res.end(JSON.stringify(deviceState));
+});
+
+app.get('/checkChangedFlag', function(req,res){
+    res.end(JSON.stringify(checkChangedFlag));
 });
 
 //Trang hẹn giờ
@@ -172,7 +180,7 @@ app.get('/process_get', function (req, res) {
 */
 
 app.get('/camera', function (req, res) {
-    if(loginflag === true){
+    if(loginFlag === true){
         res.render('camera');
     }
     else
@@ -181,7 +189,7 @@ app.get('/camera', function (req, res) {
 });
 
 app.get('/chart', function (req, res) {
-    if(loginflag === true){
+    if(loginFlag === true){
         res.render('chart');
     }
     else
