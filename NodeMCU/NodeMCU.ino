@@ -15,7 +15,7 @@ int updateFlag = 0;
 void loginHomePage(void);
 void checkUpdateFlag(void);
 void clearUpdateFlag(void);
-void turnOnDevice(String device);
+void controlDevice(String device, String state);
 void readJSONFromStatePage (void);
 void sendState(void);
 void setup() {
@@ -41,7 +41,7 @@ void setup() {
     Serial.print("Ket noi toi web ");
     Serial.println(host);
     
-    turnOnDevice("device2");
+    controlDevice("device2","on");
 }
 
 void loop() {
@@ -114,11 +114,12 @@ void clearUpdateFlag(void){
     delay(500);
 }
 
-void turnOnDevice(String device){
+void controlDevice(String device, String state){
     String url = "readStateFromSystem";
     url += "?";
     url += device;
-    url += "=on";
+    url += "=";
+    url += state;
     if (!client.connect(host, httpPort)) { 
       Serial.println("Khong ket noi duoc");
       return;
