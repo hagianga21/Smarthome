@@ -1,6 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
-
+WiFiClient client;
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
 
@@ -10,6 +10,8 @@ const int httpPort = 9000;
 String url = "device1";
 String url1 = "readStateFromSystem";
 
+
+void loginHomePage(void);
 void readJSONFromStatePage (void);
 void setup() {
     Serial.begin(115200);
@@ -33,8 +35,9 @@ void setup() {
 
     Serial.print("Ket noi toi web ");
     Serial.println(host);
-    WiFiClient client;
     
+    //Login
+    loginHomePage();
     
     //Send State
     if (!client.connect(host, httpPort)) { 
@@ -68,9 +71,22 @@ void loop() {
     readJSONFromStatePage();
 }
 
+void loginHomePage(void){
+    String login = "logincheck?username=giang&password=admin";
+    if (!client.connect(host, httpPort)) { 
+      Serial.println("Khong ket noi duoc");
+      return;
+    }
+    client.print(String("POST /") + login +" HTTP/1.1\r\n" +
+                "Host: " + host + "\r\n" +
+                "Connection: close\r\n\r\n");             
+    delay(500);
+    Serial.println("LOGIN OK"); 
+    delay(500);
+}
+
 void readJSONFromStatePage (void)
 {
-    WiFiClient client;
     if (!client.connect(host, httpPort)) { 
         Serial.println("Khong ket noi duoc");
         return;
@@ -105,4 +121,5 @@ void readJSONFromStatePage (void)
     }
     Serial.println("closing connection");
 }
+
 

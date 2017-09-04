@@ -79,6 +79,7 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 
+
 app.post('/logincheck', function(req,res){
     if(req.body.username === username  && req.body.password === password){
         console.log("OK");
@@ -90,7 +91,6 @@ app.post('/logincheck', function(req,res){
         res.redirect('/');
     }
 });
-
 
 app.get('/home', function (req, res) {
     if(loginFlag === true){
