@@ -10,9 +10,14 @@ const int httpPort = 9000;
 String url = "device1";
 String url1 = "readStateFromSystem";
 
+int updateFlag = 0;
 
 void loginHomePage(void);
+void checkUpdateFlag(void);
+void clearUpdateFlag(void);
+void turnOnDevice(String device);
 void readJSONFromStatePage (void);
+void sendState(void);
 void setup() {
     Serial.begin(115200);
     delay(10);
@@ -36,52 +41,93 @@ void setup() {
     Serial.print("Ket noi toi web ");
     Serial.println(host);
     
-    //Login
-    loginHomePage();
-    
-    //Send State
-    if (!client.connect(host, httpPort)) { 
-      Serial.println("Khong ket noi duoc");
-      return;
-    }
-    client.print(String("GET /") + url1 +" HTTP/1.1\r\n" +
-                "Host: " + host + "\r\n" +
-                "Connection: close\r\n\r\n");             
-    delay(500);
-    Serial.println("OK"); 
-    delay(500);
-
-    /*
-    //Control Led
-    if (!client.connect(host, httpPort)) { 
-      Serial.println("Khong ket noi duoc");
-      return;
-    }
-    client.print(String("POST /") + url +" HTTP/1.1\r\n" +
-                "Host: " + host + "\r\n" +
-                "Connection: close\r\n\r\n");             
-    delay(500);
-    Serial.println("OK"); 
-    delay(500);
-    */
-    readJSONFromStatePage();
+    turnOnDevice("device2");
 }
 
 void loop() {
-    readJSONFromStatePage();
+    checkUpdateFlag();
+    if(updateFlag == 1){
+      readJSONFromStatePage();
+      clearUpdateFlag();
+      updateFlag = 0;
+    }
 }
 
 void loginHomePage(void){
-    String login = "logincheck?username=giang&password=admin";
+    String login = "logincheckNodeMCU?username=giang&password=admin";
     if (!client.connect(host, httpPort)) { 
       Serial.println("Khong ket noi duoc");
       return;
     }
-    client.print(String("POST /") + login +" HTTP/1.1\r\n" +
+    client.print(String("GET /") + login +" HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n\r\n");             
     delay(500);
     Serial.println("LOGIN OK"); 
+    delay(500);
+}
+
+void checkUpdateFlag (void)
+{
+    if (!client.connect(host, httpPort)) { 
+    Serial.println("Khong ket noi duoc");
+    return;
+    }
+    client.print(String("GET /") + "checkChangedFlag" +" HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Connection: close\r\n\r\n"); 
+    
+    unsigned long timeout = millis();
+    while (client.available() == 0) {
+        if (millis() - timeout > 5000) {
+          Serial.println(">>> Client Timeout !");
+          client.stop();
+          return;
+        }
+    }
+
+    while (client.available()) {
+        String line = client.readStringUntil('\R');
+        String result = line.substring(118);
+        int size = result.length()+1;
+        char json[size];
+        result.toCharArray(json, size);
+        StaticJsonBuffer<200> jsonBuffer;
+        JsonObject& json_parsed = jsonBuffer.parseObject(json);
+        if (strcmp(json_parsed["changedFlagStatus"], "true") == 0) { 
+            updateFlag = 1;
+        }
+    }
+}
+
+void clearUpdateFlag(void){
+    String clearUpdateFlag = "checkChangedFlag?device=NodeMCU";
+    if (!client.connect(host, httpPort)) { 
+      Serial.println("Khong ket noi duoc");
+      return;
+    }
+    client.print(String("GET /") + clearUpdateFlag +" HTTP/1.1\r\n" +
+                "Host: " + host + "\r\n" +
+                "Connection: close\r\n\r\n");             
+    delay(500);
+    Serial.println("Clear Update Flag from Internet"); 
+    delay(500);
+}
+
+void turnOnDevice(String device){
+    String url = "readStateFromSystem";
+    url += "?";
+    url += device;
+    url += "=on";
+    if (!client.connect(host, httpPort)) { 
+      Serial.println("Khong ket noi duoc");
+      return;
+    }
+    client.print(String("GET /") + url +" HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Connection: close\r\n\r\n");             
+    delay(500);
+    Serial.println("TURN ON"); 
     delay(500);
 }
 
@@ -122,4 +168,16 @@ void readJSONFromStatePage (void)
     Serial.println("closing connection");
 }
 
+void sendState(void){
+  if (!client.connect(host, httpPort)) { 
+    Serial.println("Khong ket noi duoc");
+    return;
+  }
+  client.print(String("GET /") + url1 +" HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Connection: close\r\n\r\n");             
+  delay(500);
+  Serial.println("OK"); 
+  delay(500);
+}
 

@@ -79,7 +79,7 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 
-
+//LOGIN
 app.post('/logincheck', function(req,res){
     if(req.body.username === username  && req.body.password === password){
         console.log("OK");
@@ -92,6 +92,19 @@ app.post('/logincheck', function(req,res){
     }
 });
 
+app.get('/logincheckNodeMCU', function(req,res){
+    if(req.query.username === username  && req.query.password === password){
+        console.log("OK");
+        loginFlag = true;
+        res.redirect('/home');
+    }
+    else {
+        console.log("Fail");
+        res.redirect('/');
+    }
+});
+
+//HOME
 app.get('/home', function (req, res) {
     if(loginFlag === true){
         res.render('home',{
@@ -106,7 +119,7 @@ app.get('/home', function (req, res) {
         res.redirect('/');
 });
 
-
+//CONTROL
 app.get('/control', function (req, res) {
     if(loginFlag === true){
         res.render('control', {
@@ -140,6 +153,7 @@ app.post('/device3', function (req, res) {
 //Đọc trạng thái về từ hệ thống
 app.get('/readStateFromSystem', function (req, res) {
     deviceState.device1 = req.query.device1;
+    deviceState.device2 = req.query.device2;
  });
 
 //Trang Json trạng thái các thiết bị
@@ -148,6 +162,9 @@ app.get('/state', function (req, res) {
 });
 
 app.get('/checkChangedFlag', function(req,res){
+    if(req.query.device === "NodeMCU"){
+        checkChangedFlag.changedFlagStatus = "false";
+    }
     res.end(JSON.stringify(checkChangedFlag));
 });
 
