@@ -4,11 +4,11 @@ var pug = require('pug');
 var exphbs  = require('express-handlebars');
 var fetch = require('node-fetch');
 var bodyParser = require('body-parser');
-/*
+
 //khai bao cho mongodb
 var MongoClient = require('mongodb').MongoClient;
 assert = require('assert');
-*/
+
 const path = require('path');
 app.set('view engine', 'handlebars')
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -18,7 +18,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var a = 0;
+var date = new Date();
+var hour = date.getHours();
+var min  = date.getMinutes();
+//https://stackoverflow.com/questions/7357734/how-do-i-get-the-time-of-day-in-javascript-node-js
 //Login variables
 var username = "giang";
 var password = "admin"; 
@@ -49,20 +52,31 @@ function FetchData(){
 }
 */
 
-/*
-MongoClient.connect('mongodb://localhost:27017/m101', function(err, db){
+
+MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     assert.equal(null,err);
     console.log("Successfully connect MongoDB");
-    db.collection('hw1_1').find().toArray(function(err,docs){
-        docs.forEach(function(doc){
-            console.log(doc.answer);
-        });
-        db.close();
-    });
-    console.log("Called find");
+
+    var projection = {"deviceID": 1, "time" :1, "P":1, "_id":0};
+
+    //db.collection('test1').insertOne({"deviceID": "D01", "time": hour + ":" + min, "V": 220, "P": 60, "I": 10})
+    
+    var cursor = db.collection('test1').find({time: {$gt: '1:28'}})
+    cursor.project(projection)
+    cursor.forEach(
+        function(doc) {
+            console.log(doc);
+        },
+        function(err) {
+            assert.equal(err, null);
+            return db.close();
+        }
+    );
+    
 });
+
 //Neu tat mongodb roi thi mo bang lenh : mongod --dbpath=/data/db
-*/
+
 
 /*
 app.get('/', function (req, res) {
@@ -143,10 +157,12 @@ app.post('/device1', function (req, res) {
 });
 app.post('/device2', function (req, res) {
     deviceState.device2 = (deviceState.device2 === "on") ? "off" : "on";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
 app.post('/device3', function (req, res) {
     deviceState.device3 = (deviceState.device3 === "on") ? "off" : "on";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
 
@@ -212,5 +228,6 @@ app.get('/chart', function (req, res) {
     else
         res.redirect('/');
 });
+
 
 app.listen(9000)
