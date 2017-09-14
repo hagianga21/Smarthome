@@ -1,46 +1,35 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 WiFiClient client;
+
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
-
 const char* host = "192.168.100.20";
 const int httpPort = 9000;
-
-String url = "device1";
-String url1 = "readStateFromSystem";
-
 int updateFlag = 0;
+int receiveFromSystemFlag = 0;
+int count = 0;
+char stateFromInternetToSystem[11];
+char stateFromSystemToInternet[11];
 
-void loginHomePage(void);
+void wifiInit(void);
+void configState(void);
+//System
+void receiveDataFromSystem(void);
+void processDataFromSystem(void);
+//Internet
 void checkUpdateFlag(void);
 void clearUpdateFlag(void);
 void controlDevice(String device, String state);
 void readJSONFromStatePage (void);
 void sendState(void);
+
+
 void setup() {
-    Serial.begin(115200);
-    delay(10);
-    url1 += "?device1=";
-    url1 += "on";
-    // We start by connecting to a WiFi network
-    Serial.print("Connecting to ");
-    Serial.println(ssid);
-    WiFi.begin(ssid, password);
-    
-    while (WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      Serial.print(".");
-    }
-
-    Serial.println("");
-    Serial.println("WiFi connected");  
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
-
-    Serial.print("Ket noi toi web ");
-    Serial.println(host);
-    
+    Serial.begin(9600);
+    delay(100);
+    wifiInit();
+    configState();
     controlDevice("device2","on");
 }
 
@@ -51,21 +40,46 @@ void loop() {
       clearUpdateFlag();
       updateFlag = 0;
     }
+    if(Serial.available() > 0){
+       receiveDataFromSystem();
+    }
+    if(receiveFromSystemFlag == 1){
+      receiveFromSystemFlag = 0;
+      processDataFromSystem();
+    }
 }
 
-void loginHomePage(void){
-    String login = "logincheckNodeMCU?username=giang&password=admin";
-    if (!client.connect(host, httpPort)) { 
-      Serial.println("Khong ket noi duoc");
-      return;
+void wifiInit(void){
+    Serial.println("");
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
     }
-    client.print(String("GET /") + login +" HTTP/1.1\r\n" +
-                "Host: " + host + "\r\n" +
-                "Connection: close\r\n\r\n");             
-    delay(500);
-    Serial.println("LOGIN OK"); 
-    delay(500);
+    Serial.println("");
+    Serial.println("WiFi connected");  
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("Ket noi toi web ");
+    Serial.println(host);
 }
+
+void configState(void){
+    stateFromInternetToSystem[0]  = 'S';
+    stateFromInternetToSystem[1]  = '0';
+    stateFromInternetToSystem[2]  = '0';
+    stateFromInternetToSystem[3]  = '0';
+    stateFromInternetToSystem[4]  = '0';
+    stateFromInternetToSystem[5]  = '0';
+    stateFromInternetToSystem[6]  = '0';
+    stateFromInternetToSystem[7]  = '0';
+    stateFromInternetToSystem[8]  = '0';
+    stateFromInternetToSystem[9]  = '0';
+    stateFromInternetToSystem[10] = 'E';
+}
+
 
 void checkUpdateFlag (void)
 {
@@ -110,8 +124,8 @@ void clearUpdateFlag(void){
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n\r\n");             
     delay(500);
-    Serial.println("Clear Update Flag from Internet"); 
-    delay(500);
+    //Serial.println("Clear Update Flag from Internet"); 
+    //delay(500);
 }
 
 void controlDevice(String device, String state){
@@ -129,7 +143,7 @@ void controlDevice(String device, String state){
               "Connection: close\r\n\r\n");             
     delay(500);
     Serial.println("TURN ON"); 
-    delay(500);
+    //delay(500);
 }
 
 void readJSONFromStatePage (void)
@@ -161,24 +175,66 @@ void readJSONFromStatePage (void)
         JsonObject& json_parsed = jsonBuffer.parseObject(json);
         if (strcmp(json_parsed["device1"], "on") == 0) { 
             Serial.println("Thiet bi 1 ON");
+            stateFromInternetToSystem[2]  = '1';
         }
         if (strcmp(json_parsed["device1"], "off") == 0) { 
             Serial.println("Thiet bi 1 OFF");
+            stateFromInternetToSystem[2]  = '0';
+        }
+        if (strcmp(json_parsed["device2"], "on") == 0) { 
+            Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[3]  = '1';
+        }
+        if (strcmp(json_parsed["device2"], "off") == 0) { 
+            Serial.println("Thiet bi 2 OFF");
+            stateFromInternetToSystem[3]  = '0';
+            
         }
     }
+    Serial.println(stateFromInternetToSystem);
     Serial.println("closing connection");
 }
 
-void sendState(void){
-  if (!client.connect(host, httpPort)) { 
-    Serial.println("Khong ket noi duoc");
-    return;
-  }
-  client.print(String("GET /") + url1 +" HTTP/1.1\r\n" +
-              "Host: " + host + "\r\n" +
-              "Connection: close\r\n\r\n");             
-  delay(500);
-  Serial.println("OK"); 
-  delay(500);
+void receiveDataFromSystem(void){
+    char data;
+    data = Serial.read();
+    if(data == 'S'){
+      count = 0;
+      stateFromSystemToInternet[count] = data;
+      count++;
+    }
+    if(data != 'S' && data != 'E'){
+      stateFromSystemToInternet[count] = data;
+      count++;
+    }
+    if(data == 'E'){
+      stateFromSystemToInternet[count] = data;
+      count = 0;
+      receiveFromSystemFlag = 1;
+      Serial.println(stateFromSystemToInternet);
+    }
+}
+
+void processDataFromSystem(void){
+    if(stateFromSystemToInternet[1] == '0'){
+       if(stateFromSystemToInternet[2] == '1'){
+          controlDevice("device1","on");
+       }
+       if(stateFromSystemToInternet[2] == '0'){
+          controlDevice("device1","off");
+       }
+       if(stateFromSystemToInternet[3] == '1'){
+          controlDevice("device2","on");
+       }
+       if(stateFromSystemToInternet[3] == '0'){
+          controlDevice("device2","off");
+       }
+       if(stateFromSystemToInternet[4] == '1'){
+          controlDevice("device3","on");
+       }
+       if(stateFromSystemToInternet[4] == '0'){
+          controlDevice("device3","off");
+       }
+    }  
 }
 

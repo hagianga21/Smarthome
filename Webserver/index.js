@@ -168,8 +168,12 @@ app.post('/device3', function (req, res) {
 
 //Đọc trạng thái về từ hệ thống
 app.get('/readStateFromSystem', function (req, res) {
-    deviceState.device1 = req.query.device1;
-    deviceState.device2 = req.query.device2;
+    if(req.query.device1)
+        deviceState.device1 = req.query.device1;
+    if(req.query.device2)
+        deviceState.device2 = req.query.device2;
+    if(req.query.device3)
+        deviceState.device3 = req.query.device3;
  });
 
 //Trang Json trạng thái các thiết bị
