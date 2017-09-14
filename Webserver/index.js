@@ -37,6 +37,10 @@ deviceState.device3 = "off";
 
 deviceState.device1TimeOn = "";
 deviceState.device1TimeOff = "";
+deviceState.device2TimeOn = "";
+deviceState.device2TimeOff = "";
+deviceState.device3TimeOn = "";
+deviceState.device3TimeOff = "";
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
 // Fetch data
@@ -189,22 +193,21 @@ app.get('/checkChangedFlag', function(req,res){
 });
 
 //Trang hẹn giờ
-app.get('/setTimeDevice1', function (req, res) {
-    res.render('setTimeDevice1')
-});
-
 app.get('/submitTheTimeDevice1', function(req,res){
-    response = {
-      setTimeOn:req.query.setTimeOn,
-      setTimeOff:req.query.setTimeOff,
-   };
-   deviceState.device1TimeOn = response.setTimeOn;
-   deviceState.device1TimeOff = response.setTimeOff;
-   console.log(response);
+   deviceState.device1TimeOn = req.query.setTimeOn;
+   deviceState.device1TimeOff = req.query.setTimeOff;
    res.redirect('/control');
-   //res.end(JSON.stringify(response));
 });
-
+app.get('/submitTheTimeDevice2', function(req,res){
+    deviceState.device2TimeOn = req.query.setTimeOn;
+    deviceState.device2TimeOff = req.query.setTimeOff;
+    res.redirect('/control');
+});
+app.get('/submitTheTimeDevice3', function(req,res){
+    deviceState.device3TimeOn = req.query.setTimeOn;
+    deviceState.device3TimeOff = req.query.setTimeOff;
+    res.redirect('/control');
+});
 /*
 app.get('/process_get', function (req, res) {
    response = {

@@ -100,11 +100,33 @@
                         <button type="submit" class="letterInsideButtonState1">{{device1state}}</button>
                     </div>
                 </form>
-                <form action = "/setTimeDevice1", method = "get">
-                    <button type="submit" class ="buttonSetTime">
-                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
-                    </button>
-                </form>
+
+                <button class ="buttonSetTime" data-toggle="modal" data-target="#myModal1">
+                    <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                </button>
+                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action = "/submitTheTimeDevice1", method = "get">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">SET TIME FOR DEVICE</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4> Set time when turn device on </h4>
+                                    <input type="time" name="setTimeOn">
+                                    <h4> Set time when turn device off </h4>
+                                    <input type="time" name="setTimeOff">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -118,11 +140,33 @@
                         <button type="submit" class="letterInsideButtonState2">{{device2state}}</button>
                     </div>
                 </form>
-                <form action = "/setTimeDevice1", method = "get">
-                    <button type="submit" class ="buttonSetTime">
-                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
-                    </button>
-                </form>
+
+                <button class ="buttonSetTime" data-toggle="modal" data-target="#myModal2">
+                    <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                </button>
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action = "/submitTheTimeDevice2", method = "get">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">SET TIME FOR DEVICE</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4> Set time when turn device on </h4>
+                                    <input type="time" name="setTimeOn">
+                                    <h4> Set time when turn device off </h4>
+                                    <input type="time" name="setTimeOff">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -136,11 +180,33 @@
                         <button type="submit" class="letterInsideButtonState3">{{device3state}}</button>
                     </div>
                 </form>
-                <form action = "/setTimeDevice1", method = "get">
-                    <button type="submit" class ="buttonSetTime">
-                        <img src="./img/alarmclock.png" class ="alarmClockIcon">
-                    </button>
-                </form>
+                
+                <button class ="buttonSetTime" data-toggle="modal" data-target="#myModal3">
+                    <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                </button>
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action = "/submitTheTimeDevice3", method = "get">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">SET TIME FOR DEVICE</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4> Set time when turn device on </h4>
+                                    <input type="time" name="setTimeOn">
+                                    <h4> Set time when turn device off </h4>
+                                    <input type="time" name="setTimeOff">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

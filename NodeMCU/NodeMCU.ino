@@ -10,7 +10,8 @@ int updateFlag = 0;
 int receiveFromSystemFlag = 0;
 int count = 0;
 char stateFromInternetToSystem[11];
-char stateFromSystemToInternet[11];
+char stateFromSystemToInternet[11],setTimeFromInternetToSystem[11];
+char device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
 
 void wifiInit(void);
 void configState(void);
@@ -23,7 +24,7 @@ void clearUpdateFlag(void);
 void controlDevice(String device, String state);
 void readJSONFromStatePage (void);
 void sendState(void);
-
+void sendSetTimeFromInternetToSystem(void);
 
 void setup() {
     Serial.begin(9600);
@@ -37,6 +38,8 @@ void loop() {
     checkUpdateFlag();
     if(updateFlag == 1){
       readJSONFromStatePage();
+      Serial.println("Start Send Set time");
+      sendSetTimeFromInternetToSystem();
       clearUpdateFlag();
       updateFlag = 0;
     }
@@ -78,6 +81,19 @@ void configState(void){
     stateFromInternetToSystem[8]  = '0';
     stateFromInternetToSystem[9]  = '0';
     stateFromInternetToSystem[10] = 'E';
+    
+    setTimeFromInternetToSystem[0] = 'S';
+    setTimeFromInternetToSystem[1] = '1';
+    setTimeFromInternetToSystem[2] = 'D';
+    setTimeFromInternetToSystem[3] = '0';
+    setTimeFromInternetToSystem[4] = '1';
+    setTimeFromInternetToSystem[5] = '0';
+    setTimeFromInternetToSystem[6] = '0';
+    setTimeFromInternetToSystem[7] = '0';
+    setTimeFromInternetToSystem[8] = '0';
+    setTimeFromInternetToSystem[9] = '0';
+    setTimeFromInternetToSystem[10] = 'E';
+    
 }
 
 
@@ -128,24 +144,6 @@ void clearUpdateFlag(void){
     //delay(500);
 }
 
-void controlDevice(String device, String state){
-    String url = "readStateFromSystem";
-    url += "?";
-    url += device;
-    url += "=";
-    url += state;
-    if (!client.connect(host, httpPort)) { 
-      Serial.println("Khong ket noi duoc");
-      return;
-    }
-    client.print(String("GET /") + url +" HTTP/1.1\r\n" +
-              "Host: " + host + "\r\n" +
-              "Connection: close\r\n\r\n");             
-    delay(500);
-    Serial.println("TURN ON"); 
-    //delay(500);
-}
-
 void readJSONFromStatePage (void)
 {
     if (!client.connect(host, httpPort)) { 
@@ -187,14 +185,92 @@ void readJSONFromStatePage (void)
         }
         if (strcmp(json_parsed["device2"], "off") == 0) { 
             Serial.println("Thiet bi 2 OFF");
-            stateFromInternetToSystem[3]  = '0';
-            
+            stateFromInternetToSystem[3]  = '0';   
         }
+        if (strcmp(json_parsed["device3"], "on") == 0) { 
+            Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[4]  = '1';
+        }
+        if (strcmp(json_parsed["device3"], "on") == 0) { 
+            Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[4]  = '1';
+        }
+        strcpy(device1TimeOn, json_parsed["device1TimeOn"]);
+        strcpy(device1TimeOff, json_parsed["device1TimeOff"]);
+        strcpy(device2TimeOn, json_parsed["device2TimeOn"]);
+        strcpy(device2TimeOff, json_parsed["device2TimeOff"]);
+        strcpy(device3TimeOn, json_parsed["device3TimeOn"]);
+        strcpy(device3TimeOff, json_parsed["device3TimeOff"]);
+        Serial.println(device1TimeOn);
+        Serial.println(device1TimeOff);
+        Serial.println(device2TimeOn);
+        Serial.println(device2TimeOff);
+        Serial.println(device3TimeOn);
+        Serial.println(device3TimeOff);
     }
     Serial.println(stateFromInternetToSystem);
     Serial.println("closing connection");
 }
 
+void sendSetTimeFromInternetToSystem(void){
+    //Device 1 set time on
+    setTimeFromInternetToSystem[4]='1';
+    setTimeFromInternetToSystem[5]=device1TimeOn[0];
+    setTimeFromInternetToSystem[6]=device1TimeOn[1];
+    setTimeFromInternetToSystem[7]=device1TimeOn[3];
+    setTimeFromInternetToSystem[8]=device1TimeOn[4];
+    setTimeFromInternetToSystem[9]='1';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+    //
+    setTimeFromInternetToSystem[4]='1';
+    setTimeFromInternetToSystem[5]=device1TimeOff[0];
+    setTimeFromInternetToSystem[6]=device1TimeOff[1];
+    setTimeFromInternetToSystem[7]=device1TimeOff[3];
+    setTimeFromInternetToSystem[8]=device1TimeOff[4];
+    setTimeFromInternetToSystem[9]='0';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+    //
+    setTimeFromInternetToSystem[4]='2';
+    setTimeFromInternetToSystem[5]=device2TimeOn[0];
+    setTimeFromInternetToSystem[6]=device2TimeOn[1];
+    setTimeFromInternetToSystem[7]=device2TimeOn[3];
+    setTimeFromInternetToSystem[8]=device2TimeOn[4];
+    setTimeFromInternetToSystem[9]='1';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+    //
+    setTimeFromInternetToSystem[4]='2';
+    setTimeFromInternetToSystem[5]=device2TimeOff[0];
+    setTimeFromInternetToSystem[6]=device2TimeOff[1];
+    setTimeFromInternetToSystem[7]=device2TimeOff[3];
+    setTimeFromInternetToSystem[8]=device2TimeOff[4];
+    setTimeFromInternetToSystem[9]='0';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+    //
+    setTimeFromInternetToSystem[4]='3';
+    setTimeFromInternetToSystem[5]=device3TimeOn[0];
+    setTimeFromInternetToSystem[6]=device3TimeOn[1];
+    setTimeFromInternetToSystem[7]=device3TimeOn[3];
+    setTimeFromInternetToSystem[8]=device3TimeOn[4];
+    setTimeFromInternetToSystem[9]='1';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+    //
+    setTimeFromInternetToSystem[4]='3';
+    setTimeFromInternetToSystem[5]=device3TimeOff[0];
+    setTimeFromInternetToSystem[6]=device3TimeOff[1];
+    setTimeFromInternetToSystem[7]=device3TimeOff[3];
+    setTimeFromInternetToSystem[8]=device3TimeOff[4];
+    setTimeFromInternetToSystem[9]='0';
+    Serial.println(setTimeFromInternetToSystem);
+    delay(200);
+}
+
+
+//From System to Internet
 void receiveDataFromSystem(void){
     char data;
     data = Serial.read();
@@ -213,6 +289,24 @@ void receiveDataFromSystem(void){
       receiveFromSystemFlag = 1;
       Serial.println(stateFromSystemToInternet);
     }
+}
+
+void controlDevice(String device, String state){
+    String url = "readStateFromSystem";
+    url += "?";
+    url += device;
+    url += "=";
+    url += state;
+    if (!client.connect(host, httpPort)) { 
+      Serial.println("Khong ket noi duoc");
+      return;
+    }
+    client.print(String("GET /") + url +" HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Connection: close\r\n\r\n");             
+    delay(500);
+    Serial.println("TURN ON"); 
+    //delay(500);
 }
 
 void processDataFromSystem(void){
