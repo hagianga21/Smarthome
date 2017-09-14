@@ -35,12 +35,12 @@ deviceState.device1 = "off";
 deviceState.device2 = "off";
 deviceState.device3 = "off";
 
-deviceState.device1TimeOn = "";
-deviceState.device1TimeOff = "";
-deviceState.device2TimeOn = "";
-deviceState.device2TimeOff = "";
-deviceState.device3TimeOn = "";
-deviceState.device3TimeOff = "";
+deviceState.device1TimeOn = "00:00";
+deviceState.device1TimeOff = "00:00";
+deviceState.device2TimeOn = "00:00";
+deviceState.device2TimeOff = "00:00";
+deviceState.device3TimeOn = "00:00";
+deviceState.device3TimeOff = "00:00";
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
 // Fetch data
