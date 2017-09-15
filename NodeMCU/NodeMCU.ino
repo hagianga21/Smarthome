@@ -9,9 +9,9 @@ const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
 int count = 0;
-char stateFromInternetToSystem[11];
+char stateFromInternetToSystem[11],oldstateFromInternetToSystem[11];
 char stateFromSystemToInternet[11],setTimeFromInternetToSystem[11];
-char device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
+char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
 
 void wifiInit(void);
 void configState(void);
@@ -23,7 +23,8 @@ void checkUpdateFlag(void);
 void clearUpdateFlag(void);
 void controlDevice(String device, String state);
 void readJSONFromStatePage (void);
-void sendState(void);
+//void sendState(void);
+void sendStateFromInternetToSystem(void);
 void sendSetTimeFromInternetToSystem(void);
 
 void setup() {
@@ -39,6 +40,7 @@ void loop() {
     if(updateFlag == 1){
       readJSONFromStatePage();
       Serial.println("Start Send Set time");
+      sendStateFromInternetToSystem();
       sendSetTimeFromInternetToSystem();
       clearUpdateFlag();
       updateFlag = 0;
@@ -81,7 +83,17 @@ void configState(void){
     stateFromInternetToSystem[8]  = '0';
     stateFromInternetToSystem[9]  = '0';
     stateFromInternetToSystem[10] = 'E';
-    
+    strcpy(oldstateFromInternetToSystem,stateFromInternetToSystem);
+    device1TimeOn[0]='0';
+    device1TimeOn[1]='0';
+    device1TimeOn[2]=':';
+    device1TimeOn[3]='0';
+    device1TimeOn[4]='0';
+    strcpy(device1TimeOff,device1TimeOn);
+    strcpy(device2TimeOn,device1TimeOn);
+    strcpy(device2TimeOff,device1TimeOn);
+    strcpy(device3TimeOn,device1TimeOn);
+    strcpy(device3TimeOff,device1TimeOn);
     setTimeFromInternetToSystem[0] = 'S';
     setTimeFromInternetToSystem[1] = '1';
     setTimeFromInternetToSystem[2] = 'D';
@@ -195,12 +207,40 @@ void readJSONFromStatePage (void)
             Serial.println("Thiet bi 2 ON");
             stateFromInternetToSystem[4]  = '1';
         }
-        strcpy(device1TimeOn, json_parsed["device1TimeOn"]);
-        strcpy(device1TimeOff, json_parsed["device1TimeOff"]);
-        strcpy(device2TimeOn, json_parsed["device2TimeOn"]);
-        strcpy(device2TimeOff, json_parsed["device2TimeOff"]);
-        strcpy(device3TimeOn, json_parsed["device3TimeOn"]);
-        strcpy(device3TimeOff, json_parsed["device3TimeOff"]);
+        strcpy(tempDeviceTime, json_parsed["device1TimeOn"]);
+        if (strcmp(device1TimeOn,tempDeviceTime) != 0){
+          strcpy(device1TimeOn, json_parsed["device1TimeOn"]);
+          flagUpdateSetTime[1] = 1;
+        }
+        strcpy(tempDeviceTime, json_parsed["device1TimeOff"]);
+        if (strcmp(device1TimeOff,tempDeviceTime) != 0){
+          strcpy(device1TimeOff, json_parsed["device1TimeOff"]);
+          flagUpdateSetTime[1] = 1;
+        }
+        
+        
+        strcpy(tempDeviceTime, json_parsed["device2TimeOn"]);
+        if (strcmp(device2TimeOn,tempDeviceTime) !=0){
+          strcpy(device2TimeOn, json_parsed["device2TimeOn"]);
+          flagUpdateSetTime[2] = 1;
+        }
+        strcpy(tempDeviceTime, json_parsed["device2TimeOff"]);
+        if (strcmp(device2TimeOff,tempDeviceTime) !=0){
+          strcpy(device2TimeOff, json_parsed["device2TimeOff"]);
+          flagUpdateSetTime[2] = 1;
+        }
+
+        
+        strcpy(tempDeviceTime, json_parsed["device3TimeOn"]);
+        if (strcmp(device3TimeOn,tempDeviceTime) !=0){
+          strcpy(device3TimeOn, json_parsed["device3TimeOn"]);
+          flagUpdateSetTime[3] = 1;
+        }
+        strcpy(tempDeviceTime, json_parsed["device3TimeOff"]);
+        if (strcmp(device3TimeOff,tempDeviceTime) !=0){
+          strcpy(device3TimeOff, json_parsed["device3TimeOff"]);
+          flagUpdateSetTime[3] = 1;
+        }
         Serial.println(device1TimeOn);
         Serial.println(device1TimeOff);
         Serial.println(device2TimeOn);
@@ -208,65 +248,79 @@ void readJSONFromStatePage (void)
         Serial.println(device3TimeOn);
         Serial.println(device3TimeOff);
     }
-    Serial.println(stateFromInternetToSystem);
     Serial.println("closing connection");
 }
 
+void sendStateFromInternetToSystem(void){
+   if(strcmp(stateFromInternetToSystem,oldstateFromInternetToSystem) !=0){
+      Serial.println(stateFromInternetToSystem);
+      strcpy(oldstateFromInternetToSystem,stateFromInternetToSystem);
+   }
+}
 void sendSetTimeFromInternetToSystem(void){
     //Device 1 set time on
-    setTimeFromInternetToSystem[4]='1';
-    setTimeFromInternetToSystem[5]=device1TimeOn[0];
-    setTimeFromInternetToSystem[6]=device1TimeOn[1];
-    setTimeFromInternetToSystem[7]=device1TimeOn[3];
-    setTimeFromInternetToSystem[8]=device1TimeOn[4];
-    setTimeFromInternetToSystem[9]='1';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
-    //
-    setTimeFromInternetToSystem[4]='1';
-    setTimeFromInternetToSystem[5]=device1TimeOff[0];
-    setTimeFromInternetToSystem[6]=device1TimeOff[1];
-    setTimeFromInternetToSystem[7]=device1TimeOff[3];
-    setTimeFromInternetToSystem[8]=device1TimeOff[4];
-    setTimeFromInternetToSystem[9]='0';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
-    //
-    setTimeFromInternetToSystem[4]='2';
-    setTimeFromInternetToSystem[5]=device2TimeOn[0];
-    setTimeFromInternetToSystem[6]=device2TimeOn[1];
-    setTimeFromInternetToSystem[7]=device2TimeOn[3];
-    setTimeFromInternetToSystem[8]=device2TimeOn[4];
-    setTimeFromInternetToSystem[9]='1';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
-    //
-    setTimeFromInternetToSystem[4]='2';
-    setTimeFromInternetToSystem[5]=device2TimeOff[0];
-    setTimeFromInternetToSystem[6]=device2TimeOff[1];
-    setTimeFromInternetToSystem[7]=device2TimeOff[3];
-    setTimeFromInternetToSystem[8]=device2TimeOff[4];
-    setTimeFromInternetToSystem[9]='0';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
-    //
-    setTimeFromInternetToSystem[4]='3';
-    setTimeFromInternetToSystem[5]=device3TimeOn[0];
-    setTimeFromInternetToSystem[6]=device3TimeOn[1];
-    setTimeFromInternetToSystem[7]=device3TimeOn[3];
-    setTimeFromInternetToSystem[8]=device3TimeOn[4];
-    setTimeFromInternetToSystem[9]='1';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
-    //
-    setTimeFromInternetToSystem[4]='3';
-    setTimeFromInternetToSystem[5]=device3TimeOff[0];
-    setTimeFromInternetToSystem[6]=device3TimeOff[1];
-    setTimeFromInternetToSystem[7]=device3TimeOff[3];
-    setTimeFromInternetToSystem[8]=device3TimeOff[4];
-    setTimeFromInternetToSystem[9]='0';
-    Serial.println(setTimeFromInternetToSystem);
-    delay(200);
+    if(flagUpdateSetTime[1] == 1){
+      flagUpdateSetTime[1] = 0;
+      setTimeFromInternetToSystem[4]='1';
+      setTimeFromInternetToSystem[5]=device1TimeOn[0];
+      setTimeFromInternetToSystem[6]=device1TimeOn[1];
+      setTimeFromInternetToSystem[7]=device1TimeOn[3];
+      setTimeFromInternetToSystem[8]=device1TimeOn[4];
+      setTimeFromInternetToSystem[9]='1';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+      //
+      setTimeFromInternetToSystem[4]='1';
+      setTimeFromInternetToSystem[5]=device1TimeOff[0];
+      setTimeFromInternetToSystem[6]=device1TimeOff[1];
+      setTimeFromInternetToSystem[7]=device1TimeOff[3];
+      setTimeFromInternetToSystem[8]=device1TimeOff[4];
+      setTimeFromInternetToSystem[9]='0';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+    }
+    //Device 2 set time on
+    if(flagUpdateSetTime[2] == 1){
+      flagUpdateSetTime[2]=0;
+      setTimeFromInternetToSystem[4]='2';
+      setTimeFromInternetToSystem[5]=device2TimeOn[0];
+      setTimeFromInternetToSystem[6]=device2TimeOn[1];
+      setTimeFromInternetToSystem[7]=device2TimeOn[3];
+      setTimeFromInternetToSystem[8]=device2TimeOn[4];
+      setTimeFromInternetToSystem[9]='1';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+      //
+      setTimeFromInternetToSystem[4]='2';
+      setTimeFromInternetToSystem[5]=device2TimeOff[0];
+      setTimeFromInternetToSystem[6]=device2TimeOff[1];
+      setTimeFromInternetToSystem[7]=device2TimeOff[3];
+      setTimeFromInternetToSystem[8]=device2TimeOff[4];
+      setTimeFromInternetToSystem[9]='0';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+    }
+    //Device 3 set time on
+    if(flagUpdateSetTime[3] == 1){
+      flagUpdateSetTime[3] = 0;
+      setTimeFromInternetToSystem[4]='3';
+      setTimeFromInternetToSystem[5]=device3TimeOn[0];
+      setTimeFromInternetToSystem[6]=device3TimeOn[1];
+      setTimeFromInternetToSystem[7]=device3TimeOn[3];
+      setTimeFromInternetToSystem[8]=device3TimeOn[4];
+      setTimeFromInternetToSystem[9]='1';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+      //
+      setTimeFromInternetToSystem[4]='3';
+      setTimeFromInternetToSystem[5]=device3TimeOff[0];
+      setTimeFromInternetToSystem[6]=device3TimeOff[1];
+      setTimeFromInternetToSystem[7]=device3TimeOff[3];
+      setTimeFromInternetToSystem[8]=device3TimeOff[4];
+      setTimeFromInternetToSystem[9]='0';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+    }
 }
 
 

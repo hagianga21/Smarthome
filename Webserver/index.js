@@ -196,16 +196,19 @@ app.get('/checkChangedFlag', function(req,res){
 app.get('/submitTheTimeDevice1', function(req,res){
    deviceState.device1TimeOn = req.query.setTimeOn;
    deviceState.device1TimeOff = req.query.setTimeOff;
+   checkChangedFlag.changedFlagStatus = "true";
    res.redirect('/control');
 });
 app.get('/submitTheTimeDevice2', function(req,res){
     deviceState.device2TimeOn = req.query.setTimeOn;
     deviceState.device2TimeOff = req.query.setTimeOff;
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
 app.get('/submitTheTimeDevice3', function(req,res){
     deviceState.device3TimeOn = req.query.setTimeOn;
     deviceState.device3TimeOff = req.query.setTimeOff;
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
 /*
