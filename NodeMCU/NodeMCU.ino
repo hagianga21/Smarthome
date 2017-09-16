@@ -9,8 +9,8 @@ const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
 int count = 0;
-char stateFromInternetToSystem[11],oldstateFromInternetToSystem[11];
-char stateFromSystemToInternet[11],setTimeFromInternetToSystem[11];
+char stateFromInternetToSystem[18],oldstateFromInternetToSystem[18];
+char stateFromSystemToInternet[18],setTimeFromInternetToSystem[11];
 char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
 
 void wifiInit(void);
@@ -32,14 +32,15 @@ void setup() {
     delay(100);
     wifiInit();
     configState();
-    controlDevice("device2","on");
+    //Serial.println("System is OK");
+    delay(200);
 }
 
 void loop() {
     checkUpdateFlag();
     if(updateFlag == 1){
       readJSONFromStatePage();
-      Serial.println("Start Send Set time");
+      //Serial.println("Start Send Set time");
       sendStateFromInternetToSystem();
       sendSetTimeFromInternetToSystem();
       clearUpdateFlag();
@@ -55,34 +56,33 @@ void loop() {
 }
 
 void wifiInit(void){
+    /*
     Serial.println("");
     Serial.print("Connecting to ");
     Serial.println(ssid);
+    */
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
-      Serial.print(".");
+      //Serial.print(".");
     }
+    /*
     Serial.println("");
     Serial.println("WiFi connected");  
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
     Serial.print("Ket noi toi web ");
     Serial.println(host);
+    */
 }
 
 void configState(void){
+    int i;
     stateFromInternetToSystem[0]  = 'S';
-    stateFromInternetToSystem[1]  = '0';
-    stateFromInternetToSystem[2]  = '0';
-    stateFromInternetToSystem[3]  = '0';
-    stateFromInternetToSystem[4]  = '0';
-    stateFromInternetToSystem[5]  = '0';
-    stateFromInternetToSystem[6]  = '0';
-    stateFromInternetToSystem[7]  = '0';
-    stateFromInternetToSystem[8]  = '0';
-    stateFromInternetToSystem[9]  = '0';
-    stateFromInternetToSystem[10] = 'E';
+    for(i=1;i<17;i++){
+      stateFromInternetToSystem[i]='0';
+    }
+    stateFromInternetToSystem[17] = 'E';
     strcpy(oldstateFromInternetToSystem,stateFromInternetToSystem);
     device1TimeOn[0]='0';
     device1TimeOn[1]='0';
@@ -104,7 +104,7 @@ void configState(void){
     setTimeFromInternetToSystem[7] = '0';
     setTimeFromInternetToSystem[8] = '0';
     setTimeFromInternetToSystem[9] = '0';
-    setTimeFromInternetToSystem[10] = 'E';
+    setTimeFromInternetToSystem[10]= 'E';
     
 }
 
@@ -112,7 +112,7 @@ void configState(void){
 void checkUpdateFlag (void)
 {
     if (!client.connect(host, httpPort)) { 
-    Serial.println("Khong ket noi duoc");
+    //Serial.println("Khong ket noi duoc");
     return;
     }
     client.print(String("GET /") + "checkChangedFlag" +" HTTP/1.1\r\n" +
@@ -122,7 +122,7 @@ void checkUpdateFlag (void)
     unsigned long timeout = millis();
     while (client.available() == 0) {
         if (millis() - timeout > 5000) {
-          Serial.println(">>> Client Timeout !");
+          //Serial.println(">>> Client Timeout !");
           client.stop();
           return;
         }
@@ -145,7 +145,7 @@ void checkUpdateFlag (void)
 void clearUpdateFlag(void){
     String clearUpdateFlag = "checkChangedFlag?device=NodeMCU";
     if (!client.connect(host, httpPort)) { 
-      Serial.println("Khong ket noi duoc");
+      //Serial.println("Khong ket noi duoc");
       return;
     }
     client.print(String("GET /") + clearUpdateFlag +" HTTP/1.1\r\n" +
@@ -159,7 +159,7 @@ void clearUpdateFlag(void){
 void readJSONFromStatePage (void)
 {
     if (!client.connect(host, httpPort)) { 
-        Serial.println("Khong ket noi duoc");
+        //Serial.println("Khong ket noi duoc");
         return;
     }
     client.print(String("GET /") + "state" +" HTTP/1.1\r\n" +
@@ -169,7 +169,7 @@ void readJSONFromStatePage (void)
     unsigned long timeout = millis();
     while (client.available() == 0) {
         if (millis() - timeout > 5000) {
-          Serial.println(">>> Client Timeout !");
+          //Serial.println(">>> Client Timeout !");
           client.stop();
           return;
         }
@@ -184,28 +184,28 @@ void readJSONFromStatePage (void)
         StaticJsonBuffer<200> jsonBuffer;
         JsonObject& json_parsed = jsonBuffer.parseObject(json);
         if (strcmp(json_parsed["device1"], "on") == 0) { 
-            Serial.println("Thiet bi 1 ON");
+            //Serial.println("Thiet bi 1 ON");
             stateFromInternetToSystem[2]  = '1';
         }
         if (strcmp(json_parsed["device1"], "off") == 0) { 
-            Serial.println("Thiet bi 1 OFF");
+            //Serial.println("Thiet bi 1 OFF");
             stateFromInternetToSystem[2]  = '0';
         }
         if (strcmp(json_parsed["device2"], "on") == 0) { 
-            Serial.println("Thiet bi 2 ON");
+            //Serial.println("Thiet bi 2 ON");
             stateFromInternetToSystem[3]  = '1';
         }
         if (strcmp(json_parsed["device2"], "off") == 0) { 
-            Serial.println("Thiet bi 2 OFF");
+            //Serial.println("Thiet bi 2 OFF");
             stateFromInternetToSystem[3]  = '0';   
         }
         if (strcmp(json_parsed["device3"], "on") == 0) { 
-            Serial.println("Thiet bi 2 ON");
+            //Serial.println("Thiet bi 2 ON");
             stateFromInternetToSystem[4]  = '1';
         }
-        if (strcmp(json_parsed["device3"], "on") == 0) { 
-            Serial.println("Thiet bi 2 ON");
-            stateFromInternetToSystem[4]  = '1';
+        if (strcmp(json_parsed["device3"], "off") == 0) { 
+            //Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[4]  = '0';
         }
         strcpy(tempDeviceTime, json_parsed["device1TimeOn"]);
         if (strcmp(device1TimeOn,tempDeviceTime) != 0){
@@ -241,14 +241,16 @@ void readJSONFromStatePage (void)
           strcpy(device3TimeOff, json_parsed["device3TimeOff"]);
           flagUpdateSetTime[3] = 1;
         }
+        /*
         Serial.println(device1TimeOn);
         Serial.println(device1TimeOff);
         Serial.println(device2TimeOn);
         Serial.println(device2TimeOff);
         Serial.println(device3TimeOn);
         Serial.println(device3TimeOff);
+        */
     }
-    Serial.println("closing connection");
+    //Serial.println("closing connection");
 }
 
 void sendStateFromInternetToSystem(void){
@@ -359,7 +361,7 @@ void controlDevice(String device, String state){
               "Host: " + host + "\r\n" +
               "Connection: close\r\n\r\n");             
     delay(500);
-    Serial.println("TURN ON"); 
+    //Serial.println("TURN ON"); 
     //delay(500);
 }
 
