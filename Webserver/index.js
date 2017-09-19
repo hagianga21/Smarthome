@@ -21,6 +21,10 @@ app.use(bodyParser.json());
 var date = new Date();
 var hour = date.getHours();
 var min  = date.getMinutes();
+var chartTime = [];
+var chartTime2 = [1.00,3.30,4.15,6.15,7.15,8.15];
+//var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
+var chartCount = 0;
 //https://stackoverflow.com/questions/7357734/how-do-i-get-the-time-of-day-in-javascript-node-js
 //Login variables
 var username = "giang";
@@ -41,6 +45,9 @@ deviceState.device2TimeOn = "00:00";
 deviceState.device2TimeOff = "00:00";
 deviceState.device3TimeOn = "00:00";
 deviceState.device3TimeOff = "00:00";
+
+
+
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
 // Fetch data
@@ -61,7 +68,7 @@ MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     assert.equal(null,err);
     console.log("Successfully connect MongoDB");
 
-    var projection = {"deviceID": 1, "time" :1, "P":1, "_id":0};
+    var projection = {"time" :1, "P":1, "_id":0}; //"deviceID": 1, 
 
     //db.collection('test1').insertOne({"deviceID": "D01", "time": hour + ":" + min, "V": 220, "P": 60, "I": 10})
     
@@ -69,14 +76,15 @@ MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     cursor.project(projection)
     cursor.forEach(
         function(doc) {
-            console.log(doc);
+            chartTime[chartCount] = doc.time;
+            chartCount++;
+            console.log(doc.time);
         },
         function(err) {
             assert.equal(err, null);
             return db.close();
         }
-    );
-    
+    );   
 });
 
 //Neu tat mongodb roi thi mo bang lenh : mongod --dbpath=/data/db
@@ -89,6 +97,7 @@ app.get('/', function (req, res) {
 */
 
 app.get('/', function (req, res) {
+    console.log(chartTime);
     res.redirect('/login');
 });
 
@@ -233,11 +242,10 @@ app.get('/camera', function (req, res) {
 
 app.get('/chart', function (req, res) {
     if(loginFlag === true){
-        res.render('chart');
+        res.render('chart',{chartTime: chartTime2});
     }
     else
         res.redirect('/');
 });
-
 
 app.listen(9000)
