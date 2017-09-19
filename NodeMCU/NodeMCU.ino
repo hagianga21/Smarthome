@@ -11,6 +11,7 @@ int receiveFromSystemFlag = 0;
 int count = 0;
 char stateFromInternetToSystem[18],oldstateFromInternetToSystem[18];
 char stateFromSystemToInternet[18],oldstateFromSystemToInternet[18];
+char devicesState[18];
 char setTimeFromInternetToSystem[11];
 char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
 
@@ -84,8 +85,7 @@ void configState(void){
       stateFromInternetToSystem[i]='0';
     }
     stateFromInternetToSystem[17] = 'E';
-    strcpy(oldstateFromInternetToSystem,stateFromInternetToSystem);
-    strcpy(oldstateFromSystemToInternet,stateFromInternetToSystem);
+    strcpy(devicesState,stateFromInternetToSystem);
     device1TimeOn[0]='0';
     device1TimeOn[1]='0';
     device1TimeOn[2]=':';
@@ -256,8 +256,8 @@ void readJSONFromStatePage (void)
 }
 
 void sendStateFromInternetToSystem(void){
-   if(strcmp(stateFromInternetToSystem,oldstateFromInternetToSystem) !=0){
-      strcpy(oldstateFromInternetToSystem,stateFromInternetToSystem);
+   if(strcmp(stateFromInternetToSystem,devicesState) !=0){
+      strcpy(devicesState,stateFromInternetToSystem);
       Serial.println(stateFromInternetToSystem);
       //delay(200);
    }
@@ -370,31 +370,30 @@ void controlDevice(String device, String state){
 
 void processDataFromSystem(void){
     if(stateFromSystemToInternet[1] == '0'){
-       if(stateFromSystemToInternet[2] == '1' && stateFromSystemToInternet[2] != oldstateFromSystemToInternet[2]){
-          oldstateFromSystemToInternet[2] = stateFromSystemToInternet[2];
+       if(stateFromSystemToInternet[2] == '1' && stateFromSystemToInternet[2] != devicesState[2]){
+          devicesState[2] = stateFromSystemToInternet[2];
           controlDevice("device1","on");
        }
-       if(stateFromSystemToInternet[2] == '0' && stateFromSystemToInternet[2] != oldstateFromSystemToInternet[2]){
-          oldstateFromSystemToInternet[2] = stateFromSystemToInternet[2];
+       if(stateFromSystemToInternet[2] == '0' && stateFromSystemToInternet[2] != devicesState[2]){
+          devicesState[2] = stateFromSystemToInternet[2];
           controlDevice("device1","off");
        }
-       if(stateFromSystemToInternet[3] == '1' && stateFromSystemToInternet[3] != oldstateFromSystemToInternet[3]){
-          oldstateFromSystemToInternet[3] = stateFromSystemToInternet[3];
+       if(stateFromSystemToInternet[3] == '1' && stateFromSystemToInternet[3] != devicesState[3]){
+          devicesState[3] = stateFromSystemToInternet[3];
           controlDevice("device2","on");
        }
-       if(stateFromSystemToInternet[3] == '0' && stateFromSystemToInternet[3] != oldstateFromSystemToInternet[3]){
-          oldstateFromSystemToInternet[3] = stateFromSystemToInternet[3];
+       if(stateFromSystemToInternet[3] == '0' && stateFromSystemToInternet[3] != devicesState[3]){
+          devicesState[3] = stateFromSystemToInternet[3];
           controlDevice("device2","off");
        }
-       if(stateFromSystemToInternet[4] == '1' && stateFromSystemToInternet[4] != oldstateFromSystemToInternet[4]){
-          oldstateFromSystemToInternet[4] = stateFromSystemToInternet[4];
+       if(stateFromSystemToInternet[4] == '1' && stateFromSystemToInternet[4] != devicesState[4]){
+          devicesState[4] = stateFromSystemToInternet[4];
           controlDevice("device3","on");
        }
-       if(stateFromSystemToInternet[4] == '0' && stateFromSystemToInternet[4] != oldstateFromSystemToInternet[4]){
+       if(stateFromSystemToInternet[4] == '0' && stateFromSystemToInternet[4] != devicesState[4]){
           controlDevice("device3","off");
-          oldstateFromSystemToInternet[4] = stateFromSystemToInternet[4];
+          devicesState[4] = stateFromSystemToInternet[4];
        }
-       strcpy(oldstateFromInternetToSystem,stateFromSystemToInternet);
     }  
 }
 
