@@ -346,7 +346,7 @@ void receiveDataFromSystem(void){
       stateFromSystemToInternet[count] = data;
       count = 0;
       receiveFromSystemFlag = 1;
-      Serial.println(stateFromSystemToInternet);
+      //Serial.println(stateFromSystemToInternet);
     }
 }
 

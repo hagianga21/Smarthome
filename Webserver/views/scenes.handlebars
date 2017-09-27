@@ -1,0 +1,132 @@
+<!-- /. NAV SIDE  -->
+<nav class="navbar-default navbar-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
+
+            <li>
+                <a href="home"><i class="fa fa-dashboard"></i> Dashboard</a>
+            </li>
+            <li>
+                <a href="control"><i class="fa fa-list-alt"></i> Control</a>
+            </li>
+            <li>
+                <a class="active-menu"><i class="fa fa-camera"></i> Scenes</a>
+            </li>
+            <li>
+                <a href="chart"><i class="fa fa-bar-chart-o"></i> Charts</a>
+            </li>
+            <li>
+                <a href="camera"><i class="fa fa-camera"></i> Camera</a>
+            </li>
+            
+            <li>
+                <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+            </li>
+            <li>
+                <a href="form.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- /. PAGE WRAPPER  --> 
+<div id="page-wrapper" >
+    <div id="page-inner">
+        <style>
+            div.box{
+                position: relative;
+                text-align: center;
+                width: 100px;
+                height: 60px;
+                margin: 20px auto 20px auto;
+            }
+            div.box .goodmorning {
+                display: block;
+                font-size: 26px;
+                width: 100px;
+                border: none;
+                background-color: white;
+                color: {{goodmorningColor}};
+            }
+            div.box .iAmHome {
+                display: block;
+                font-size: 26px;
+                width: 100px;
+                border: none;
+                background-color: white;
+                color: {{iAmHomeColor}};
+            }
+            div.box .movies {
+                display: block;
+                font-size: 26px;
+                width: 100px;
+                border: none;
+                background-color: white;
+                color: {{moviesColor}};
+            }
+            div.box .security {
+                display: block;
+                font-size: 26px;
+                width: 100px;
+                border: none;
+                background-color: white;
+                color: {{securityColor}};
+            }
+            
+        </style>
+
+        <div class="col-xs-6 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <form action = "/goodmorning", method = "post"> 
+                        <div class="box">
+                            <button type="submit" class="goodmorning">Good Morning</button>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>    
+        
+        <div class="col-xs-6 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <form action = "/iamhome", method = "post"> 
+                        <div class="box">
+                            <button type="submit" class="iAmHome">I'm Home</button>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <form action = "/movies", method = "post"> 
+                        <div class="box">
+                            <button type="submit" class="movies">Movies Night</button>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body easypiechart-panel">
+                    <form action = "/security", method = "post"> 
+                        <div class="box">
+                            <button type="submit" class="security">Security</button>
+                        </div>
+                    </form>
+                </div>    
+            </div>
+        </div>
+
+    </div>    
+</div>
+
+
+	

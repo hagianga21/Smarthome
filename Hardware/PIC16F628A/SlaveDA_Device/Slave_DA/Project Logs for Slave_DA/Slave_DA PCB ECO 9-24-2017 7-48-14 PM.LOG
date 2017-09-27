@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=VCC Pin=C32-1
+Removed Pin From Net: NetName=GND Pin=C32-2
+Removed Member From Class: ClassName=Slave_DA Member=C32
