@@ -5,17 +5,29 @@ import Dashboard from './Dashboard';
 import Control from './Control';
 import Scenes from './Scenes';
 
-
 export const SideMenu = DrawerNavigator({
-    Dashboard_Screen:{
+    Dashboard:{
         screen: Dashboard,
         navigationOptions:{
             drawerIcon: ({ tintColor }) => (
-                <MaterialIcons name="drafts" size={24} style={{ color: tintColor }} />
+                <MaterialIcons name="dashboard" size={24} style={{ color: tintColor }} />
             ),
         }
     },
-    Control_Screen:{
-        screen: Control
+    Control:{
+        screen: Control,
+        navigationOptions:{
+            drawerIcon: ({ tintColor }) => (
+                <MaterialIcons name="keyboard" size={24} style={{ color: tintColor }} />
+            ),
+        }
+    },
+    Scenes:{
+        screen: Scenes,
+        navigationOptions:{
+            drawerIcon: ({ tintColor }) => (
+                <MaterialIcons name="insert-photo" size={24} style={{ color: tintColor }} />
+            ),
+        }
     },
 })
