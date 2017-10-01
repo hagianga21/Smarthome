@@ -16,6 +16,8 @@ export default class Control extends Component {
       device1TimeOff: "00:00",
       device2State: "off",
       device2Switch: false,
+      device2TimeOn : "00:00",
+      device2TimeOff: "00:00",
     };
   }
 
@@ -24,7 +26,7 @@ export default class Control extends Component {
   }
 
   fetchData(){
-    var url = 'http://192.168.100.20:9000/' + 'state'
+    var url = 'http://192.168.100.20:9000/' + 'state' 
     fetch(url)
     .then((response) => response.json())
     .then((responseData) => {
@@ -48,13 +50,24 @@ export default class Control extends Component {
     })
   };
 
-  renderModalContent = () => (
+  sendSetTimetoServer(id,TimeOn,TimeOff){
+    //http://192.168.100.20:9000/submitTheTimeDevice1?setTimeOn=01%3A02&setTimeOff=14%3A03
+    //var url = 'http://192.168.100.20:9000/submitTheTimeDevice1?setTimeOn=05:06&setTimeOff=17:08'
+    var url = 'http://192.168.100.20:9000/submitTheTimeDevice' + id + '?setTimeOn=' + TimeOn + '&setTimeOff=' + TimeOff;
+    fetch(url)
+    .catch((error) => {
+      console.error(error);
+    })
+    .done();
+  };
+
+  renderModalContent = (a,b,c,d,e) => (
     <View style = {styles.modalView}>
       <Text style = {styles.textSetTime}>SET TIME FOR DEVICE</Text>
       <Text style = {styles.textSetTimeOnOff}>Set time when turn device on</Text>
       <DatePicker
         style={{width: 200}}
-        date={this.state.device1TimeOn}
+        date={b}
         mode="time"
         format="HH:mm"
         confirmBtnText="Confirm"
@@ -64,12 +77,12 @@ export default class Control extends Component {
             marginLeft: 36
           }
         }}
-        onDateChange={(date) => {this.setState({device1TimeOn: date})}}
+        onDateChange={c}
       />
       <Text style = {styles.textSetTimeOnOff}>Set time when turn device off</Text>
       <DatePicker
         style={{width: 200}}
-        date={this.state.device1TimeOff}
+        date={d}
         mode="time"
         format="HH:mm"
         confirmBtnText="Confirm"
@@ -79,11 +92,12 @@ export default class Control extends Component {
             marginLeft: 36
           }
         }}
-        onDateChange={(date) => {this.setState({time: device1TimeOff})}}
+        onDateChange={e}
       />
       <View style = {{flexDirection: 'row', marginTop:20}}>
         <TouchableHighlight onPress={() => {
           this.setModalVisible(null)
+          this.sendSetTimetoServer(a,b,d);
         }}>
           <Text style = {styles.textSubmit}>Submit</Text>
         </TouchableHighlight>
@@ -180,10 +194,21 @@ export default class Control extends Component {
           </View>
         </View>      
 
-        <Modal isVisible={this.state.modalVisible !== null}>
-          {this.renderModalContent()}
+        <Modal isVisible={this.state.modalVisible === 1}>
+          {this.renderModalContent('1',this.state.device1TimeOn,
+                                  (date) => {this.setState({device1TimeOn: date})},
+                                  this.state.device1TimeOff,
+                                  (date) => {this.setState({device1TimeOff:date})}
+                                  )}
         </Modal>
         
+        <Modal isVisible={this.state.modalVisible === 2}>
+          {this.renderModalContent('2',this.state.device2TimeOn,
+                                  (date) => {this.setState({device2TimeOn: date})},
+                                  this.state.device2TimeOff,
+                                  (date) => {this.setState({device2TimeOff:date})}
+                                  )}
+        </Modal>
       </View>
     );
   }
