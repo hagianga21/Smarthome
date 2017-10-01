@@ -5,7 +5,7 @@ import { Header, Icon } from 'react-native-elements';
 export default class Dashboard extends Component {
     render() {
     return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, backgroundColor: "aliceblue"}}>
           <View>
             <Header
                 backgroundColor = "darkgreen"//"#273779"
@@ -63,7 +63,7 @@ export default class Dashboard extends Component {
 const styles = StyleSheet.create({
   box:{
     alignItems:'center',
-    backgroundColor: 'cornsilk', 
+    backgroundColor: 'white', 
     width: 150, 
     height: 150,
     margin: 10
