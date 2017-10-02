@@ -18,6 +18,10 @@ export default class Control extends Component {
       device2Switch: false,
       device2TimeOn : "00:00",
       device2TimeOff: "00:00",
+      device3State: "off",
+      device3Switch: false,
+      device3TimeOn : "00:00",
+      device3TimeOff: "00:00",
     };
   }
 
@@ -31,6 +35,8 @@ export default class Control extends Component {
     .then((response) => response.json())
     .then((responseData) => {
         this.setState({device1State:responseData.device1})
+        this.setState({device2State:responseData.device2})
+        this.setState({device3State:responseData.device3})
         this.updateDataFromSystem();    
     })
     .catch((error) => {
@@ -118,7 +124,20 @@ export default class Control extends Component {
     if(this.state.device1State === "off"){
       this.setState({device1Switch: false})
     }
-    console.log(this.state.device1State);
+
+    if(this.state.device2State === "on"){
+      this.setState({device2Switch: true})
+    }
+    if(this.state.device2State === "off"){
+      this.setState({device2Switch: false})
+    }
+    
+    if(this.state.device3State === "on"){
+      this.setState({device3Switch: true})
+    }
+    if(this.state.device3State === "off"){
+      this.setState({device3Switch: false})
+    }
   };
 
   componentDidMount(){
@@ -142,8 +161,8 @@ export default class Control extends Component {
               centerComponent={{ text: 'Control', style: { color: 'white',fontSize:23, left:-7 } }} 
               rightComponent={
                   <Icon
-                      onPress ={()=>{this.props.navigation.navigate('DrawerOpen') }}
-                      name = "home"
+                      onPress ={()=>{this.fetchData()}}
+                      name = "sync"
                       color = "white"
                       size = {35}
                       underlayColor = "#273779"
@@ -193,6 +212,26 @@ export default class Control extends Component {
             />
           </View>
         </View>      
+            
+        <View style={{alignItems:'center',marginTop:15}}>
+          <View style={styles.Box}>
+            <Text style ={styles.labelOfDevice}>Device 3</Text>
+            <Switch
+              onValueChange={(value) => {this.setState({device3Switch: value});this.controlDevice('device3')}}
+              value={this.state.device3Switch}
+              style = {{marginLeft: 110}}
+            />
+            <Text style = {styles.textOnOff}>{this.state.device3Switch ? 'ON' : 'OFF'}</Text>
+            <Icon
+              onPress ={()=>{this.setModalVisible(3)}}
+              name = "alarm"
+              color = "black"
+              size = {35}
+              underlayColor = "#273779"
+              style = {{marginLeft: 15}}
+            />
+          </View>
+        </View>
 
         <Modal isVisible={this.state.modalVisible === 1}>
           {this.renderModalContent('1',this.state.device1TimeOn,
@@ -207,6 +246,14 @@ export default class Control extends Component {
                                   (date) => {this.setState({device2TimeOn: date})},
                                   this.state.device2TimeOff,
                                   (date) => {this.setState({device2TimeOff:date})}
+                                  )}
+        </Modal>
+
+        <Modal isVisible={this.state.modalVisible === 3}>
+          {this.renderModalContent('3',this.state.device3TimeOn,
+                                  (date) => {this.setState({device3TimeOn: date})},
+                                  this.state.device3TimeOff,
+                                  (date) => {this.setState({device3TimeOff:date})}
                                   )}
         </Modal>
       </View>
