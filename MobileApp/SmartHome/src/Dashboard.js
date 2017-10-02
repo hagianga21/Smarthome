@@ -59,7 +59,6 @@ export default class Dashboard extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   box:{
     alignItems:'center',

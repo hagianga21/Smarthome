@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight} from 'react-native';
 import { Header, Icon } from 'react-native-elements';
+import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-datepicker';
 
-export default class Control extends Component {
+class Control extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -30,7 +31,7 @@ export default class Control extends Component {
   }
 
   fetchData(){
-    var url = 'http://192.168.100.20:9000/' + 'state' 
+    var url = 'http://'+ this.props.webserverURL + '/state'; 
     fetch(url)
     .then((response) => response.json())
     .then((responseData) => {
@@ -46,7 +47,7 @@ export default class Control extends Component {
   }
 
   controlDevice(device){
-    var url = 'http://192.168.100.20:9000/'+ device;
+    var url = 'http://'+ this.props.webserverURL +'/'+ device;
     fetch(url,{
       method: 'POST',
       headers: {
@@ -59,7 +60,7 @@ export default class Control extends Component {
   sendSetTimetoServer(id,TimeOn,TimeOff){
     //http://192.168.100.20:9000/submitTheTimeDevice1?setTimeOn=01%3A02&setTimeOff=14%3A03
     //var url = 'http://192.168.100.20:9000/submitTheTimeDevice1?setTimeOn=05:06&setTimeOff=17:08'
-    var url = 'http://192.168.100.20:9000/submitTheTimeDevice' + id + '?setTimeOn=' + TimeOn + '&setTimeOff=' + TimeOff;
+    var url = 'http://'+ this.props.webserverURL + '/submitTheTimeDevice' + id + '?setTimeOn=' + TimeOn + '&setTimeOff=' + TimeOff;
     fetch(url)
     .catch((error) => {
       console.error(error);
@@ -131,7 +132,7 @@ export default class Control extends Component {
     if(this.state.device2State === "off"){
       this.setState({device2Switch: false})
     }
-    
+
     if(this.state.device3State === "on"){
       this.setState({device3Switch: true})
     }
@@ -170,7 +171,7 @@ export default class Control extends Component {
               }
               
           />
-        </View > 
+        </View> 
         <View style = {{marginTop:85}}></View>
         
         <View style={{alignItems:'center'}}>
@@ -260,6 +261,12 @@ export default class Control extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state){
+  return {webserverURL: state.serverURL}
+}
+export default connect(mapStateToProps)(Control);
 
 const styles = StyleSheet.create({
   Box:{
