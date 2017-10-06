@@ -14,18 +14,45 @@ export default class AI extends Component {
     super(props);
 
     this.state = {
-        result: {"result": {"resolvedQuery":"ABC","fulfillment":{"speech":"DEF"}}},
+        result: "",
         listeningState: "not started",
         audioLevel: 0,
-        ask:{},
-        answer:"",
     };
 
     console.log(ApiAi);
 
     ApiAi.setConfiguration(
         "27729321705749a0b6c8e92cb4812a97", ApiAi.LANG_ENGLISH_US
-    ); 
+    );
+
+
+
+    const contexts = [{
+        "name": "deals",
+        "lifespan": 1,
+        "parameters": {
+            "name": "Sam"
+        }
+    }];
+
+    ApiAi.setContexts(contexts);
+
+
+    const entities = [{
+        "name":"shop",
+        "extend":true,
+        "entries":[
+            {
+                "value":"Media Markt",
+                "synonyms":[
+                    "Media Markt",
+                ]
+            }
+        ]
+    }];
+
+
+    ApiAi.setEntities(entities);
   }
   render() {
     return (
@@ -34,9 +61,7 @@ export default class AI extends Component {
             <View style={{flex: 4}}>
                 <Text>{"Listening State: " + this.state.listeningState}</Text>
                 <Text>{"Audio Level: " + this.state.audioLevel}</Text>
-                <Text>{"Ask: " + this.state.result.result.resolvedQuery}</Text>
-                <Text>{"json: " + this.state.ask}</Text>
-                <Text>{"Result: " + this.state.result.result.fulfillment.speech}</Text>
+                <Text>{"Result: " + this.state.result}</Text>
             </View>
             <View style={{flex: 1, padding: 10}}>
                 <Button title="Start Listening" onPress={() => {
@@ -59,11 +84,8 @@ export default class AI extends Component {
                     });
 
                     ApiAi.startListening(result => {
-                        console.log(result);
-                        
-                        this.setState({result: JSON.parse(result)});
-                        this.setState({ask: result});
-                        this.setState({answer: result.aiResponse});
+            console.log(result);
+                        this.setState({result: result});
                     }, error => {
                         this.setState({result: error});
                     });
