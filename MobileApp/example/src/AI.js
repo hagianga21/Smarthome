@@ -14,7 +14,7 @@ export default class AI extends Component {
     super(props);
 
     this.state = {
-        result: {"result": {"resolvedQuery":"ABC","fulfillment":{"speech":"DEF"}}},
+        result: {"result": {"resolvedQuery":"ABC","action":"ABC","fulfillment":{"speech":"DEF"}}},
         listeningState: "not started",
         audioLevel: 0,
         ask:{},
@@ -35,8 +35,8 @@ export default class AI extends Component {
                 <Text>{"Listening State: " + this.state.listeningState}</Text>
                 <Text>{"Audio Level: " + this.state.audioLevel}</Text>
                 <Text>{"Ask: " + this.state.result.result.resolvedQuery}</Text>
-                <Text>{"json: " + this.state.ask}</Text>
                 <Text>{"Result: " + this.state.result.result.fulfillment.speech}</Text>
+                <Text>{"Action: " + this.state.result.result.action}</Text>
             </View>
             <View style={{flex: 1, padding: 10}}>
                 <Button title="Start Listening" onPress={() => {
