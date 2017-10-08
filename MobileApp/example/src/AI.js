@@ -8,25 +8,30 @@ import {
 } from 'react-native';
 
 import ApiAi from "react-native-api-ai"
+import Tts from 'react-native-tts';
 
 export default class AI extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        result: {"result": {"resolvedQuery":"ABC","action":"ABC","fulfillment":{"speech":"DEF"}}},
-        listeningState: "not started",
-        audioLevel: 0,
-        ask:{},
-        answer:"",
+        this.state = {
+            result: {"result": {"resolvedQuery":"ABC","action":"ABC","fulfillment":{"speech":"DEF"}}},
+            listeningState: "not started",
+            audioLevel: 0,
+            ask:{},
+            answer:"",
+        };
+
+        console.log(ApiAi);
+
+        ApiAi.setConfiguration(
+            "27729321705749a0b6c8e92cb4812a97", ApiAi.LANG_ENGLISH_US
+        ); 
+    }
+    Speak(){
+        Tts.speak(this.state.result.result.fulfillment.speech);
     };
 
-    console.log(ApiAi);
-
-    ApiAi.setConfiguration(
-        "27729321705749a0b6c8e92cb4812a97", ApiAi.LANG_ENGLISH_US
-    ); 
-  }
   render() {
     return (
         <View style={styles.container}>
@@ -40,8 +45,6 @@ export default class AI extends Component {
             </View>
             <View style={{flex: 1, padding: 10}}>
                 <Button title="Start Listening" onPress={() => {
-
-
                     ApiAi.onListeningStarted(() => {
                         this.setState({listeningState: "started"});
                     });
@@ -59,15 +62,16 @@ export default class AI extends Component {
                     });
 
                     ApiAi.startListening(result => {
-                        console.log(result);
-                        
+                        console.log(result);                        
                         this.setState({result: JSON.parse(result)});
                         this.setState({ask: result});
                         this.setState({answer: result.aiResponse});
+                        this.Speak();
                     }, error => {
                         this.setState({result: error});
                     });
 
+                    
                 }}/>
             </View>
         </View>
