@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Dashboard from './Dashboard';
 import Control from './Control';
 import Scenes from './Scenes';
+import AI from './AI';
 import Setting from './Setting';
 
 export const SideMenu = DrawerNavigator({
@@ -28,6 +29,14 @@ export const SideMenu = DrawerNavigator({
         navigationOptions:{
             drawerIcon: ({ tintColor }) => (
                 <MaterialIcons name="insert-photo" size={24} style={{ color: tintColor }} />
+            ),
+        }
+    },
+    AI:{
+        screen: AI,
+        navigationOptions:{
+            drawerIcon: ({ tintColor }) => (
+                <MaterialIcons name="face" size={24} style={{ color: tintColor }} />
             ),
         }
     },

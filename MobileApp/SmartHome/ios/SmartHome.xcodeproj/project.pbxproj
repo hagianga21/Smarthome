@@ -48,6 +48,7 @@
 		B76E8020782C4EF286761508 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E3FF2B4B7A24F62BB73D4F9 /* Octicons.ttf */; };
 		209C3BDDA83140F28EE40340 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EFBBED8890043219A7274E7 /* SimpleLineIcons.ttf */; };
 		C176C8AE11984ED7AA08C989 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9CE7F84CC3942F3946D4B95 /* Zocial.ttf */; };
+		9C27B7680A7B40E6B02F3591 /* libRNSpeechToTextIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8D5C82D5B72496BA0349BB3 /* libRNSpeechToTextIos.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -288,6 +289,8 @@
 		4E3FF2B4B7A24F62BB73D4F9 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		8EFBBED8890043219A7274E7 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C9CE7F84CC3942F3946D4B95 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A1B8CE0856EC44A4AF3B56E4 /* ApiAi.xcodeproj */ = {isa = PBXFileReference; name = "ApiAi.xcodeproj"; path = "../node_modules/react-native-api-ai/ios/ApiAi.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		A8D5C82D5B72496BA0349BB3 /* libRNSpeechToTextIos.a */ = {isa = PBXFileReference; name = "libRNSpeechToTextIos.a"; path = "libRNSpeechToTextIos.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +320,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				5D04ECBC53C94F04BAC599C0 /* libRNVectorIcons.a in Frameworks */,
+				9C27B7680A7B40E6B02F3591 /* libRNSpeechToTextIos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +490,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				54967ED3B4CF496EB1B40B19 /* RNVectorIcons.xcodeproj */,
+				A1B8CE0856EC44A4AF3B56E4 /* ApiAi.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1065,10 +1070,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Debug;
@@ -1090,10 +1097,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Release;
@@ -1116,6 +1125,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Debug;
@@ -1137,6 +1147,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Release;
@@ -1167,10 +1178,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Debug;
@@ -1201,10 +1214,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-api-ai\ios\ApiAi",
 				);
 			};
 			name = Release;
@@ -1230,6 +1245,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1254,6 +1270,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
