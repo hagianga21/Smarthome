@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight, Image} from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 import {connect} from 'react-redux';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-datepicker';
+import ApiAi from "react-native-api-ai"
+import Tts from 'react-native-tts';
 
 class Control extends Component {
   constructor(props){
     super(props);
     this.state = {
+      result: {"result": {"resolvedQuery":"ABC","action":"ABC","parameters":{"number":"0"},"fulfillment":{"speech":"DEF"}}},
+      listeningState: "not started",
+      audioLevel: 0,
       isLoading: true,
       modalVisible: null,
       device1State: "off",
@@ -24,7 +29,15 @@ class Control extends Component {
       device3TimeOn : "00:00",
       device3TimeOff: "00:00",
     };
+
+    ApiAi.setConfiguration(
+      "27729321705749a0b6c8e92cb4812a97", ApiAi.LANG_ENGLISH_US
+    ); 
   }
+
+  Speak(){
+    Tts.speak(this.state.result.result.fulfillment.speech);
+  };
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
@@ -118,6 +131,38 @@ class Control extends Component {
     </View>
   );
 
+  HandlerVoice(){
+    if(this.state.result.result.action === "turnOnDevice"){
+      if(this.state.result.result.parameters.number === "1" && this.state.device1Switch === false){
+        this.setState({device1Switch: true});
+        this.controlDevice('device1');
+      }
+      if(this.state.result.result.parameters.number === "2" && this.state.device2Switch === false){
+        this.setState({device2Switch: true});
+        this.controlDevice('device2');
+      }
+      if(this.state.result.result.parameters.number === "3" && this.state.device3Switch === false){
+        this.setState({device3Switch: true});
+        this.controlDevice('device3');
+      }
+    }
+
+    if(this.state.result.result.action === "turnOffDevice"){
+      if(this.state.result.result.parameters.number === "1" && this.state.device1Switch === true){
+        this.setState({device1Switch: false});
+        this.controlDevice('device1');
+      }
+      if(this.state.result.result.parameters.number === "2" && this.state.device2Switch === true){
+        this.setState({device2Switch: false});
+        this.controlDevice('device2');
+      }
+      if(this.state.result.result.parameters.number === "3" && this.state.device3Switch === true){
+        this.setState({device3Switch: false});
+        this.controlDevice('device3');
+      }
+    }
+
+  };
   updateDataFromSystem(){
     if(this.state.device1State === "on"){
       this.setState({device1Switch: true})
@@ -140,6 +185,7 @@ class Control extends Component {
       this.setState({device3Switch: false})
     }
   };
+
 
   componentDidMount(){
     this.fetchData();
@@ -233,6 +279,46 @@ class Control extends Component {
             />
           </View>
         </View>
+        
+        <Text>{"Listening State: " + this.state.listeningState}</Text>
+        <Text>{"Audio Level: " + this.state.audioLevel}</Text>
+        <Text>{"Ask: " + this.state.result.result.resolvedQuery}</Text>
+        <Text>{"Result: " + this.state.result.result.fulfillment.speech}</Text>
+        <Text>{"Action: " + this.state.result.result.action + this.state.result.result.parameters.number }</Text>
+
+        <View style = {{marginLeft:300, marginTop:200}}>
+          <TouchableOpacity onPress={() => {
+                    ApiAi.onListeningStarted(() => {
+                        this.setState({listeningState: "started"});
+                    });
+
+                    ApiAi.onListeningCanceled(() => {
+                        this.setState({listeningState: "canceled"});
+                    });
+
+                    ApiAi.onListeningFinished(() => {
+                        this.setState({listeningState: "finished"});
+                    });
+
+                    ApiAi.onAudioLevel(level => {
+                        this.setState({audioLevel: level});
+                    });
+
+                    ApiAi.startListening(result => {
+                        console.log(result);                        
+                        this.setState({result: JSON.parse(result)});
+                        this.Speak();
+                        this.HandlerVoice();
+                    }, error => {
+                        this.setState({result: error});
+                    });
+                }}>
+            <Image
+              style={styles.voiceButton}
+              source={require('./pic/voiceButton.png')}
+            />          
+          </TouchableOpacity>
+        </View>
 
         <Modal isVisible={this.state.modalVisible === 1}>
           {this.renderModalContent('1',this.state.device1TimeOn,
@@ -303,5 +389,9 @@ const styles = StyleSheet.create({
   textBack:{
     fontSize: 25,
     color: "blue"
+  },
+  voiceButton:{
+    width: 40,
+    height: 40
   }
 })

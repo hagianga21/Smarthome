@@ -39,6 +39,7 @@ export default class AI extends Component {
             <View style={{flex: 4}}>
                 <Text>{"Listening State: " + this.state.listeningState}</Text>
                 <Text>{"Audio Level: " + this.state.audioLevel}</Text>
+                <Text>{"Result1: " + this.state.result}</Text>
                 <Text>{"Ask: " + this.state.result.result.resolvedQuery}</Text>
                 <Text>{"Result: " + this.state.result.result.fulfillment.speech}</Text>
                 <Text>{"Action: " + this.state.result.result.action}</Text>
