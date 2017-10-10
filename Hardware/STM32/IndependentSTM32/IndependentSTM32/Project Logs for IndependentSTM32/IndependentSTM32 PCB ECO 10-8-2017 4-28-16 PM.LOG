@@ -1,0 +1,24 @@
+Added Component: Designator=P23(RJ11)
+Added Component: Designator=P24(RJ11)
+Added Component: Designator=P25(RJ11)
+Added Pin To Net: NetName=A Pin=P23-1
+Added Pin To Net: NetName=B Pin=P23-2
+Added Pin To Net: NetName=GND Pin=P23-3
+Added Pin To Net: NetName=12V Pin=P23-4
+Added Pin To Net: NetName=12V Pin=P23-5
+Added Pin To Net: NetName=GND Pin=P23-6
+Added Pin To Net: NetName=A Pin=P24-1
+Added Pin To Net: NetName=B Pin=P24-2
+Added Pin To Net: NetName=GND Pin=P24-3
+Added Pin To Net: NetName=12V Pin=P24-4
+Added Pin To Net: NetName=12V Pin=P24-5
+Added Pin To Net: NetName=GND Pin=P24-6
+Added Pin To Net: NetName=A Pin=P25-1
+Added Pin To Net: NetName=B Pin=P25-2
+Added Pin To Net: NetName=GND Pin=P25-3
+Added Pin To Net: NetName=12V Pin=P25-4
+Added Pin To Net: NetName=12V Pin=P25-5
+Added Pin To Net: NetName=GND Pin=P25-6
+Added Member To Class: ClassName=IndependentSTM32 Member=Component P23 Header 8
+Added Member To Class: ClassName=IndependentSTM32 Member=Component P24 Header 8
+Added Member To Class: ClassName=IndependentSTM32 Member=Component P25 Header 8
