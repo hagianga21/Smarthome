@@ -6,6 +6,7 @@ import Control from './Control';
 import Scenes from './Scenes';
 import AI from './AI';
 import Setting from './Setting';
+import Test from './Test';
 
 export const SideMenu = DrawerNavigator({
     Dashboard:{
@@ -42,6 +43,14 @@ export const SideMenu = DrawerNavigator({
     },
     Setting:{
         screen: Setting,
+        navigationOptions:{
+            drawerIcon: ({ tintColor }) => (
+                <MaterialIcons name="settings" size={24} style={{ color: tintColor }} />
+            ),
+        }
+    },
+    Test:{
+        screen: Test,
         navigationOptions:{
             drawerIcon: ({ tintColor }) => (
                 <MaterialIcons name="settings" size={24} style={{ color: tintColor }} />

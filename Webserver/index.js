@@ -49,7 +49,7 @@ deviceState.device3TimeOff = "00:00";
 var scenes = {};
 scenes.iAmHome = "off";
 scenes.goodmorning = "off";
-scenes.movies = "off";
+scenes.goodnight = "off";
 scenes.security = "off";
 //var mongourl = 'mongodb://localhost:27017//video';
 /*
@@ -236,12 +236,16 @@ app.get('/process_get', function (req, res) {
 
 
 //SCENES
+app.get('/scenesjson', function (req, res) {
+    res.end(JSON.stringify(scenes));
+});
+
 app.get('/scenes', function (req, res) {
     if(loginFlag === true){
         res.render('scenes', {
             goodmorningColor: (scenes.goodmorning === "on") ? "green" : "black",
             iAmHomeColor: (scenes.iAmHome === "on") ? "green" : "black",
-            moviesColor: (scenes.movies === "on") ? "green" : "black",
+            goodnightColor: (scenes.goodnight === "on") ? "green" : "black",
             securityColor: (scenes.security === "on") ? "green" : "black",
         })
     }
@@ -252,19 +256,19 @@ app.get('/scenes', function (req, res) {
 app.post('/goodmorning', function (req, res) {
     scenes.goodmorning = (scenes.goodmorning === "on") ? "off" : "on";
     scenes.iAmHome = "off";
-    scenes.movies = "off";
+    scenes.goodnight = "off";
     scenes.security = "off";
     res.redirect('/scenes');
 });
 app.post('/iamhome', function (req, res) {
     scenes.iAmHome = (scenes.iAmHome === "on") ? "off" : "on";
     scenes.goodmorning = "off";
-    scenes.movies = "off";
+    scenes.goodnight = "off";
     scenes.security = "off";
     res.redirect('/scenes');
 });
-app.post('/movies', function (req, res) {
-    scenes.movies = (scenes.movies === "on") ? "off" : "on";
+app.post('/goodnight', function (req, res) {
+    scenes.goodnight = (scenes.goodnight === "on") ? "off" : "on";
     scenes.goodmorning = "off";
     scenes.iAmHome = "off";
     scenes.security = "off";
@@ -274,7 +278,7 @@ app.post('/security', function (req, res) {
     scenes.security = (scenes.security === "on") ? "off" : "on";
     scenes.goodmorning = "off";
     scenes.iAmHome = "off";
-    scenes.movies = "off";
+    scenes.goodnight = "off";
     res.redirect('/scenes');
 });
 
