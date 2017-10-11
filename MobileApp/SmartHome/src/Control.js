@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight, Image} from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 import {connect} from 'react-redux';
+import {changeState, changeTimeOn, changeTimeOff} from './Action';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-datepicker';
 import ApiAi from "react-native-api-ai"
@@ -16,18 +17,6 @@ class Control extends Component {
       audioLevel: 0,
       isLoading: true,
       modalVisible: null,
-      device1State: "off",
-      device1Switch: false,
-      device1TimeOn : "00:00",
-      device1TimeOff: "00:00",
-      device2State: "off",
-      device2Switch: false,
-      device2TimeOn : "00:00",
-      device2TimeOff: "00:00",
-      device3State: "off",
-      device3Switch: false,
-      device3TimeOn : "00:00",
-      device3TimeOff: "00:00",
     };
 
     ApiAi.setConfiguration(
@@ -48,10 +37,9 @@ class Control extends Component {
     fetch(url)
     .then((response) => response.json())
     .then((responseData) => {
-        this.setState({device1State:responseData.device1})
-        this.setState({device2State:responseData.device2})
-        this.setState({device3State:responseData.device3})
-        this.updateDataFromSystem();    
+        this.props.dispatch(changeState("device1",responseData.device1));
+        this.props.dispatch(changeState("device2",responseData.device2));
+        this.props.dispatch(changeState("device3",responseData.device3));
     })
     .catch((error) => {
         console.error(error);
@@ -133,60 +121,36 @@ class Control extends Component {
 
   HandlerVoice(){
     if(this.state.result.result.action === "turnOnDevice"){
-      if(this.state.result.result.parameters.number === "1" && this.state.device1Switch === false){
-        this.setState({device1Switch: true});
+      if(this.state.result.result.parameters.number === "1" && this.props.device[1].switch === false){
+        this.props.dispatch(changeState("device1","on"));
         this.controlDevice('device1');
       }
-      if(this.state.result.result.parameters.number === "2" && this.state.device2Switch === false){
-        this.setState({device2Switch: true});
+      if(this.state.result.result.parameters.number === "2" && this.props.device[2].switch === false){
+        this.props.dispatch(changeState("device2","on"));
         this.controlDevice('device2');
       }
-      if(this.state.result.result.parameters.number === "3" && this.state.device3Switch === false){
-        this.setState({device3Switch: true});
+      if(this.state.result.result.parameters.number === "3" && this.props.device[3].switch === false){
+        this.props.dispatch(changeState("device3","on"));
         this.controlDevice('device3');
       }
     }
 
     if(this.state.result.result.action === "turnOffDevice"){
-      if(this.state.result.result.parameters.number === "1" && this.state.device1Switch === true){
-        this.setState({device1Switch: false});
+      if(this.state.result.result.parameters.number === "1" && this.props.device[1].switch === true){
+        this.props.dispatch(changeState("device1","off"));
         this.controlDevice('device1');
       }
-      if(this.state.result.result.parameters.number === "2" && this.state.device2Switch === true){
-        this.setState({device2Switch: false});
+      if(this.state.result.result.parameters.number === "2" && this.props.device[2].switch === true){
+        this.props.dispatch(changeState("device1","off"));
         this.controlDevice('device2');
       }
-      if(this.state.result.result.parameters.number === "3" && this.state.device3Switch === true){
-        this.setState({device3Switch: false});
+      if(this.state.result.result.parameters.number === "3" && this.props.device[3].switch === true){
+        this.props.dispatch(changeState("device1","off"));
         this.controlDevice('device3');
       }
     }
 
   };
-  updateDataFromSystem(){
-    if(this.state.device1State === "on"){
-      this.setState({device1Switch: true})
-    }
-    if(this.state.device1State === "off"){
-      this.setState({device1Switch: false})
-    }
-
-    if(this.state.device2State === "on"){
-      this.setState({device2Switch: true})
-    }
-    if(this.state.device2State === "off"){
-      this.setState({device2Switch: false})
-    }
-
-    if(this.state.device3State === "on"){
-      this.setState({device3Switch: true})
-    }
-    if(this.state.device3State === "off"){
-      this.setState({device3Switch: false})
-    }
-  };
-
-
   componentDidMount(){
     this.fetchData();
   }
@@ -218,17 +182,24 @@ class Control extends Component {
               
           />
         </View> 
+
         <View style = {{marginTop:85}}></View>
         
         <View style={{alignItems:'center'}}>
           <View style={styles.Box}>
             <Text style ={styles.labelOfDevice}>Device 1</Text>
             <Switch
-              onValueChange={(value) => {this.setState({device1Switch: value});this.controlDevice('device1')}}
-              value={this.state.device1Switch}
+              onValueChange={() => {
+                if(this.props.device[1].state === "on")
+                  this.props.dispatch(changeState("device1","off"));
+                else 
+                  this.props.dispatch(changeState("device1","on"));
+                this.controlDevice('device1');
+              }}
+              value={this.props.device[1].switch}
               style = {{marginLeft: 110}}
             />
-            <Text style = {styles.textOnOff}>{this.state.device1Switch ? 'ON' : 'OFF'}</Text>
+            <Text style = {styles.textOnOff}>{this.props.device[1].switch ? 'ON' : 'OFF'}</Text>
             <Icon
               onPress ={()=>{this.setModalVisible(1)}}
               name = "alarm"
@@ -244,11 +215,17 @@ class Control extends Component {
           <View style={styles.Box}>
             <Text style ={styles.labelOfDevice}>Device 2</Text>
             <Switch
-              onValueChange={(value) => {this.setState({device2Switch: value});this.controlDevice('device2')}}
-              value={this.state.device2Switch}
+              onValueChange={() => {
+                if(this.props.device[2].state === "on")
+                  this.props.dispatch(changeState("device2","off"));
+                else 
+                  this.props.dispatch(changeState("device2","on"));
+                this.controlDevice('device2');
+              }}
+              value={this.props.device[2].switch}
               style = {{marginLeft: 110}}
             />
-            <Text style = {styles.textOnOff}>{this.state.device2Switch ? 'ON' : 'OFF'}</Text>
+            <Text style = {styles.textOnOff}>{this.props.device[2].switch ? 'ON' : 'OFF'}</Text>
             <Icon
               onPress ={()=>{this.setModalVisible(2)}}
               name = "alarm"
@@ -264,11 +241,17 @@ class Control extends Component {
           <View style={styles.Box}>
             <Text style ={styles.labelOfDevice}>Device 3</Text>
             <Switch
-              onValueChange={(value) => {this.setState({device3Switch: value});this.controlDevice('device3')}}
-              value={this.state.device3Switch}
+              onValueChange={() => {
+                if(this.props.device[3].state === "on")
+                  this.props.dispatch(changeState("device3","off"));
+                else 
+                  this.props.dispatch(changeState("device3","on"));
+                this.controlDevice('device3');
+              }}
+              value={this.props.device[3].switch}
               style = {{marginLeft: 110}}
             />
-            <Text style = {styles.textOnOff}>{this.state.device3Switch ? 'ON' : 'OFF'}</Text>
+            <Text style = {styles.textOnOff}>{this.props.device[3].switch ? 'ON' : 'OFF'}</Text>
             <Icon
               onPress ={()=>{this.setModalVisible(3)}}
               name = "alarm"
@@ -321,26 +304,26 @@ class Control extends Component {
         </View>
 
         <Modal isVisible={this.state.modalVisible === 1}>
-          {this.renderModalContent('1',this.state.device1TimeOn,
-                                  (date) => {this.setState({device1TimeOn: date})},
-                                  this.state.device1TimeOff,
-                                  (date) => {this.setState({device1TimeOff:date})}
+          {this.renderModalContent('1',this.props.device[1].timeOn,
+                                  (date) => {this.props.dispatch(changeTimeOn("device1",date))},
+                                  this.props.device[1].timeOff,
+                                  (date) => {this.props.dispatch(changeTimeOff("device1",date))}
                                   )}
         </Modal>
         
         <Modal isVisible={this.state.modalVisible === 2}>
-          {this.renderModalContent('2',this.state.device2TimeOn,
-                                  (date) => {this.setState({device2TimeOn: date})},
-                                  this.state.device2TimeOff,
-                                  (date) => {this.setState({device2TimeOff:date})}
+          {this.renderModalContent('2',this.props.device[2].timeOn,
+                                  (date) => {this.props.dispatch(changeTimeOn("device2",date))},
+                                  this.props.device[2].timeOff,
+                                  (date) => {this.props.dispatch(changeTimeOff("device2",date))}
                                   )}
         </Modal>
 
         <Modal isVisible={this.state.modalVisible === 3}>
-          {this.renderModalContent('3',this.state.device3TimeOn,
-                                  (date) => {this.setState({device3TimeOn: date})},
-                                  this.state.device3TimeOff,
-                                  (date) => {this.setState({device3TimeOff:date})}
+          {this.renderModalContent('3',this.props.device[3].timeOn,
+                                  (date) => {this.props.dispatch(changeTimeOn("device3",date))},
+                                  this.props.device[3].timeOff,
+                                  (date) => {this.props.dispatch(changeTimeOff("device3",date))}
                                   )}
         </Modal>
       </View>
@@ -350,7 +333,9 @@ class Control extends Component {
 
 
 function mapStateToProps(state){
-  return {webserverURL: state.serverURL}
+  return {webserverURL: state.serverURL,      
+          device: state.device,
+  }
 }
 export default connect(mapStateToProps)(Control);
 
