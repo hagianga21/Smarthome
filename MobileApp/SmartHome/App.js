@@ -16,7 +16,7 @@ export default class App extends Component {
 
 //defaultState
 const defaultState={
-  serverURL: '192.168.100.20:9000',
+  serverURL: "192.168.1.29:9000",
   device: [
     {id:0, name: "device0", label: "device0", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
     {id:1, name: "device1", label: "device1", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
@@ -29,7 +29,7 @@ const defaultState={
 const reducer = (state = defaultState,action) => {
   switch (action.type) {
     case 'InsertURL':
-        return {serverURL: action.url};
+        return {...state, serverURL: action.url};
     case 'StateChanged': return {
         ...state,
         device: state.device.map(e => {

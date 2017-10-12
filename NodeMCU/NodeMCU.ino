@@ -1,10 +1,15 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 WiFiClient client;
-
+/*
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
 const char* host = "192.168.100.20";
+*/
+const char* ssid     = "Ptnktd";
+const char* password = "hoilamgivay";
+const char* host = "192.168.1.29";
+
 const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
