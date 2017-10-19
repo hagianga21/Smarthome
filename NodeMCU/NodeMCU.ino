@@ -1,21 +1,23 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 WiFiClient client;
-/*
+
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
 const char* host = "192.168.100.20";
-*/
+
+/*
 const char* ssid     = "Ptnktd";
 const char* password = "hoilamgivay";
 const char* host = "192.168.1.29";
-
+*/
 const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
 int count = 0;
 char stateFromInternetToSystem[18],oldstateFromInternetToSystem[18];
-char stateFromSystemToInternet[18],oldstateFromSystemToInternet[18];
+String stateFromSystemToInternet;
+char oldstateFromSystemToInternet[18];
 char devicesState[18];
 char setTimeFromInternetToSystem[11];
 char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
@@ -23,7 +25,6 @@ char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],
 void wifiInit(void);
 void configState(void);
 //System
-void receiveDataFromSystem(void);
 void processDataFromSystem(void);
 //Internet
 void checkUpdateFlag(void);
@@ -36,6 +37,7 @@ void sendSetTimeFromInternetToSystem(void);
 
 void setup() {
     Serial.begin(9600);
+    Serial.setTimeout(50);
     delay(100);
     wifiInit();
     configState();
@@ -54,11 +56,8 @@ void loop() {
       updateFlag = 0;
     }
     if(Serial.available() > 0){
-       receiveDataFromSystem();
-    }
-    if(receiveFromSystemFlag == 1){
-      receiveFromSystemFlag = 0;
-      processDataFromSystem();
+       stateFromSystemToInternet = Serial.readString();
+       processDataFromSystem();
     }
 }
 
@@ -112,7 +111,6 @@ void configState(void){
     setTimeFromInternetToSystem[8] = '0';
     setTimeFromInternetToSystem[9] = '0';
     setTimeFromInternetToSystem[10]= 'E';
-    
 }
 
 
@@ -158,9 +156,7 @@ void clearUpdateFlag(void){
     client.print(String("GET /") + clearUpdateFlag +" HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n\r\n");             
-    delay(500);
-    //Serial.println("Clear Update Flag from Internet"); 
-    //delay(500);
+    delay(100);
 }
 
 void readJSONFromStatePage (void)
@@ -330,28 +326,6 @@ void sendSetTimeFromInternetToSystem(void){
       setTimeFromInternetToSystem[9]='0';
       Serial.println(setTimeFromInternetToSystem);
       delay(200);
-    }
-}
-
-
-//From System to Internet
-void receiveDataFromSystem(void){
-    char data;
-    data = Serial.read();
-    if(data == 'S'){
-      count = 0;
-      stateFromSystemToInternet[count] = data;
-      count++;
-    }
-    if(data != 'S' && data != 'E'){
-      stateFromSystemToInternet[count] = data;
-      count++;
-    }
-    if(data == 'E'){
-      stateFromSystemToInternet[count] = data;
-      count = 0;
-      receiveFromSystemFlag = 1;
-      //Serial.println(stateFromSystemToInternet);
     }
 }
 
