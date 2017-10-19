@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 var date = new Date();
 var hour = date.getHours();
 var min  = date.getMinutes();
+var temperature = 30;
 var chartTime = [];
 var chartTime2 = [1.00,3.30,4.15,6.15,7.15,8.15];
 //var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
@@ -70,9 +71,7 @@ function FetchData(){
 MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     assert.equal(null,err);
     console.log("Successfully connect MongoDB");
-
     var projection = {"time" :1, "P":1, "_id":0}; //"deviceID": 1, 
-
     //db.collection('test1').insertOne({"deviceID": "D01", "time": hour + ":" + min, "V": 220, "P": 60, "I": 10})
     
     var cursor = db.collection('test1').find({time: {$gt: '1:28'}})
@@ -138,7 +137,7 @@ app.get('/logincheckNodeMCU', function(req,res){
 app.get('/home', function (req, res) {
     if(loginFlag === true){
         res.render('home',{
-            insideTemperature: 36,
+            insideTemperature: temperature,
             insideHumidity: 66,
             letterInsideGasdetectionBox : "red",
             letterInsideHumandetectionBox: "green",
@@ -190,7 +189,13 @@ app.get('/readStateFromSystem', function (req, res) {
         deviceState.device2 = req.query.device2;
     if(req.query.device3)
         deviceState.device3 = req.query.device3;
- });
+});
+
+//Đọc nhiệt độ từ hệ thống 
+app.get('/readTempFromSystem', function (req, res) {
+    temperature = req.query.temperature;
+});
+
 
 //Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {

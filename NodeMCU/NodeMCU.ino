@@ -31,6 +31,7 @@ void checkUpdateFlag(void);
 void clearUpdateFlag(void);
 void controlDevice(String device, String state);
 void readJSONFromStatePage (void);
+void sendTemperature(int temp);
 //void sendState(void);
 void sendStateFromInternetToSystem(void);
 void sendSetTimeFromInternetToSystem(void);
@@ -57,6 +58,7 @@ void loop() {
     }
     if(Serial.available() > 0){
        stateFromSystemToInternet = Serial.readString();
+       Serial.println(stateFromSystemToInternet);
        processDataFromSystem();
     }
 }
@@ -347,7 +349,24 @@ void controlDevice(String device, String state){
     //delay(500);
 }
 
+void sendTemperature(int temp){
+    String url = "readTempFromSystem";
+    url += "?";
+    url += "temperature";
+    url += "=";
+    url += temp;
+    if (!client.connect(host, httpPort)) { 
+      Serial.println("Khong ket noi duoc");
+      return;
+    }
+    client.print(String("GET /") + url +" HTTP/1.1\r\n" +
+              "Host: " + host + "\r\n" +
+              "Connection: close\r\n\r\n");             
+    delay(200);
+}
+
 void processDataFromSystem(void){
+    int Temp;
     if(stateFromSystemToInternet[1] == '0'){
        if(stateFromSystemToInternet[2] == '1' && stateFromSystemToInternet[2] != devicesState[2]){
           devicesState[2] = stateFromSystemToInternet[2];
@@ -373,6 +392,12 @@ void processDataFromSystem(void){
           controlDevice("device3","off");
           devicesState[4] = stateFromSystemToInternet[4];
        }
-    }  
+    }
+    if(stateFromSystemToInternet[1] == '2'){
+        if(stateFromSystemToInternet[9] == 'T'){
+          Temp = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
+          sendTemperature(Temp);
+        }
+    }
 }
 
