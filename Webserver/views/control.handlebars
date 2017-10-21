@@ -97,8 +97,8 @@
             <div class="panel-body easypiechart-panel">
                 <form action = "/device1", method = "post">
                     <h4> THIẾT BỊ 1 </h4>
-                    <div class="box" id = "div1">
-                        <button type="submit" class="letterInsideButtonState1">{{device1state}}</button>
+                    <div class="box">
+                        <button type="submit" class="letterInsideButtonState1" id = "device1">{{device1state}}</button>
                     </div>
                 </form>
 
@@ -138,7 +138,7 @@
                 <form action = "/device2", method = "post">
                     <h4> THIẾT BỊ 2 </h4>
                     <div class="box">
-                        <button type="submit" class="letterInsideButtonState2">{{device2state}}</button>
+                        <button type="submit" class="letterInsideButtonState2" id = "device2">{{device2state}}</button>
                     </div>
                 </form>
 
@@ -178,7 +178,7 @@
                 <form action = "/device3", method = "post">
                     <h4> THIẾT BỊ 3 </h4>
                     <div class="box">
-                        <button type="submit" class="letterInsideButtonState3">{{device3state}}</button>
+                        <button type="submit" class="letterInsideButtonState3" id = "device3">{{device3state}}</button>
                     </div>
                 </form>
                 
@@ -215,15 +215,41 @@
 </div>
 
 <script>
-    $(document).ready(function(){
+    function updateData(){
         $.ajax({
-            url: "./control", 
+            url: "./state", 
+            dataType: 'JSON',
             success: function(result){
+                if(result.device1 === "on"){ 
+                    $("#device1").text("ON");
+                    $("#device1").css("color","green");
+                }
+                if(result.device1 === "off"){ 
+                    $("#device1").text("OFF");
+                    $("#device1").css("color","red");
+                }
+                if(result.device2 === "on"){ 
+                    $("#device2").text("ON");
+                    $("#device2").css("color","green");
+                }
+                if(result.device2 === "off"){ 
+                    $("#device2").text("OFF");
+                    $("#device2").css("color","red");
+                }
+                if(result.device3 === "on"){ 
+                    $("#device3").text("ON");
+                    $("#device3").css("color","green");
+                }
+                if(result.device3 === "off"){ 
+                    $("#device3").text("OFF");
+                    $("#device3").css("color","red");
+                }
                 setTimeout(function(){
-                    window.location.reload(1);
-                },2000);
+                    updateData()
+                }, 2000);
             }
         });
-    });
+    }
+    updateData();
 </script>
 
