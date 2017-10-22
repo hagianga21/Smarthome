@@ -1,0 +1,35 @@
+main
+	__CC2DW
+		____DoICP
+	initSensor
+	initRS485
+		UART1_Init
+	sendTemp
+		DHT11_Read
+		Div_16x16_S
+			Div_16x16_S_L
+		Mul_16X16_U
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+	sendHumid
+		DHT11_Read
+		Div_16x16_S
+			Div_16x16_S_L
+		Mul_16X16_U
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+	sendHumanStatus
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+	Button
+		Delay_500us
+	sendGasStatus
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+interrupt
+	UART1_Data_Ready
+	UART1_Read
