@@ -1,0 +1,5 @@
+Added Component: Designator=P?(Header 3)
+Added Pin To Net: NetName=TXD Pin=P?-1
+Added Pin To Net: NetName=SEC Pin=P?-2
+Added Pin To Net: NetName=RXD Pin=P?-3
+Added Member To Class: ClassName=Slave_Sensor Member=Component P? Header 3
