@@ -35,6 +35,7 @@ void sendTemperature(int temp);
 //void sendState(void);
 void sendStateFromInternetToSystem(void);
 void sendSetTimeFromInternetToSystem(void);
+void sendDataFromSensorToInternet(String type, int value);
 
 void setup() {
     Serial.begin(9600);
@@ -58,7 +59,7 @@ void loop() {
     }
     if(Serial.available() > 0){
        stateFromSystemToInternet = Serial.readString();
-       Serial.println(stateFromSystemToInternet);
+       //Serial.println(stateFromSystemToInternet);
        processDataFromSystem();
     }
 }
@@ -349,12 +350,30 @@ void controlDevice(String device, String state){
     //delay(500);
 }
 
-void sendTemperature(int temp){
-    String url = "readTempFromSystem";
-    url += "?";
-    url += "temperature";
-    url += "=";
-    url += temp;
+void sendDataFromSensorToInternet(String type, int value){
+    String url;
+    if(type == "Temp"){
+      url += "readTempFromSystem?temperature=";
+      url += value;
+    }
+    if(type == "Humid"){
+      url += "readHumidFromSystem?humid=";
+      url += value;
+    }
+    if(type == "Gas"){
+      url += "readGasFromSystem?gasDetection=";
+      if(value == 1)
+        url += "YES";
+      else
+        url += "NO";
+    }
+    if(type == "Human"){
+      url += "readHumanFromSystem?humanDetection=";
+      if(value == 1)
+        url += "YES";
+      else
+        url += "NO";
+    }
     if (!client.connect(host, httpPort)) { 
       Serial.println("Khong ket noi duoc");
       return;
@@ -366,7 +385,7 @@ void sendTemperature(int temp){
 }
 
 void processDataFromSystem(void){
-    int Temp;
+    int Temp, Humid, Gas, Human;
     if(stateFromSystemToInternet[1] == '0'){
        if(stateFromSystemToInternet[2] == '1' && stateFromSystemToInternet[2] != devicesState[2]){
           devicesState[2] = stateFromSystemToInternet[2];
@@ -393,10 +412,22 @@ void processDataFromSystem(void){
           devicesState[4] = stateFromSystemToInternet[4];
        }
     }
-    if(stateFromSystemToInternet[1] == '2'){
+    if(stateFromSystemToInternet[2] == '3'){
         if(stateFromSystemToInternet[9] == 'T'){
           Temp = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
-          sendTemperature(Temp);
+          sendDataFromSensorToInternet("Temp",Temp);
+        }
+        if(stateFromSystemToInternet[9] == 'H'){
+          Humid = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
+          sendDataFromSensorToInternet("Humid",Humid);
+        }
+        if(stateFromSystemToInternet[9] == 'M'){
+          Human = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
+          sendDataFromSensorToInternet("Human",Human);
+        }
+        if(stateFromSystemToInternet[9] == 'G'){
+          Gas = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
+          sendDataFromSensorToInternet("Gas",Gas);
         }
     }
 }

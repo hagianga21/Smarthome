@@ -21,7 +21,12 @@ app.use(bodyParser.json());
 var date = new Date();
 var hour = date.getHours();
 var min  = date.getMinutes();
+
 var temperature = 30;
+var humid = 30;
+var gasDetection = "NO";
+var humanDetection = "NO";
+var securityStatus = "UNARMED";
 var chartTime = [];
 var chartTime2 = [1.00,3.30,4.15,6.15,7.15,8.15];
 //var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
@@ -138,10 +143,14 @@ app.get('/home', function (req, res) {
     if(loginFlag === true){
         res.render('home',{
             insideTemperature: temperature,
-            insideHumidity: 66,
-            letterInsideGasdetectionBox : "red",
-            letterInsideHumandetectionBox: "green",
-            letterInsideSecurityBox: "red",
+            insideHumidity: humid,
+            gasDetection: gasDetection,
+            humanDetection: humanDetection,
+            securityStatus: securityStatus,
+
+            letterInsideGasdetectionBox : (gasDetection === "YES") ? "red": "green",
+            letterInsideHumandetectionBox: (humanDetection === "YES") ? "red": "green",
+            letterInsideSecurityBox: (securityStatus === "ARMED") ? "red": "green",
         });
     }
     else 
@@ -195,12 +204,22 @@ app.get('/readStateFromSystem', function (req, res) {
 app.get('/readTempFromSystem', function (req, res) {
     temperature = req.query.temperature;
 });
+app.get('/readHumidFromSystem', function (req, res) {
+    humid = req.query.humid;
+});
+app.get('/readGasFromSystem', function (req, res) {
+    gasDetection = req.query.gasDetection;
+});
+app.get('/readHumanFromSystem', function (req, res) {
+    humanDetection = req.query.humanDetection;
+});
 
 
 //Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {
     res.end(JSON.stringify(deviceState));
 });
+
 
 app.get('/checkChangedFlag', function(req,res){
     if(req.query.device === "NodeMCU"){
