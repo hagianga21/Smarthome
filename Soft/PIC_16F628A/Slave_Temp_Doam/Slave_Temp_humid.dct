@@ -733,6 +733,8 @@ trisb7
 trisb7_bit
 trmt
 trmt_bit
+turnoffspeaker
+turnonspeaker
 tx9
 tx9_bit
 tx9d

@@ -37,6 +37,8 @@ void sendTemp(void);
 void sendHumid(void);
 void sendHumanStatus(void);
 void sendGasStatus(void);
+void turnOnSpeaker(void);
+void turnOffSpeaker(void);
 
 void interrupt()
 {
@@ -72,13 +74,16 @@ void main()
 {
      initSensor();
      initRS485();
+     //turnOnSpeaker();
+     turnOffSpeaker();
      Delay_ms(100);
      while(1)
      {
+
           if(flagReceivedAllData==1){
                flagReceivedAllData = 0;
                //receive S12 C01 000 HE
-               if(receiveData[1] == '1' && receiveData[2] == '2' && receiveData[3] == 'C' && receiveData[4] == '0' && receiveData[5] == '1')
+               if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'C' && receiveData[4] == '0' && receiveData[5] == '1')
                {
                      if(receiveData[9] == 'T'){
                            sendTemp();
@@ -92,6 +97,7 @@ void main()
                      Delay_ms(100);
                }
           }
+
           //Cam bien chuyen dong
           if (Button(&PORTB, 5, 1, 0)) {               // Detect logical one
              humanStatus = 1;
@@ -100,9 +106,13 @@ void main()
           if (Button(&PORTB, 4, 1, 0)) {               // Detect logical one
                gasStatus = 1;
                countGas++;
-               if(countGas == 10){
+               if(countGas >= 65000){
+                     countGas = 1;
+               }
+               
+               if(countGas >= 15){
                     sendGasStatus();
-                    PORTA.RB0 =1;
+                    turnOnSpeaker();
                }
                Delay_ms(500);
           }
@@ -110,6 +120,7 @@ void main()
                gasStatus = 0;
                countGas = 0;
           }
+
      }
 }
 
@@ -120,7 +131,7 @@ void RS485_send (char dat[])
 {
     int i;
     PORTB.RB3 =1;
-    for (i=0; i<=9;i++){
+    for (i=0; i<=10;i++){
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
@@ -154,7 +165,7 @@ void sendTemp(void){
      b = temp - 10*a;
      sendData[0] = 'S';
      sendData[1] = '0';
-     sendData[2] = '2';
+     sendData[2] = '3';
      sendData[3] = 'C';
      sendData[4] = '0';
      sendData[5] = '1';
@@ -173,7 +184,7 @@ void sendHumid(void){
      b = hum - 10*a;
      sendData[0] = 'S';
      sendData[1] = '0';
-     sendData[2] = '2';
+     sendData[2] = '3';
      sendData[3] = 'C';
      sendData[4] = '0';
      sendData[5] = '1';
@@ -188,7 +199,7 @@ void sendHumid(void){
 void sendHumanStatus(void){
      sendData[0] = 'S';
      sendData[1] = '0';
-     sendData[2] = '2';
+     sendData[2] = '3';
      sendData[3] = 'C';
      sendData[4] = '0';
      sendData[5] = '1';
@@ -203,7 +214,7 @@ void sendHumanStatus(void){
 void sendGasStatus(void){
      sendData[0] = 'S';
      sendData[1] = '0';
-     sendData[2] = '2';
+     sendData[2] = '3';
      sendData[3] = 'C';
      sendData[4] = '0';
      sendData[5] = '1';
@@ -213,4 +224,12 @@ void sendGasStatus(void){
      sendData[9] = 'G';
      sendData[10] = 'E';
      RS485_send(sendData);
+}
+
+void turnOnSpeaker(void){
+     PORTA.RB0 =0;
+}
+
+void turnOffSpeaker(void){
+     PORTA.RB0 =1;
 }
