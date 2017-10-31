@@ -1,16 +1,16 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 WiFiClient client;
-
+/*
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
 const char* host = "192.168.100.20";
+*/
 
-/*
 const char* ssid     = "Ptnktd";
 const char* password = "hoilamgivay";
 const char* host = "192.168.1.29";
-*/
+
 const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
@@ -39,11 +39,12 @@ void sendDataFromSensorToInternet(String type, int value);
 
 void setup() {
     Serial.begin(9600);
+    //Serial.println("System is OK");
     Serial.setTimeout(50);
     delay(100);
     wifiInit();
     configState();
-    //Serial.println("System is OK");
+    
     delay(200);
 }
 

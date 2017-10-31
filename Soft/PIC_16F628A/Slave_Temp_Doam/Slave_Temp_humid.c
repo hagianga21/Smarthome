@@ -75,7 +75,19 @@ void main()
      initSensor();
      initRS485();
      //turnOnSpeaker();
-     turnOffSpeaker();
+     //turnOffSpeaker();
+     sendData[0] = 'S';
+     sendData[1] = '0';
+     sendData[2] = '0';
+     sendData[3] = 'B';
+     sendData[4] = '0';
+     sendData[5] = '1';
+     sendData[6] = 'D';
+     sendData[7] = '0';
+     sendData[8] = '1';
+     sendData[9] = '1';
+     sendData[10] = 'E';
+     RS485_send(sendData);
      Delay_ms(100);
      while(1)
      {
@@ -99,7 +111,7 @@ void main()
           }
 
           //Cam bien chuyen dong
-          if (Button(&PORTB, 5, 1, 0)) {               // Detect logical one
+          if (Button(&PORTB, 5, 1, 1)) {               // Detect logical one
              humanStatus = 1;
           }
           //Cam bien khi gas
@@ -112,7 +124,7 @@ void main()
                
                if(countGas >= 15){
                     sendGasStatus();
-                    turnOnSpeaker();
+                    //turnOnSpeaker();
                }
                Delay_ms(500);
           }
@@ -135,6 +147,7 @@ void RS485_send (char dat[])
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
+    Delay_ms(100);
     PORTB.RB3 =0;
 }
 
@@ -144,8 +157,8 @@ void initSensor(void){
      //Cam bien chuyen dong
      TRISB5_bit = 1;
      //Loa
-     TRISA0_bit = 0;
-     PORTA.RB0 =0;
+     //TRISA0_bit = 0;
+     //PORTA.RB0 =0;
 }
 
 void initRS485(void){

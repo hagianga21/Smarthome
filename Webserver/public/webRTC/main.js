@@ -9,7 +9,12 @@
 'use strict';
 
 var errorElement = document.querySelector('#errorMsg');
-var video = document.querySelector('video');
+
+var video1 = document.querySelector('video#video1');
+
+var pipes = [];
+var localStream;
+var remoteStream;
 
 // Put variables in global scope to make them available to the browser console.
 var constraints = window.constraints = {
@@ -17,16 +22,13 @@ var constraints = window.constraints = {
   video: true
 };
 
-function handleSuccess(stream) {
-  var videoTracks = stream.getVideoTracks();
-  console.log('Got stream with constraints:', constraints);
-  console.log('Using video device: ' + videoTracks[0].label);
-  stream.oninactive = function() {
-    console.log('Stream inactive');
-  };
-  window.stream = stream; // make variable available to browser console
-  video.srcObject = stream;
+function gotStream(stream) {
+  trace('Received local stream');
+  video1.srcObject = stream;
+  window.localStream = stream;
+  callButton.disabled = false;
 }
+
 
 function handleError(error) {
   if (error.name === 'ConstraintNotSatisfiedError') {
@@ -48,4 +50,4 @@ function errorMsg(msg, error) {
 }
 
 navigator.mediaDevices.getUserMedia(constraints).
-    then(handleSuccess).catch(handleError);
+  then(gotStream).catch(handleError);

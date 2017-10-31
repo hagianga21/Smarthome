@@ -1,5 +1,5 @@
-#line 1 "E:/MYPROJECTINHCMUT/Doan1/Testcode/PIC/Slave_Temp_Doam/Slave_Temp_humid.c"
-#line 20 "E:/MYPROJECTINHCMUT/Doan1/Testcode/PIC/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 1 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 20 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
 sbit DHT11_PIN at RB0_bit;
 sbit DHT11_PIN_Direction at TRISB0_bit;
 
@@ -58,7 +58,19 @@ void main()
  initSensor();
  initRS485();
 
- turnOffSpeaker();
+
+ sendData[0] = 'S';
+ sendData[1] = '0';
+ sendData[2] = '0';
+ sendData[3] = 'B';
+ sendData[4] = '0';
+ sendData[5] = '1';
+ sendData[6] = 'D';
+ sendData[7] = '0';
+ sendData[8] = '1';
+ sendData[9] = '1';
+ sendData[10] = 'E';
+ RS485_send(sendData);
  Delay_ms(100);
  while(1)
  {
@@ -82,7 +94,7 @@ void main()
  }
 
 
- if (Button(&PORTB, 5, 1, 0)) {
+ if (Button(&PORTB, 5, 1, 1)) {
  humanStatus = 1;
  }
 
@@ -95,7 +107,7 @@ void main()
 
  if(countGas >= 15){
  sendGasStatus();
- turnOnSpeaker();
+
  }
  Delay_ms(500);
  }
@@ -106,7 +118,7 @@ void main()
 
  }
 }
-#line 130 "E:/MYPROJECTINHCMUT/Doan1/Testcode/PIC/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 142 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
 void RS485_send (char dat[])
 {
  int i;
@@ -115,6 +127,7 @@ void RS485_send (char dat[])
  while(UART1_Tx_Idle()==0);
  UART1_Write(dat[i]);
  }
+ Delay_ms(100);
  PORTB.RB3 =0;
 }
 
@@ -124,8 +137,8 @@ void initSensor(void){
 
  TRISB5_bit = 1;
 
- TRISA0_bit = 0;
- PORTA.RB0 =0;
+
+
 }
 
 void initRS485(void){

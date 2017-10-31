@@ -33,11 +33,12 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=4
+Count=5
 Path0=F:\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=F:\Mikroelektronika\mikroC PRO for PIC\Uses\P16\
-Path2=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_Temp_Doam\
-Path3=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
+Path2=E:\LVTN\Smarthome\Soft\PIC_16F628A\Slave_Temp_Doam\
+Path3=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_Temp_Doam\
+Path4=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
 [HEADER_PATH]
 Count=0
 [HEADERS]

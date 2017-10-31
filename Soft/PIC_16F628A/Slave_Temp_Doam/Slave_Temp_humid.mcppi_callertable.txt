@@ -4,7 +4,9 @@ main
 	initSensor
 	initRS485
 		UART1_Init
-	turnOffSpeaker
+	RS485_send
+		UART1_Tx_Idle
+		UART1_Write
 	sendTemp
 		DHT11_Read
 		Div_16x16_S
@@ -31,7 +33,6 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
-	turnOnSpeaker
 interrupt
 	UART1_Data_Ready
 	UART1_Read

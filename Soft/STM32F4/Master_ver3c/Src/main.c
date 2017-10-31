@@ -106,14 +106,14 @@ int main(void)
 	HAL_UART_Receive_IT(&huart4,&receive_data2,1);
 	
 	//HAL_UART_Transmit_IT(&huart1,&send_data,1);
-	HAL_UART_Transmit_IT(&huart2,&send_data,1);
+	//HAL_UART_Transmit_IT(&huart2,&send_data,1);
 	//HAL_UART_Transmit_IT(&huart3,"AT\r\n",4);
 	//HAL_UART_Transmit_IT(&huart4,&send_data,1);
 	HAL_Delay(300);
 	Initsim900A();
 	deleteSMS();
 	//Call();
-	//sendMessage("Giang dep trai",14);
+	sendMessage("Giang dep trai",14);
 	
 	
 	//Init LCD
@@ -125,6 +125,7 @@ int main(void)
 	HAL_Delay(500);
 	//sprintf(buffer,"%0.4f",var);
 	//lcd_puts(1,0,(int8_t*)buffer);
+
 	//-------------------------------------------------------------------------------------//
   while (1)
   {
@@ -533,7 +534,8 @@ void checkTimeToReadSensor(void){
 		oldminute = minute;
 		strcpy((char *)dataSendtoSystem,"S13C01000TE");
 		sendRS485toSystem();
-		HAL_Delay(200);
+		HAL_Delay(600);
+		
 		if(flagReceiveAllDataFromSystem == 1){
 			flagReceiveAllDataFromSystem = 0;
 			answerSystem();
@@ -541,6 +543,7 @@ void checkTimeToReadSensor(void){
 		strcpy((char *)dataSendtoSystem,"S13C01000HE");
 		sendRS485toSystem();
 		HAL_Delay(100);
+		
 	}
 }
 

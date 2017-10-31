@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Master_ver3c\Master_ver3c.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Master_ver3c\Master_ver3c.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Tue Oct 24 01:54:24 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Tue Oct 31 16:05:02 2017
 <BR><P>
 <H3>Maximum Stack Usage =        184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -373,20 +373,20 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>WWDG_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[109]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
+<P><STRONG><a name="[10a]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 </UL>
 
-<P><STRONG><a name="[10b]"></a>strcmp</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, strcmp.o(.text))
+<P><STRONG><a name="[10c]"></a>strcmp</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, strcmp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strcmp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 </UL>
 
 <P><STRONG><a name="[100]"></a>strcpy</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, strcpy.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR><BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
 </UL>
 
@@ -538,10 +538,10 @@ Global Symbols
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromSensorToInternet
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
@@ -980,7 +980,7 @@ Global Symbols
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 </UL>
 
-<P><STRONG><a name="[c0]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 304 bytes, Stack size 24 bytes, main.o(i.HAL_UART_RxCpltCallback))
+<P><STRONG><a name="[c0]"></a>HAL_UART_RxCpltCallback</STRONG> (Thumb, 300 bytes, Stack size 24 bytes, main.o(i.HAL_UART_RxCpltCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = HAL_UART_RxCpltCallback
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
@@ -992,10 +992,9 @@ Global Symbols
 <P><STRONG><a name="[c2]"></a>HAL_UART_Transmit_IT</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromSensorToInternet
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Initsim900A
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
@@ -1417,7 +1416,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ff]"></a>checkTimeToReadSensor</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, main.o(i.checkTimeToReadSensor))
+<P><STRONG><a name="[ff]"></a>checkTimeToReadSensor</STRONG> (Thumb, 72 bytes, Stack size 8 bytes, main.o(i.checkTimeToReadSensor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = checkTimeToReadSensor &rArr; answerSystem &rArr; setIDforDevice &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
@@ -1439,20 +1438,20 @@ Global Symbols
 <P><STRONG><a name="[fd]"></a>convertNumToStringLSB</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(i.convertNumToStringLSB))
 <BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 </UL>
 
 <P><STRONG><a name="[fc]"></a>convertNumToStringMSB</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.convertNumToStringMSB))
 <BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 </UL>
 
 <P><STRONG><a name="[f4]"></a>convertStringToNum</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.convertStringToNum))
 <BR><BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateDevicesState
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
@@ -1462,7 +1461,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1552,7 +1551,7 @@ Global Symbols
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
 
-<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 410 bytes, Stack size 16 bytes, main.o(i.main))
+<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 402 bytes, Stack size 16 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
@@ -1560,7 +1559,6 @@ Global Symbols
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
 <LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_FATFS_Init
-<LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_NVIC_SetPriority
@@ -1568,8 +1566,9 @@ Global Symbols
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_Mem_Read_DMA
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
@@ -1582,7 +1581,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[107]"></a>processDataFromInternet</STRONG> (Thumb, 180 bytes, Stack size 24 bytes, main.o(i.processDataFromInternet))
+<P><STRONG><a name="[108]"></a>processDataFromInternet</STRONG> (Thumb, 180 bytes, Stack size 24 bytes, main.o(i.processDataFromInternet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = processDataFromInternet &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
@@ -1595,28 +1594,28 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[108]"></a>processDataFromSim</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, main.o(i.processDataFromSim))
+<P><STRONG><a name="[109]"></a>processDataFromSim</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, main.o(i.processDataFromSim))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = processDataFromSim &rArr; processDetailSms &rArr; sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 <LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[10a]"></a>processDetailSms</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(i.processDetailSms))
+<P><STRONG><a name="[10b]"></a>processDetailSms</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(i.processDetailSms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = processDetailSms &rArr; sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
 <LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 </UL>
 
 <P><STRONG><a name="[f3]"></a>sendDataFromSensorToInternet</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, main.o(i.sendDataFromSensorToInternet))
@@ -1628,13 +1627,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
-<P><STRONG><a name="[10c]"></a>sendMessage</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, main.o(i.sendMessage))
+<P><STRONG><a name="[107]"></a>sendMessage</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, main.o(i.sendMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
 <P><STRONG><a name="[fe]"></a>sendRS485toSystem</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, main.o(i.sendRS485toSystem))
@@ -1646,8 +1646,8 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;controlDevice
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
@@ -1679,7 +1679,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertStringToNum
 </UL>
-<BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
@@ -1690,7 +1690,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
