@@ -58,11 +58,13 @@ void loop() {
       clearUpdateFlag();
       updateFlag = 0;
     }
+    
     if(Serial.available() > 0){
        stateFromSystemToInternet = Serial.readString();
-       //Serial.println(stateFromSystemToInternet);
-       processDataFromSystem();
+       Serial.println(stateFromSystemToInternet);
+       //processDataFromSystem();
     }
+    
 }
 
 void wifiInit(void){

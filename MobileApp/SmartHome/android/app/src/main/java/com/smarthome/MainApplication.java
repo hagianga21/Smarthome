@@ -5,6 +5,10 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import net.no_mad.tts.TextToSpeechPackage;
+import com.rusel.RCTBluetoothSerial.RCTBluetoothSerialPackage;
+import de.innfactory.apiai.RNApiAiPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import net.no_mad.tts.TextToSpeechPackage;
 import de.innfactory.apiai.RNApiAiPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import net.no_mad.tts.TextToSpeechPackage;
@@ -30,9 +34,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new TextToSpeechPackage(),
-            new RNApiAiPackage(),
-            new VectorIconsPackage()
+            new RCTBluetoothSerialPackage(),
+            new RNApiAiPackage()
       );
     }
   };
