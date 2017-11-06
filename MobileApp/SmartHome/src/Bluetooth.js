@@ -108,7 +108,7 @@ export default class Bluetooth extends Component {
     toggleBluetooth(value) {
       if (value === true) {
         this.enable();
-        //this.setModalVisible(1);
+        this.setModalVisible(1);
       } else {
         this.disable()
       }
@@ -152,6 +152,17 @@ export default class Bluetooth extends Component {
       .catch((err) => ToastAndroid.show(err.message,ToastAndroid.SHORT))
     }
     
+
+    connectHC05() {
+      this.setState({ connecting: true })
+      BluetoothSerial.connect("20:16:08:22:27:81")
+      .then((res) => {
+        ToastAndroid.show(`Connected to device ${device.name}`,ToastAndroid.SHORT)
+        this.setState({ device, connected: true, connecting: false })
+      })
+      .catch((err) => ToastAndroid.show(err.message,ToastAndroid.SHORT))
+    }
+
     //connect to bluetooth device
     connect (device) {
       this.setState({ connecting: true })
@@ -227,6 +238,11 @@ export default class Bluetooth extends Component {
               connectedId={this.state.device && this.state.device.id}
               devices={this.state.section === 0 ? this.state.devices : this.state.unpairedDevices}
               onDevicePress={(device) => this.onDevicePress(device)} />
+            <Button
+              textStyle={{ color: '#FFFFFF' }}
+              style={styles.buttonRaised}
+              title='Connect'
+              onPress={() => this.connectHC05()} />  
         </View>
     );
 
