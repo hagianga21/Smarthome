@@ -258,7 +258,6 @@ glcd_write_text_adv
 glcd_write_text_return_pos
 halfbits
 hum
-humanstatus
 ics_auto
 ics_off
 indf
@@ -382,6 +381,7 @@ porta
 portb
 pow
 pr2
+processspeaker
 ps0
 ps0_bit
 ps1
@@ -545,7 +545,6 @@ s1d13700_write_text_return_pos
 sdiv3232l
 senddata
 sendgasstatus
-sendhumanstatus
 sendhumid
 sendtemp
 setfdz32

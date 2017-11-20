@@ -10,7 +10,6 @@ char sendData[11];
 long value;
 int temp,hum;
 int a,b;
-int humanStatus = 0;
 int gasStatus = 0, countGas = 0;
 
 void RS485_send(char dat[]);
@@ -22,6 +21,7 @@ void sendHumanStatus(void);
 void sendGasStatus(void);
 void turnOnSpeaker(void);
 void turnOffSpeaker(void);
+void processSpeaker(int mode);
 
 void interrupt()
 {
@@ -57,8 +57,6 @@ void main()
 {
  initSensor();
  initRS485();
-
-
  sendData[0] = 'S';
  sendData[1] = '0';
  sendData[2] = '0';
@@ -71,10 +69,10 @@ void main()
  sendData[9] = '1';
  sendData[10] = 'E';
  RS485_send(sendData);
- Delay_ms(100);
+ Delay_ms(1000);
+ turnOffSpeaker();
  while(1)
  {
-
  if(flagReceivedAllData==1){
  flagReceivedAllData = 0;
 
@@ -86,39 +84,54 @@ void main()
  if(receiveData[9] == 'H'){
  sendHumid();
  }
- if(receiveData[9] == 'M'){
- sendHumanStatus();
- }
  Delay_ms(100);
  }
  }
 
-
- if (Button(&PORTB, 5, 1, 1)) {
- humanStatus = 1;
- }
-
  if (Button(&PORTB, 4, 1, 0)) {
  gasStatus = 1;
+ }
+
+ if (gasStatus == 1){
  countGas++;
- if(countGas >= 65000){
- countGas = 1;
- }
-
- if(countGas >= 15){
- sendGasStatus();
-
- }
  Delay_ms(500);
+ if(countGas == 10){
+ if (Button(&PORTB, 4, 1, 0)) {
+ processSpeaker(1);
  }
  else{
  gasStatus = 0;
  countGas = 0;
  }
-
+ }
+ if(countGas == 20){
+ if (Button(&PORTB, 4, 1, 0)) {
+ processSpeaker(2);
+ }
+ else{
+ gasStatus = 0;
+ countGas = 0;
+ }
+ }
+ if(countGas >= 30 && countGas % 10 == 0 ){
+ if (Button(&PORTB, 4, 1, 0)) {
+ processSpeaker(3);
+ sendGasStatus();
+ }
+ else{
+ gasStatus = 0;
+ countGas = 0;
+ sendGasStatus();
+ }
+ }
+ if(countGas == 65000){
+ countGas = 30;
+ }
+ }
+#line 168 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
  }
 }
-#line 142 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 174 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
 void RS485_send (char dat[])
 {
  int i;
@@ -137,6 +150,8 @@ void initSensor(void){
 
  TRISB5_bit = 1;
 
+ TRISB.B5 = 0;
+ turnOnSpeaker();
 
 
 }
@@ -189,21 +204,6 @@ void sendHumid(void){
  RS485_send(sendData);
 }
 
-void sendHumanStatus(void){
- sendData[0] = 'S';
- sendData[1] = '0';
- sendData[2] = '3';
- sendData[3] = 'C';
- sendData[4] = '0';
- sendData[5] = '1';
- sendData[6] = '0';
- sendData[7] = '0';
- sendData[8] = (char)humanStatus+48;
- sendData[9] = 'M';
- sendData[10] = 'E';
- RS485_send(sendData);
-}
-
 void sendGasStatus(void){
  sendData[0] = 'S';
  sendData[1] = '0';
@@ -220,9 +220,45 @@ void sendGasStatus(void){
 }
 
 void turnOnSpeaker(void){
- PORTA.RB0 =0;
+ PORTB.RB5 = 1;
+
 }
 
 void turnOffSpeaker(void){
- PORTA.RB0 =1;
+ PORTB.RB5 = 0;
+
+}
+
+void processSpeaker(int mode){
+ if(mode == 1){
+ turnOnSpeaker();
+ Delay_ms(100);
+ turnOffSpeaker();
+ Delay_ms(100);
+ turnOnSpeaker();
+ Delay_ms(100);
+ turnOffSpeaker();
+ Delay_ms(100);
+ }
+ if(mode == 2){
+ turnOnSpeaker();
+ Delay_ms(200);
+ turnOffSpeaker();
+ Delay_ms(200);
+ turnOnSpeaker();
+ Delay_ms(200);
+ turnOffSpeaker();
+ Delay_ms(200);
+ }
+ if(mode == 3){
+ turnOnSpeaker();
+ Delay_ms(400);
+ turnOffSpeaker();
+ Delay_ms(400);
+ turnOnSpeaker();
+ Delay_ms(400);
+ turnOffSpeaker();
+ Delay_ms(400);
+ }
+
 }

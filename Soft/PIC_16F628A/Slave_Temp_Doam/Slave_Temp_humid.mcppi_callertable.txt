@@ -2,11 +2,13 @@ main
 	__CC2DW
 		____DoICP
 	initSensor
+		turnOnSpeaker
 	initRS485
 		UART1_Init
 	RS485_send
 		UART1_Tx_Idle
 		UART1_Write
+	turnOffSpeaker
 	sendTemp
 		DHT11_Read
 		Div_16x16_S
@@ -23,12 +25,13 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
-	sendHumanStatus
-		RS485_send
-			UART1_Tx_Idle
-			UART1_Write
 	Button
 		Delay_500us
+	processSpeaker
+		turnOnSpeaker
+		turnOffSpeaker
+	Div_16x16_S
+		Div_16x16_S_L
 	sendGasStatus
 		RS485_send
 			UART1_Tx_Idle

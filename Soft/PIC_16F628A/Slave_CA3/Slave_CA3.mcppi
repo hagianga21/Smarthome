@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Slave_CA3.c
+Value=..\..\..\..\..\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Test_Slave\Test_Slave_887.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -24,8 +24,9 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=1
+Count=2
 File0=Slave_CA3.c
+File1=..\..\..\..\..\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Test_Slave\Test_Slave_887.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -33,11 +34,12 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=4
+Count=5
 Path0=F:\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=F:\Mikroelektronika\mikroC PRO for PIC\Uses\P16\
-Path2=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_CA3\
-Path3=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
+Path2=E:\LVTN\Smarthome\Soft\PIC_16F628A\Slave_CA3\
+Path3=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_CA3\
+Path4=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
 [HEADER_PATH]
 Count=0
 [HEADERS]
