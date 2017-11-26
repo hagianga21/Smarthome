@@ -78,7 +78,21 @@ void main() {
   PEIE_bit = 1;                        // enable peripheral interrupts
   GIE_bit = 1;                         // enable all interrupts
 
+  addressButton1[0] = '0';
+  addressButton1[1] = '1';
+  addressDevice1[0] = '0';
+  addressDevice1[1] = '1';
 
+  addressButton2[0] = '0';
+  addressButton2[1] = '2';
+  addressDevice2[0] = '0';
+  addressDevice2[1] = '2';
+
+  addressButton3[0] = '0';
+  addressButton3[1] = '3';
+  addressDevice3[0] = '0';
+  addressDevice3[1] = '3';
+  /*
   addressButton1[0] = EEPROM_Read(0x02);
   addressButton1[1] = EEPROM_Read(0x03);
   addressDevice1[0] = EEPROM_Read(0x04);
@@ -94,10 +108,11 @@ void main() {
   addressDevice3[0] = EEPROM_Read(0x0C);
   addressDevice3[1] = EEPROM_Read(0x0D);
   //Delay_ms(1000);
-
+  */
   //RS485_send(send);
   Delay_ms(100);
   //Luc dau xin Master set ma vat ly cua cong tac chum 3: S 02 0000 3 1E
+  /*
   if (addressButton1[0]==0xff || addressButton2[0]==0xff || addressButton3[0]==0xff){
      sendData[0] = 'S';
      sendData[1] = '0';
@@ -112,11 +127,14 @@ void main() {
      sendData[10] = 'E';
      RS485_send(sendData);
   }
+  */
   while(1)
   {
+     /*
      if(flagReceivedAllData==1){
          flagReceivedAllData = 0;
          //S12 B01 D01 1 E
+
          if(receiveData[2] == '2'){
              if(receiveData[9] == '1'){
                  addressButton1[0] = receiveData[4];
@@ -149,8 +167,9 @@ void main() {
                  EEPROM_Write(0x0D,addressDevice3[1]);
              }
          }
+
      }
-     
+     */
     if (Button(&PORTB, 0, 1, 1)) {               // Detect logical one
       oldstate = 1;                              // Update flag
     }
@@ -171,9 +190,11 @@ void main() {
          sendData[10] = 'E';
          checkstt(stt1);
          stt1++;
-         RS485_send(sendData);                            // Invert PORTC
+         RS485_send(sendData);
+         Delay_ms(100);
+         //RS485_send(sendData);                            // Invert PORTC
          oldstate = 0;
-         Delay_ms(200);
+         Delay_ms(500);
       }                              // Update flag
     }
 
@@ -198,9 +219,11 @@ void main() {
          sendData[10] = 'E';
          checkstt(stt2);
          stt2++;
-         RS485_send(sendData);                            // Invert PORTC
+         RS485_send(sendData);
+         Delay_ms(100);  
+         //RS485_send(sendData);                          // Invert PORTC
          oldstate = 0;
-         Delay_ms(200);
+         Delay_ms(500);
       }                              // Update flag
     }
 
@@ -227,8 +250,10 @@ void main() {
          checkstt(stt3);
          stt3++;
          RS485_send(sendData);
+         Delay_ms(100);
+         //RS485_send(sendData);
          oldstate = 0;
-         Delay_ms(200);
+         Delay_ms(500);
       }
     }
 
@@ -239,11 +264,12 @@ void RS485_send (char dat[])
 {
     int i;
     PORTB.RB3 =1;
+    Delay_ms(100);
     for (i=0; i<=10;i++){
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
-    Delay_ms(200);
+    Delay_ms(10);
     PORTB.RB3 =0;
 }
 

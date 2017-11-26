@@ -44,7 +44,6 @@ void setup() {
     delay(100);
     wifiInit();
     configState();
-    
     delay(200);
 }
 
@@ -61,7 +60,7 @@ void loop() {
     
     if(Serial.available() > 0){
        stateFromSystemToInternet = Serial.readString();
-       Serial.println(stateFromSystemToInternet);
+       //Serial.println(stateFromSystemToInternet);
        //processDataFromSystem();
     }
     

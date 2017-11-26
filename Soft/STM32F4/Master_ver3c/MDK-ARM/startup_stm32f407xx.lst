@@ -869,12 +869,12 @@ ARM Macro Assembler    Page 14
               00000000 
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M4.fp --apcs=interwork --depend=maste
-r_ver3c\startup_stm32f407xx.d -omaster_ver3c\startup_stm32f407xx.o -IE:\MYPROJE
-CTINHCMUT\Doan1\Testcode\ST_HAL_Test\Master_ver3c\MDK-ARM\RTE -IF:\Keil_v5\ARM\
-PACK\ARM\CMSIS\5.0.0-Beta12\CMSIS\Include -IF:\Keil_v5\ARM\PACK\Keil\STM32F4xx_
-DFP\2.10.0 --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 
-513" --predefine="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=startup
-_stm32f407xx.lst startup_stm32f407xx.s
+r_ver3c\startup_stm32f407xx.d -omaster_ver3c\startup_stm32f407xx.o -IE:\LVTN\Sm
+arthome\Soft\STM32F4\Master_ver3c\MDK-ARM\RTE -IF:\Keil_v5\ARM\PACK\ARM\CMSIS\5
+.0.0-Beta12\CMSIS\Include -IF:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.10.0 --pre
+define="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 513" --predefine
+="_RTE_ SETA 1" --predefine="STM32F407xx SETA 1" --list=startup_stm32f407xx.lst
+ startup_stm32f407xx.s
 
 
 

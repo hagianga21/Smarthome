@@ -2,11 +2,6 @@ main
 	__CC2DW
 		____DoICP
 	UART1_Init
-	EEPROM_Read
-	RS485_send
-		UART1_Tx_Idle
-		UART1_Write
-	EEPROM_Write
 interrupt
 	UART1_Data_Ready
 	UART1_Read

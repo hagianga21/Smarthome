@@ -100,6 +100,7 @@ int main(void)
   MX_FATFS_Init();
 
 	//My code-----------------------------------------------------------------------------//
+	
 	HAL_UART_Receive_IT(&huart1,&receive_data2,1);
 	HAL_UART_Receive_IT(&huart2,&receive_data2,1);
 	HAL_UART_Receive_IT(&huart3,&receive_data2,1);
@@ -123,6 +124,7 @@ int main(void)
 	lcd_clear();
 	lcd_HomePage(day,date,month,year,hour,minute,second);
 	HAL_Delay(500);
+
 	//sprintf(buffer,"%0.4f",var);
 	//lcd_puts(1,0,(int8_t*)buffer);
 
@@ -151,7 +153,6 @@ int main(void)
 		checkLCD();
 		//-------------------------------------------------------------------------------------//
   }
-
 }
 
 //My code-----------------------------------------------------------------------------//
@@ -531,19 +532,17 @@ void checkSetTime(void){
 
 void checkTimeToReadSensor(void){
 	if(minute != oldminute){
-		oldminute = minute;
-		strcpy((char *)dataSendtoSystem,"S13C01000TE");
-		sendRS485toSystem();
-		HAL_Delay(600);
-		
-		if(flagReceiveAllDataFromSystem == 1){
-			flagReceiveAllDataFromSystem = 0;
-			answerSystem();
+		if(minute%2 == 0){
+				strcpy((char *)dataSendtoSystem,"S13C01000TE");
+				HAL_Delay(100);
+				sendRS485toSystem();
 		}
-		strcpy((char *)dataSendtoSystem,"S13C01000HE");
-		sendRS485toSystem();
-		HAL_Delay(100);
-		
+		else if(minute%2 !=0){
+				strcpy((char *)dataSendtoSystem,"S13C01000HE");
+				sendRS485toSystem();
+				HAL_Delay(100);
+		}
+		oldminute = minute;
 	}
 }
 

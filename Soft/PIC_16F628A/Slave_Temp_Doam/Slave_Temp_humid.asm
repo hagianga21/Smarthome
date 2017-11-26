@@ -57,7 +57,7 @@ L_interrupt4:
 	XORLW      69
 	BTFSC      STATUS+0, 2
 	GOTO       L_interrupt7
-L__interrupt56:
+L__interrupt59:
 ;Slave_Temp_humid.c,59 :: 		receiveData[count] = tempReceiveData;
 	MOVF       _count+0, 0
 	ADDLW      _receiveData+0
@@ -92,7 +92,7 @@ L_interrupt3:
 L_interrupt0:
 ;Slave_Temp_humid.c,70 :: 		}
 L_end_interrupt:
-L__interrupt60:
+L__interrupt64:
 	MOVF       ___savePCLATH+0, 0
 	MOVWF      PCLATH+0
 	SWAPF      ___saveSTATUS+0, 0
@@ -105,53 +105,19 @@ L__interrupt60:
 _main:
 
 ;Slave_Temp_humid.c,73 :: 		void main()
-;Slave_Temp_humid.c,75 :: 		initSensor();
-	CALL       _initSensor+0
-;Slave_Temp_humid.c,76 :: 		initRS485();
-	CALL       _initRS485+0
-;Slave_Temp_humid.c,77 :: 		sendData[0] = 'S';
-	MOVLW      83
-	MOVWF      _sendData+0
-;Slave_Temp_humid.c,78 :: 		sendData[1] = '0';
-	MOVLW      48
-	MOVWF      _sendData+1
-;Slave_Temp_humid.c,79 :: 		sendData[2] = '0';
-	MOVLW      48
-	MOVWF      _sendData+2
-;Slave_Temp_humid.c,80 :: 		sendData[3] = 'B';
-	MOVLW      66
-	MOVWF      _sendData+3
-;Slave_Temp_humid.c,81 :: 		sendData[4] = '0';
-	MOVLW      48
-	MOVWF      _sendData+4
-;Slave_Temp_humid.c,82 :: 		sendData[5] = '1';
-	MOVLW      49
-	MOVWF      _sendData+5
-;Slave_Temp_humid.c,83 :: 		sendData[6] = 'D';
-	MOVLW      68
-	MOVWF      _sendData+6
-;Slave_Temp_humid.c,84 :: 		sendData[7] = '0';
-	MOVLW      48
-	MOVWF      _sendData+7
-;Slave_Temp_humid.c,85 :: 		sendData[8] = '1';
-	MOVLW      49
-	MOVWF      _sendData+8
-;Slave_Temp_humid.c,86 :: 		sendData[9] = '1';
-	MOVLW      49
-	MOVWF      _sendData+9
-;Slave_Temp_humid.c,87 :: 		sendData[10] = 'E';
-	MOVLW      69
-	MOVWF      _sendData+10
-;Slave_Temp_humid.c,88 :: 		RS485_send(sendData);
-	MOVLW      _sendData+0
-	MOVWF      FARG_RS485_send_dat+0
-	CALL       _RS485_send+0
-;Slave_Temp_humid.c,89 :: 		Delay_ms(1000);
-	MOVLW      26
+;Slave_Temp_humid.c,75 :: 		UART1_Init(9600);
+	MOVLW      129
+	MOVWF      SPBRG+0
+	BSF        TXSTA+0, 2
+	CALL       _UART1_Init+0
+;Slave_Temp_humid.c,76 :: 		TRISB.B3 =0;
+	BCF        TRISB+0, 3
+;Slave_Temp_humid.c,78 :: 		Delay_ms(100);
+	MOVLW      3
 	MOVWF      R11+0
-	MOVLW      94
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      110
+	MOVLW      85
 	MOVWF      R13+0
 L_main9:
 	DECFSZ     R13+0, 1
@@ -161,116 +127,142 @@ L_main9:
 	DECFSZ     R11+0, 1
 	GOTO       L_main9
 	NOP
-;Slave_Temp_humid.c,90 :: 		turnOffSpeaker();
-	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,91 :: 		while(1)
+	NOP
+;Slave_Temp_humid.c,79 :: 		RCIE_bit = 1;                        // enable interrupt on UART1 receive
+	BSF        RCIE_bit+0, BitPos(RCIE_bit+0)
+;Slave_Temp_humid.c,80 :: 		TXIE_bit = 0;                        // disable interrupt on UART1 transmit
+	BCF        TXIE_bit+0, BitPos(TXIE_bit+0)
+;Slave_Temp_humid.c,81 :: 		PEIE_bit = 1;                        // enable peripheral interrupts
+	BSF        PEIE_bit+0, BitPos(PEIE_bit+0)
+;Slave_Temp_humid.c,82 :: 		GIE_bit = 1;                         // enable all interrupts
+	BSF        GIE_bit+0, BitPos(GIE_bit+0)
+;Slave_Temp_humid.c,85 :: 		TRISB.B5 = 0;
+	BCF        TRISB+0, 5
+;Slave_Temp_humid.c,86 :: 		turnOnSpeaker();
+	CALL       _turnOnSpeaker+0
+;Slave_Temp_humid.c,90 :: 		Delay_ms(1000);
+	MOVLW      26
+	MOVWF      R11+0
+	MOVLW      94
+	MOVWF      R12+0
+	MOVLW      110
+	MOVWF      R13+0
 L_main10:
-;Slave_Temp_humid.c,93 :: 		if(flagReceivedAllData==1){
+	DECFSZ     R13+0, 1
+	GOTO       L_main10
+	DECFSZ     R12+0, 1
+	GOTO       L_main10
+	DECFSZ     R11+0, 1
+	GOTO       L_main10
+	NOP
+;Slave_Temp_humid.c,91 :: 		turnOffSpeaker();
+	CALL       _turnOffSpeaker+0
+;Slave_Temp_humid.c,92 :: 		sendData[0] = 'S';
+	MOVLW      83
+	MOVWF      _sendData+0
+;Slave_Temp_humid.c,93 :: 		sendData[1] = '0';
+	MOVLW      48
+	MOVWF      _sendData+1
+;Slave_Temp_humid.c,94 :: 		sendData[2] = '3';
+	MOVLW      51
+	MOVWF      _sendData+2
+;Slave_Temp_humid.c,95 :: 		sendData[3] = 'C';
+	MOVLW      67
+	MOVWF      _sendData+3
+;Slave_Temp_humid.c,96 :: 		sendData[4] = '0';
+	MOVLW      48
+	MOVWF      _sendData+4
+;Slave_Temp_humid.c,97 :: 		sendData[5] = '1';
+	MOVLW      49
+	MOVWF      _sendData+5
+;Slave_Temp_humid.c,98 :: 		sendData[6] = '0';
+	MOVLW      48
+	MOVWF      _sendData+6
+;Slave_Temp_humid.c,99 :: 		sendData[7] = '0';
+	MOVLW      48
+	MOVWF      _sendData+7
+;Slave_Temp_humid.c,100 :: 		sendData[8] = 'G';
+	MOVLW      71
+	MOVWF      _sendData+8
+;Slave_Temp_humid.c,101 :: 		sendData[9] = 'G';
+	MOVLW      71
+	MOVWF      _sendData+9
+;Slave_Temp_humid.c,102 :: 		sendData[10] = 'E';
+	MOVLW      69
+	MOVWF      _sendData+10
+;Slave_Temp_humid.c,103 :: 		RS485_send(sendData);
+	MOVLW      _sendData+0
+	MOVWF      FARG_RS485_send_dat+0
+	CALL       _RS485_send+0
+;Slave_Temp_humid.c,104 :: 		sendTemp();
+	CALL       _sendTemp+0
+;Slave_Temp_humid.c,105 :: 		while(1)
+L_main11:
+;Slave_Temp_humid.c,107 :: 		if(flagReceivedAllData==1){
 	MOVF       _flagReceivedAllData+0, 0
 	XORLW      1
 	BTFSS      STATUS+0, 2
-	GOTO       L_main12
-;Slave_Temp_humid.c,94 :: 		flagReceivedAllData = 0;
+	GOTO       L_main13
+;Slave_Temp_humid.c,108 :: 		flagReceivedAllData = 0;
 	CLRF       _flagReceivedAllData+0
-;Slave_Temp_humid.c,96 :: 		if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'C' && receiveData[4] == '0' && receiveData[5] == '1')
+;Slave_Temp_humid.c,110 :: 		if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'T')
 	MOVF       _receiveData+1, 0
 	XORLW      49
 	BTFSS      STATUS+0, 2
-	GOTO       L_main15
+	GOTO       L_main16
 	MOVF       _receiveData+2, 0
 	XORLW      51
 	BTFSS      STATUS+0, 2
-	GOTO       L_main15
-	MOVF       _receiveData+3, 0
-	XORLW      67
-	BTFSS      STATUS+0, 2
-	GOTO       L_main15
-	MOVF       _receiveData+4, 0
-	XORLW      48
-	BTFSS      STATUS+0, 2
-	GOTO       L_main15
-	MOVF       _receiveData+5, 0
-	XORLW      49
-	BTFSS      STATUS+0, 2
-	GOTO       L_main15
-L__main58:
-;Slave_Temp_humid.c,98 :: 		if(receiveData[9] == 'T'){
+	GOTO       L_main16
 	MOVF       _receiveData+9, 0
 	XORLW      84
 	BTFSS      STATUS+0, 2
 	GOTO       L_main16
-;Slave_Temp_humid.c,99 :: 		sendTemp();
+L__main62:
+;Slave_Temp_humid.c,112 :: 		sendTemp();
 	CALL       _sendTemp+0
-;Slave_Temp_humid.c,100 :: 		}
-L_main16:
-;Slave_Temp_humid.c,101 :: 		if(receiveData[9] == 'H'){
-	MOVF       _receiveData+9, 0
-	XORLW      72
-	BTFSS      STATUS+0, 2
-	GOTO       L_main17
-;Slave_Temp_humid.c,102 :: 		sendHumid();
-	CALL       _sendHumid+0
-;Slave_Temp_humid.c,103 :: 		}
-L_main17:
-;Slave_Temp_humid.c,104 :: 		Delay_ms(100);
+;Slave_Temp_humid.c,113 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
 	MOVWF      R12+0
 	MOVLW      85
 	MOVWF      R13+0
-L_main18:
+L_main17:
 	DECFSZ     R13+0, 1
-	GOTO       L_main18
+	GOTO       L_main17
 	DECFSZ     R12+0, 1
-	GOTO       L_main18
+	GOTO       L_main17
 	DECFSZ     R11+0, 1
-	GOTO       L_main18
+	GOTO       L_main17
 	NOP
 	NOP
-;Slave_Temp_humid.c,105 :: 		}
-L_main15:
-;Slave_Temp_humid.c,106 :: 		}
-L_main12:
-;Slave_Temp_humid.c,108 :: 		if (Button(&PORTB, 4, 1, 0)) {
-	MOVLW      PORTB+0
-	MOVWF      FARG_Button_port+0
-	MOVLW      4
-	MOVWF      FARG_Button_pin+0
-	MOVLW      1
-	MOVWF      FARG_Button_time_ms+0
-	CLRF       FARG_Button_active_state+0
-	CALL       _Button+0
-	MOVF       R0+0, 0
-	BTFSC      STATUS+0, 2
-	GOTO       L_main19
-;Slave_Temp_humid.c,109 :: 		gasStatus = 1;
-	MOVLW      1
-	MOVWF      _gasStatus+0
-	MOVLW      0
-	MOVWF      _gasStatus+1
-;Slave_Temp_humid.c,110 :: 		}
-L_main19:
-;Slave_Temp_humid.c,112 :: 		if (gasStatus == 1){
-	MOVLW      0
-	XORWF      _gasStatus+1, 0
-	BTFSS      STATUS+0, 2
-	GOTO       L__main62
-	MOVLW      1
-	XORWF      _gasStatus+0, 0
-L__main62:
+;Slave_Temp_humid.c,114 :: 		sendTemp();
+	CALL       _sendTemp+0
+;Slave_Temp_humid.c,115 :: 		}
+L_main16:
+;Slave_Temp_humid.c,116 :: 		if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'H'){
+	MOVF       _receiveData+1, 0
+	XORLW      49
 	BTFSS      STATUS+0, 2
 	GOTO       L_main20
-;Slave_Temp_humid.c,113 :: 		countGas++;
-	INCF       _countGas+0, 1
-	BTFSC      STATUS+0, 2
-	INCF       _countGas+1, 1
-;Slave_Temp_humid.c,114 :: 		Delay_ms(500);
-	MOVLW      13
+	MOVF       _receiveData+2, 0
+	XORLW      51
+	BTFSS      STATUS+0, 2
+	GOTO       L_main20
+	MOVF       _receiveData+9, 0
+	XORLW      72
+	BTFSS      STATUS+0, 2
+	GOTO       L_main20
+L__main61:
+;Slave_Temp_humid.c,117 :: 		sendHumid();
+	CALL       _sendHumid+0
+;Slave_Temp_humid.c,118 :: 		Delay_ms(100);
+	MOVLW      3
 	MOVWF      R11+0
-	MOVLW      175
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      182
+	MOVLW      85
 	MOVWF      R13+0
 L_main21:
 	DECFSZ     R13+0, 1
@@ -280,17 +272,14 @@ L_main21:
 	DECFSZ     R11+0, 1
 	GOTO       L_main21
 	NOP
-;Slave_Temp_humid.c,115 :: 		if(countGas == 10){
-	MOVLW      0
-	XORWF      _countGas+1, 0
-	BTFSS      STATUS+0, 2
-	GOTO       L__main63
-	MOVLW      10
-	XORWF      _countGas+0, 0
-L__main63:
-	BTFSS      STATUS+0, 2
-	GOTO       L_main22
-;Slave_Temp_humid.c,116 :: 		if (Button(&PORTB, 4, 1, 0)) {
+	NOP
+;Slave_Temp_humid.c,119 :: 		sendHumid();
+	CALL       _sendHumid+0
+;Slave_Temp_humid.c,120 :: 		}
+L_main20:
+;Slave_Temp_humid.c,121 :: 		}
+L_main13:
+;Slave_Temp_humid.c,124 :: 		if (Button(&PORTB, 4, 1, 0)) {
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      4
@@ -301,37 +290,54 @@ L__main63:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main23
-;Slave_Temp_humid.c,117 :: 		processSpeaker(1);
+	GOTO       L_main22
+;Slave_Temp_humid.c,125 :: 		gasStatus = 1;
 	MOVLW      1
-	MOVWF      FARG_processSpeaker_mode+0
+	MOVWF      _gasStatus+0
 	MOVLW      0
-	MOVWF      FARG_processSpeaker_mode+1
-	CALL       _processSpeaker+0
-;Slave_Temp_humid.c,118 :: 		}
-	GOTO       L_main24
-L_main23:
-;Slave_Temp_humid.c,120 :: 		gasStatus = 0;
-	CLRF       _gasStatus+0
-	CLRF       _gasStatus+1
-;Slave_Temp_humid.c,121 :: 		countGas = 0;
-	CLRF       _countGas+0
-	CLRF       _countGas+1
-;Slave_Temp_humid.c,122 :: 		}
-L_main24:
-;Slave_Temp_humid.c,123 :: 		}
+	MOVWF      _gasStatus+1
+;Slave_Temp_humid.c,126 :: 		}
 L_main22:
-;Slave_Temp_humid.c,124 :: 		if(countGas == 20){
+;Slave_Temp_humid.c,128 :: 		if (gasStatus == 1){
+	MOVLW      0
+	XORWF      _gasStatus+1, 0
+	BTFSS      STATUS+0, 2
+	GOTO       L__main66
+	MOVLW      1
+	XORWF      _gasStatus+0, 0
+L__main66:
+	BTFSS      STATUS+0, 2
+	GOTO       L_main23
+;Slave_Temp_humid.c,129 :: 		countGas++;
+	INCF       _countGas+0, 1
+	BTFSC      STATUS+0, 2
+	INCF       _countGas+1, 1
+;Slave_Temp_humid.c,130 :: 		Delay_ms(500);
+	MOVLW      13
+	MOVWF      R11+0
+	MOVLW      175
+	MOVWF      R12+0
+	MOVLW      182
+	MOVWF      R13+0
+L_main24:
+	DECFSZ     R13+0, 1
+	GOTO       L_main24
+	DECFSZ     R12+0, 1
+	GOTO       L_main24
+	DECFSZ     R11+0, 1
+	GOTO       L_main24
+	NOP
+;Slave_Temp_humid.c,131 :: 		if(countGas == 10){
 	MOVLW      0
 	XORWF      _countGas+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main64
-	MOVLW      20
+	GOTO       L__main67
+	MOVLW      10
 	XORWF      _countGas+0, 0
-L__main64:
+L__main67:
 	BTFSS      STATUS+0, 2
 	GOTO       L_main25
-;Slave_Temp_humid.c,125 :: 		if (Button(&PORTB, 4, 1, 0)) {
+;Slave_Temp_humid.c,132 :: 		if (Button(&PORTB, 4, 1, 0)) {
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      4
@@ -343,38 +349,79 @@ L__main64:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main26
-;Slave_Temp_humid.c,126 :: 		processSpeaker(2);
+;Slave_Temp_humid.c,133 :: 		processSpeaker(1);
+	MOVLW      1
+	MOVWF      FARG_processSpeaker_mode+0
+	MOVLW      0
+	MOVWF      FARG_processSpeaker_mode+1
+	CALL       _processSpeaker+0
+;Slave_Temp_humid.c,134 :: 		}
+	GOTO       L_main27
+L_main26:
+;Slave_Temp_humid.c,136 :: 		gasStatus = 0;
+	CLRF       _gasStatus+0
+	CLRF       _gasStatus+1
+;Slave_Temp_humid.c,137 :: 		countGas = 0;
+	CLRF       _countGas+0
+	CLRF       _countGas+1
+;Slave_Temp_humid.c,138 :: 		}
+L_main27:
+;Slave_Temp_humid.c,139 :: 		}
+L_main25:
+;Slave_Temp_humid.c,140 :: 		if(countGas == 20){
+	MOVLW      0
+	XORWF      _countGas+1, 0
+	BTFSS      STATUS+0, 2
+	GOTO       L__main68
+	MOVLW      20
+	XORWF      _countGas+0, 0
+L__main68:
+	BTFSS      STATUS+0, 2
+	GOTO       L_main28
+;Slave_Temp_humid.c,141 :: 		if (Button(&PORTB, 4, 1, 0)) {
+	MOVLW      PORTB+0
+	MOVWF      FARG_Button_port+0
+	MOVLW      4
+	MOVWF      FARG_Button_pin+0
+	MOVLW      1
+	MOVWF      FARG_Button_time_ms+0
+	CLRF       FARG_Button_active_state+0
+	CALL       _Button+0
+	MOVF       R0+0, 0
+	BTFSC      STATUS+0, 2
+	GOTO       L_main29
+;Slave_Temp_humid.c,142 :: 		processSpeaker(2);
 	MOVLW      2
 	MOVWF      FARG_processSpeaker_mode+0
 	MOVLW      0
 	MOVWF      FARG_processSpeaker_mode+1
 	CALL       _processSpeaker+0
-;Slave_Temp_humid.c,127 :: 		}
-	GOTO       L_main27
-L_main26:
-;Slave_Temp_humid.c,129 :: 		gasStatus = 0;
+;Slave_Temp_humid.c,143 :: 		}
+	GOTO       L_main30
+L_main29:
+;Slave_Temp_humid.c,145 :: 		gasStatus = 0;
 	CLRF       _gasStatus+0
 	CLRF       _gasStatus+1
-;Slave_Temp_humid.c,130 :: 		countGas = 0;
+;Slave_Temp_humid.c,146 :: 		countGas = 0;
 	CLRF       _countGas+0
 	CLRF       _countGas+1
-;Slave_Temp_humid.c,131 :: 		}
-L_main27:
-;Slave_Temp_humid.c,132 :: 		}
-L_main25:
-;Slave_Temp_humid.c,133 :: 		if(countGas >= 30 && countGas % 10 == 0 ){
+;Slave_Temp_humid.c,147 :: 		}
+L_main30:
+;Slave_Temp_humid.c,148 :: 		}
+L_main28:
+;Slave_Temp_humid.c,149 :: 		if(countGas >= 30 && countGas % 10 == 0 ){
 	MOVLW      128
 	XORWF      _countGas+1, 0
 	MOVWF      R0+0
 	MOVLW      128
 	SUBWF      R0+0, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main65
+	GOTO       L__main69
 	MOVLW      30
 	SUBWF      _countGas+0, 0
-L__main65:
+L__main69:
 	BTFSS      STATUS+0, 0
-	GOTO       L_main30
+	GOTO       L_main33
 	MOVLW      10
 	MOVWF      R4+0
 	MOVLW      0
@@ -391,14 +438,14 @@ L__main65:
 	MOVLW      0
 	XORWF      R0+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main66
+	GOTO       L__main70
 	MOVLW      0
 	XORWF      R0+0, 0
-L__main66:
+L__main70:
 	BTFSS      STATUS+0, 2
-	GOTO       L_main30
-L__main57:
-;Slave_Temp_humid.c,134 :: 		if (Button(&PORTB, 4, 1, 0)) {
+	GOTO       L_main33
+L__main60:
+;Slave_Temp_humid.c,150 :: 		if (Button(&PORTB, 4, 1, 0)) {
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      4
@@ -409,182 +456,182 @@ L__main57:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main31
-;Slave_Temp_humid.c,135 :: 		processSpeaker(3);
+	GOTO       L_main34
+;Slave_Temp_humid.c,151 :: 		processSpeaker(3);
 	MOVLW      3
 	MOVWF      FARG_processSpeaker_mode+0
 	MOVLW      0
 	MOVWF      FARG_processSpeaker_mode+1
 	CALL       _processSpeaker+0
-;Slave_Temp_humid.c,136 :: 		sendGasStatus();
+;Slave_Temp_humid.c,152 :: 		sendGasStatus();
 	CALL       _sendGasStatus+0
-;Slave_Temp_humid.c,137 :: 		}
-	GOTO       L_main32
-L_main31:
-;Slave_Temp_humid.c,139 :: 		gasStatus = 0;
+;Slave_Temp_humid.c,153 :: 		}
+	GOTO       L_main35
+L_main34:
+;Slave_Temp_humid.c,155 :: 		gasStatus = 0;
 	CLRF       _gasStatus+0
 	CLRF       _gasStatus+1
-;Slave_Temp_humid.c,140 :: 		countGas = 0;
+;Slave_Temp_humid.c,156 :: 		countGas = 0;
 	CLRF       _countGas+0
 	CLRF       _countGas+1
-;Slave_Temp_humid.c,141 :: 		sendGasStatus();
+;Slave_Temp_humid.c,157 :: 		sendGasStatus();
 	CALL       _sendGasStatus+0
-;Slave_Temp_humid.c,142 :: 		}
-L_main32:
-;Slave_Temp_humid.c,143 :: 		}
-L_main30:
-;Slave_Temp_humid.c,144 :: 		if(countGas == 65000){
+;Slave_Temp_humid.c,158 :: 		}
+L_main35:
+;Slave_Temp_humid.c,159 :: 		}
+L_main33:
+;Slave_Temp_humid.c,160 :: 		if(countGas == 65000){
 	MOVF       _countGas+1, 0
 	XORLW      253
 	BTFSS      STATUS+0, 2
-	GOTO       L__main67
+	GOTO       L__main71
 	MOVLW      232
 	XORWF      _countGas+0, 0
-L__main67:
+L__main71:
 	BTFSS      STATUS+0, 2
-	GOTO       L_main33
-;Slave_Temp_humid.c,145 :: 		countGas = 30;
+	GOTO       L_main36
+;Slave_Temp_humid.c,161 :: 		countGas = 30;
 	MOVLW      30
 	MOVWF      _countGas+0
 	MOVLW      0
 	MOVWF      _countGas+1
-;Slave_Temp_humid.c,146 :: 		}
-L_main33:
-;Slave_Temp_humid.c,147 :: 		}
-L_main20:
-;Slave_Temp_humid.c,168 :: 		}
-	GOTO       L_main10
-;Slave_Temp_humid.c,169 :: 		}
+;Slave_Temp_humid.c,162 :: 		}
+L_main36:
+;Slave_Temp_humid.c,163 :: 		}
+L_main23:
+;Slave_Temp_humid.c,165 :: 		}
+	GOTO       L_main11
+;Slave_Temp_humid.c,166 :: 		}
 L_end_main:
 	GOTO       $+0
 ; end of _main
 
 _RS485_send:
 
-;Slave_Temp_humid.c,174 :: 		void RS485_send (char dat[])
-;Slave_Temp_humid.c,177 :: 		PORTB.RB3 =1;
+;Slave_Temp_humid.c,171 :: 		void RS485_send (char dat[])
+;Slave_Temp_humid.c,174 :: 		PORTB.RB3 =1;
 	BSF        PORTB+0, 3
-;Slave_Temp_humid.c,178 :: 		for (i=0; i<=10;i++){
+;Slave_Temp_humid.c,175 :: 		for (i=0; i<=10;i++){
 	CLRF       RS485_send_i_L0+0
 	CLRF       RS485_send_i_L0+1
-L_RS485_send34:
+L_RS485_send37:
 	MOVLW      128
 	MOVWF      R0+0
 	MOVLW      128
 	XORWF      RS485_send_i_L0+1, 0
 	SUBWF      R0+0, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__RS485_send69
+	GOTO       L__RS485_send73
 	MOVF       RS485_send_i_L0+0, 0
 	SUBLW      10
-L__RS485_send69:
+L__RS485_send73:
 	BTFSS      STATUS+0, 0
-	GOTO       L_RS485_send35
-;Slave_Temp_humid.c,179 :: 		while(UART1_Tx_Idle()==0);
-L_RS485_send37:
+	GOTO       L_RS485_send38
+;Slave_Temp_humid.c,176 :: 		while(UART1_Tx_Idle()==0);
+L_RS485_send40:
 	CALL       _UART1_Tx_Idle+0
 	MOVF       R0+0, 0
 	XORLW      0
 	BTFSS      STATUS+0, 2
-	GOTO       L_RS485_send38
-	GOTO       L_RS485_send37
-L_RS485_send38:
-;Slave_Temp_humid.c,180 :: 		UART1_Write(dat[i]);
+	GOTO       L_RS485_send41
+	GOTO       L_RS485_send40
+L_RS485_send41:
+;Slave_Temp_humid.c,177 :: 		UART1_Write(dat[i]);
 	MOVF       RS485_send_i_L0+0, 0
 	ADDWF      FARG_RS485_send_dat+0, 0
 	MOVWF      FSR
 	MOVF       INDF+0, 0
 	MOVWF      FARG_UART1_Write_data_+0
 	CALL       _UART1_Write+0
-;Slave_Temp_humid.c,178 :: 		for (i=0; i<=10;i++){
+;Slave_Temp_humid.c,175 :: 		for (i=0; i<=10;i++){
 	INCF       RS485_send_i_L0+0, 1
 	BTFSC      STATUS+0, 2
 	INCF       RS485_send_i_L0+1, 1
-;Slave_Temp_humid.c,181 :: 		}
-	GOTO       L_RS485_send34
-L_RS485_send35:
-;Slave_Temp_humid.c,182 :: 		Delay_ms(100);
-	MOVLW      3
+;Slave_Temp_humid.c,178 :: 		}
+	GOTO       L_RS485_send37
+L_RS485_send38:
+;Slave_Temp_humid.c,179 :: 		Delay_ms(200);
+	MOVLW      6
 	MOVWF      R11+0
-	MOVLW      138
+	MOVLW      19
 	MOVWF      R12+0
-	MOVLW      85
+	MOVLW      173
 	MOVWF      R13+0
-L_RS485_send39:
+L_RS485_send42:
 	DECFSZ     R13+0, 1
-	GOTO       L_RS485_send39
+	GOTO       L_RS485_send42
 	DECFSZ     R12+0, 1
-	GOTO       L_RS485_send39
+	GOTO       L_RS485_send42
 	DECFSZ     R11+0, 1
-	GOTO       L_RS485_send39
+	GOTO       L_RS485_send42
 	NOP
 	NOP
-;Slave_Temp_humid.c,183 :: 		PORTB.RB3 =0;
+;Slave_Temp_humid.c,180 :: 		PORTB.RB3 =0;
 	BCF        PORTB+0, 3
-;Slave_Temp_humid.c,184 :: 		}
+;Slave_Temp_humid.c,181 :: 		}
 L_end_RS485_send:
 	RETURN
 ; end of _RS485_send
 
 _initSensor:
 
-;Slave_Temp_humid.c,186 :: 		void initSensor(void){
-;Slave_Temp_humid.c,188 :: 		TRISB4_bit = 1;
+;Slave_Temp_humid.c,183 :: 		void initSensor(void){
+;Slave_Temp_humid.c,185 :: 		TRISB4_bit = 1;
 	BSF        TRISB4_bit+0, BitPos(TRISB4_bit+0)
-;Slave_Temp_humid.c,190 :: 		TRISB5_bit = 1;
-	BSF        TRISB5_bit+0, BitPos(TRISB5_bit+0)
-;Slave_Temp_humid.c,192 :: 		TRISB.B5 = 0;
+;Slave_Temp_humid.c,187 :: 		TRISB.B5 = 0;
 	BCF        TRISB+0, 5
-;Slave_Temp_humid.c,193 :: 		turnOnSpeaker();
+;Slave_Temp_humid.c,188 :: 		turnOnSpeaker();
 	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,196 :: 		}
+;Slave_Temp_humid.c,189 :: 		}
 L_end_initSensor:
 	RETURN
 ; end of _initSensor
 
 _initRS485:
 
-;Slave_Temp_humid.c,198 :: 		void initRS485(void){
-;Slave_Temp_humid.c,199 :: 		UART1_Init(9600);
+;Slave_Temp_humid.c,191 :: 		void initRS485(void){
+;Slave_Temp_humid.c,192 :: 		UART1_Init(9600);
 	MOVLW      129
 	MOVWF      SPBRG+0
 	BSF        TXSTA+0, 2
 	CALL       _UART1_Init+0
-;Slave_Temp_humid.c,200 :: 		TRISB.B3 =0;
+;Slave_Temp_humid.c,193 :: 		TRISB.B3 =0;
 	BCF        TRISB+0, 3
-;Slave_Temp_humid.c,201 :: 		Delay_ms(100);
+;Slave_Temp_humid.c,194 :: 		PORTB.RB3 =0;
+	BCF        PORTB+0, 3
+;Slave_Temp_humid.c,195 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
 	MOVWF      R12+0
 	MOVLW      85
 	MOVWF      R13+0
-L_initRS48540:
+L_initRS48543:
 	DECFSZ     R13+0, 1
-	GOTO       L_initRS48540
+	GOTO       L_initRS48543
 	DECFSZ     R12+0, 1
-	GOTO       L_initRS48540
+	GOTO       L_initRS48543
 	DECFSZ     R11+0, 1
-	GOTO       L_initRS48540
+	GOTO       L_initRS48543
 	NOP
 	NOP
-;Slave_Temp_humid.c,202 :: 		RCIE_bit = 1;                        // enable interrupt on UART1 receive
+;Slave_Temp_humid.c,196 :: 		RCIE_bit = 1;                        // enable interrupt on UART1 receive
 	BSF        RCIE_bit+0, BitPos(RCIE_bit+0)
-;Slave_Temp_humid.c,203 :: 		TXIE_bit = 0;                        // disable interrupt on UART1 transmit
+;Slave_Temp_humid.c,197 :: 		TXIE_bit = 0;                        // disable interrupt on UART1 transmit
 	BCF        TXIE_bit+0, BitPos(TXIE_bit+0)
-;Slave_Temp_humid.c,204 :: 		PEIE_bit = 1;                        // enable peripheral interrupts
+;Slave_Temp_humid.c,198 :: 		PEIE_bit = 1;                        // enable peripheral interrupts
 	BSF        PEIE_bit+0, BitPos(PEIE_bit+0)
-;Slave_Temp_humid.c,205 :: 		GIE_bit = 1;                         // enable all interrupts
+;Slave_Temp_humid.c,199 :: 		GIE_bit = 1;                         // enable all interrupts
 	BSF        GIE_bit+0, BitPos(GIE_bit+0)
-;Slave_Temp_humid.c,206 :: 		}
+;Slave_Temp_humid.c,200 :: 		}
 L_end_initRS485:
 	RETURN
 ; end of _initRS485
 
 _sendTemp:
 
-;Slave_Temp_humid.c,208 :: 		void sendTemp(void){
-;Slave_Temp_humid.c,209 :: 		value = DHT11_Read();
+;Slave_Temp_humid.c,202 :: 		void sendTemp(void){
+;Slave_Temp_humid.c,203 :: 		value = DHT11_Read();
 	CALL       _DHT11_Read+0
 	MOVF       R0+0, 0
 	MOVWF      _value+0
@@ -592,7 +639,7 @@ _sendTemp:
 	MOVWF      _value+1
 	CLRF       _value+2
 	CLRF       _value+3
-;Slave_Temp_humid.c,210 :: 		temp = value & 0xFF;
+;Slave_Temp_humid.c,204 :: 		temp = value & 0xFF;
 	MOVLW      255
 	ANDWF      _value+0, 0
 	MOVWF      FLOC__sendTemp+2
@@ -604,7 +651,7 @@ _sendTemp:
 	MOVWF      _temp+0
 	MOVF       FLOC__sendTemp+3, 0
 	MOVWF      _temp+1
-;Slave_Temp_humid.c,211 :: 		a = temp/10;
+;Slave_Temp_humid.c,205 :: 		a = temp/10;
 	MOVLW      10
 	MOVWF      R4+0
 	MOVLW      0
@@ -622,7 +669,7 @@ _sendTemp:
 	MOVWF      _a+0
 	MOVF       FLOC__sendTemp+1, 0
 	MOVWF      _a+1
-;Slave_Temp_humid.c,212 :: 		b = temp - 10*a;
+;Slave_Temp_humid.c,206 :: 		b = temp - 10*a;
 	MOVLW      10
 	MOVWF      R0+0
 	MOVLW      0
@@ -644,54 +691,54 @@ _sendTemp:
 	MOVWF      _b+0
 	MOVF       R0+1, 0
 	MOVWF      _b+1
-;Slave_Temp_humid.c,213 :: 		sendData[0] = 'S';
+;Slave_Temp_humid.c,207 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
-;Slave_Temp_humid.c,214 :: 		sendData[1] = '0';
+;Slave_Temp_humid.c,208 :: 		sendData[1] = '0';
 	MOVLW      48
 	MOVWF      _sendData+1
-;Slave_Temp_humid.c,215 :: 		sendData[2] = '3';
+;Slave_Temp_humid.c,209 :: 		sendData[2] = '3';
 	MOVLW      51
 	MOVWF      _sendData+2
-;Slave_Temp_humid.c,216 :: 		sendData[3] = 'C';
+;Slave_Temp_humid.c,210 :: 		sendData[3] = 'C';
 	MOVLW      67
 	MOVWF      _sendData+3
-;Slave_Temp_humid.c,217 :: 		sendData[4] = '0';
+;Slave_Temp_humid.c,211 :: 		sendData[4] = '0';
 	MOVLW      48
 	MOVWF      _sendData+4
-;Slave_Temp_humid.c,218 :: 		sendData[5] = '1';
+;Slave_Temp_humid.c,212 :: 		sendData[5] = '1';
 	MOVLW      49
 	MOVWF      _sendData+5
-;Slave_Temp_humid.c,219 :: 		sendData[6] = '0';
+;Slave_Temp_humid.c,213 :: 		sendData[6] = '0';
 	MOVLW      48
 	MOVWF      _sendData+6
-;Slave_Temp_humid.c,220 :: 		sendData[7] = (char)a+48;
+;Slave_Temp_humid.c,214 :: 		sendData[7] = (char)a+48;
 	MOVLW      48
 	ADDWF      FLOC__sendTemp+0, 0
 	MOVWF      _sendData+7
-;Slave_Temp_humid.c,221 :: 		sendData[8] = (char)b+48;
+;Slave_Temp_humid.c,215 :: 		sendData[8] = (char)b+48;
 	MOVLW      48
 	ADDWF      R0+0, 0
 	MOVWF      _sendData+8
-;Slave_Temp_humid.c,222 :: 		sendData[9] = 'T';
+;Slave_Temp_humid.c,216 :: 		sendData[9] = 'T';
 	MOVLW      84
 	MOVWF      _sendData+9
-;Slave_Temp_humid.c,223 :: 		sendData[10] = 'E';
+;Slave_Temp_humid.c,217 :: 		sendData[10] = 'E';
 	MOVLW      69
 	MOVWF      _sendData+10
-;Slave_Temp_humid.c,224 :: 		RS485_send(sendData);
+;Slave_Temp_humid.c,218 :: 		RS485_send(sendData);
 	MOVLW      _sendData+0
 	MOVWF      FARG_RS485_send_dat+0
 	CALL       _RS485_send+0
-;Slave_Temp_humid.c,225 :: 		}
+;Slave_Temp_humid.c,219 :: 		}
 L_end_sendTemp:
 	RETURN
 ; end of _sendTemp
 
 _sendHumid:
 
-;Slave_Temp_humid.c,227 :: 		void sendHumid(void){
-;Slave_Temp_humid.c,228 :: 		value = DHT11_Read();
+;Slave_Temp_humid.c,221 :: 		void sendHumid(void){
+;Slave_Temp_humid.c,222 :: 		value = DHT11_Read();
 	CALL       _DHT11_Read+0
 	MOVF       R0+0, 0
 	MOVWF      _value+0
@@ -699,7 +746,7 @@ _sendHumid:
 	MOVWF      _value+1
 	CLRF       _value+2
 	CLRF       _value+3
-;Slave_Temp_humid.c,229 :: 		hum = value >> 8;
+;Slave_Temp_humid.c,223 :: 		hum = value >> 8;
 	MOVF       _value+1, 0
 	MOVWF      FLOC__sendHumid+2
 	MOVF       _value+2, 0
@@ -714,7 +761,7 @@ _sendHumid:
 	MOVWF      _hum+0
 	MOVF       FLOC__sendHumid+3, 0
 	MOVWF      _hum+1
-;Slave_Temp_humid.c,230 :: 		a = hum/10;
+;Slave_Temp_humid.c,224 :: 		a = hum/10;
 	MOVLW      10
 	MOVWF      R4+0
 	MOVLW      0
@@ -732,7 +779,7 @@ _sendHumid:
 	MOVWF      _a+0
 	MOVF       FLOC__sendHumid+1, 0
 	MOVWF      _a+1
-;Slave_Temp_humid.c,231 :: 		b = hum - 10*a;
+;Slave_Temp_humid.c,225 :: 		b = hum - 10*a;
 	MOVLW      10
 	MOVWF      R0+0
 	MOVLW      0
@@ -754,186 +801,132 @@ _sendHumid:
 	MOVWF      _b+0
 	MOVF       R0+1, 0
 	MOVWF      _b+1
-;Slave_Temp_humid.c,232 :: 		sendData[0] = 'S';
+;Slave_Temp_humid.c,226 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
-;Slave_Temp_humid.c,233 :: 		sendData[1] = '0';
+;Slave_Temp_humid.c,227 :: 		sendData[1] = '0';
 	MOVLW      48
 	MOVWF      _sendData+1
-;Slave_Temp_humid.c,234 :: 		sendData[2] = '3';
+;Slave_Temp_humid.c,228 :: 		sendData[2] = '3';
 	MOVLW      51
 	MOVWF      _sendData+2
-;Slave_Temp_humid.c,235 :: 		sendData[3] = 'C';
+;Slave_Temp_humid.c,229 :: 		sendData[3] = 'C';
 	MOVLW      67
 	MOVWF      _sendData+3
-;Slave_Temp_humid.c,236 :: 		sendData[4] = '0';
+;Slave_Temp_humid.c,230 :: 		sendData[4] = '0';
 	MOVLW      48
 	MOVWF      _sendData+4
-;Slave_Temp_humid.c,237 :: 		sendData[5] = '1';
+;Slave_Temp_humid.c,231 :: 		sendData[5] = '1';
 	MOVLW      49
 	MOVWF      _sendData+5
-;Slave_Temp_humid.c,238 :: 		sendData[6] = '0';
+;Slave_Temp_humid.c,232 :: 		sendData[6] = '0';
 	MOVLW      48
 	MOVWF      _sendData+6
-;Slave_Temp_humid.c,239 :: 		sendData[7] = (char)a+48;
+;Slave_Temp_humid.c,233 :: 		sendData[7] = (char)a+48;
 	MOVLW      48
 	ADDWF      FLOC__sendHumid+0, 0
 	MOVWF      _sendData+7
-;Slave_Temp_humid.c,240 :: 		sendData[8] = (char)b+48;
+;Slave_Temp_humid.c,234 :: 		sendData[8] = (char)b+48;
 	MOVLW      48
 	ADDWF      R0+0, 0
 	MOVWF      _sendData+8
-;Slave_Temp_humid.c,241 :: 		sendData[9] = 'H';
+;Slave_Temp_humid.c,235 :: 		sendData[9] = 'H';
 	MOVLW      72
 	MOVWF      _sendData+9
-;Slave_Temp_humid.c,242 :: 		sendData[10] = 'E';
+;Slave_Temp_humid.c,236 :: 		sendData[10] = 'E';
 	MOVLW      69
 	MOVWF      _sendData+10
-;Slave_Temp_humid.c,243 :: 		RS485_send(sendData);
+;Slave_Temp_humid.c,237 :: 		RS485_send(sendData);
 	MOVLW      _sendData+0
 	MOVWF      FARG_RS485_send_dat+0
 	CALL       _RS485_send+0
-;Slave_Temp_humid.c,244 :: 		}
+;Slave_Temp_humid.c,238 :: 		}
 L_end_sendHumid:
 	RETURN
 ; end of _sendHumid
 
 _sendGasStatus:
 
-;Slave_Temp_humid.c,246 :: 		void sendGasStatus(void){
-;Slave_Temp_humid.c,247 :: 		sendData[0] = 'S';
+;Slave_Temp_humid.c,240 :: 		void sendGasStatus(void){
+;Slave_Temp_humid.c,241 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
-;Slave_Temp_humid.c,248 :: 		sendData[1] = '0';
+;Slave_Temp_humid.c,242 :: 		sendData[1] = '0';
 	MOVLW      48
 	MOVWF      _sendData+1
-;Slave_Temp_humid.c,249 :: 		sendData[2] = '3';
+;Slave_Temp_humid.c,243 :: 		sendData[2] = '3';
 	MOVLW      51
 	MOVWF      _sendData+2
-;Slave_Temp_humid.c,250 :: 		sendData[3] = 'C';
+;Slave_Temp_humid.c,244 :: 		sendData[3] = 'C';
 	MOVLW      67
 	MOVWF      _sendData+3
-;Slave_Temp_humid.c,251 :: 		sendData[4] = '0';
+;Slave_Temp_humid.c,245 :: 		sendData[4] = '0';
 	MOVLW      48
 	MOVWF      _sendData+4
-;Slave_Temp_humid.c,252 :: 		sendData[5] = '1';
+;Slave_Temp_humid.c,246 :: 		sendData[5] = '1';
 	MOVLW      49
 	MOVWF      _sendData+5
-;Slave_Temp_humid.c,253 :: 		sendData[6] = '0';
+;Slave_Temp_humid.c,247 :: 		sendData[6] = '0';
 	MOVLW      48
 	MOVWF      _sendData+6
-;Slave_Temp_humid.c,254 :: 		sendData[7] = '0';
+;Slave_Temp_humid.c,248 :: 		sendData[7] = '0';
 	MOVLW      48
 	MOVWF      _sendData+7
-;Slave_Temp_humid.c,255 :: 		sendData[8] = (char)gasStatus+48;
+;Slave_Temp_humid.c,249 :: 		sendData[8] = (char)gasStatus+48;
 	MOVLW      48
 	ADDWF      _gasStatus+0, 0
 	MOVWF      _sendData+8
-;Slave_Temp_humid.c,256 :: 		sendData[9] = 'G';
+;Slave_Temp_humid.c,250 :: 		sendData[9] = 'G';
 	MOVLW      71
 	MOVWF      _sendData+9
-;Slave_Temp_humid.c,257 :: 		sendData[10] = 'E';
+;Slave_Temp_humid.c,251 :: 		sendData[10] = 'E';
 	MOVLW      69
 	MOVWF      _sendData+10
-;Slave_Temp_humid.c,258 :: 		RS485_send(sendData);
+;Slave_Temp_humid.c,252 :: 		RS485_send(sendData);
 	MOVLW      _sendData+0
 	MOVWF      FARG_RS485_send_dat+0
 	CALL       _RS485_send+0
-;Slave_Temp_humid.c,259 :: 		}
+;Slave_Temp_humid.c,253 :: 		}
 L_end_sendGasStatus:
 	RETURN
 ; end of _sendGasStatus
 
 _turnOnSpeaker:
 
-;Slave_Temp_humid.c,261 :: 		void turnOnSpeaker(void){
-;Slave_Temp_humid.c,262 :: 		PORTB.RB5 = 1;
+;Slave_Temp_humid.c,255 :: 		void turnOnSpeaker(void){
+;Slave_Temp_humid.c,256 :: 		PORTB.RB5 = 1;
 	BSF        PORTB+0, 5
-;Slave_Temp_humid.c,264 :: 		}
+;Slave_Temp_humid.c,258 :: 		}
 L_end_turnOnSpeaker:
 	RETURN
 ; end of _turnOnSpeaker
 
 _turnOffSpeaker:
 
-;Slave_Temp_humid.c,266 :: 		void turnOffSpeaker(void){
-;Slave_Temp_humid.c,267 :: 		PORTB.RB5 = 0;
+;Slave_Temp_humid.c,260 :: 		void turnOffSpeaker(void){
+;Slave_Temp_humid.c,261 :: 		PORTB.RB5 = 0;
 	BCF        PORTB+0, 5
-;Slave_Temp_humid.c,269 :: 		}
+;Slave_Temp_humid.c,263 :: 		}
 L_end_turnOffSpeaker:
 	RETURN
 ; end of _turnOffSpeaker
 
 _processSpeaker:
 
-;Slave_Temp_humid.c,271 :: 		void processSpeaker(int mode){
-;Slave_Temp_humid.c,272 :: 		if(mode == 1){
+;Slave_Temp_humid.c,265 :: 		void processSpeaker(int mode){
+;Slave_Temp_humid.c,266 :: 		if(mode == 1){
 	MOVLW      0
 	XORWF      FARG_processSpeaker_mode+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__processSpeaker78
+	GOTO       L__processSpeaker82
 	MOVLW      1
 	XORWF      FARG_processSpeaker_mode+0, 0
-L__processSpeaker78:
+L__processSpeaker82:
 	BTFSS      STATUS+0, 2
-	GOTO       L_processSpeaker41
-;Slave_Temp_humid.c,273 :: 		turnOnSpeaker();
+	GOTO       L_processSpeaker44
+;Slave_Temp_humid.c,267 :: 		turnOnSpeaker();
 	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,274 :: 		Delay_ms(100);
-	MOVLW      3
-	MOVWF      R11+0
-	MOVLW      138
-	MOVWF      R12+0
-	MOVLW      85
-	MOVWF      R13+0
-L_processSpeaker42:
-	DECFSZ     R13+0, 1
-	GOTO       L_processSpeaker42
-	DECFSZ     R12+0, 1
-	GOTO       L_processSpeaker42
-	DECFSZ     R11+0, 1
-	GOTO       L_processSpeaker42
-	NOP
-	NOP
-;Slave_Temp_humid.c,275 :: 		turnOffSpeaker();
-	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,276 :: 		Delay_ms(100);
-	MOVLW      3
-	MOVWF      R11+0
-	MOVLW      138
-	MOVWF      R12+0
-	MOVLW      85
-	MOVWF      R13+0
-L_processSpeaker43:
-	DECFSZ     R13+0, 1
-	GOTO       L_processSpeaker43
-	DECFSZ     R12+0, 1
-	GOTO       L_processSpeaker43
-	DECFSZ     R11+0, 1
-	GOTO       L_processSpeaker43
-	NOP
-	NOP
-;Slave_Temp_humid.c,277 :: 		turnOnSpeaker();
-	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,278 :: 		Delay_ms(100);
-	MOVLW      3
-	MOVWF      R11+0
-	MOVLW      138
-	MOVWF      R12+0
-	MOVLW      85
-	MOVWF      R13+0
-L_processSpeaker44:
-	DECFSZ     R13+0, 1
-	GOTO       L_processSpeaker44
-	DECFSZ     R12+0, 1
-	GOTO       L_processSpeaker44
-	DECFSZ     R11+0, 1
-	GOTO       L_processSpeaker44
-	NOP
-	NOP
-;Slave_Temp_humid.c,279 :: 		turnOffSpeaker();
-	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,280 :: 		Delay_ms(100);
+;Slave_Temp_humid.c,268 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
@@ -949,26 +942,32 @@ L_processSpeaker45:
 	GOTO       L_processSpeaker45
 	NOP
 	NOP
-;Slave_Temp_humid.c,281 :: 		}
-L_processSpeaker41:
-;Slave_Temp_humid.c,282 :: 		if(mode == 2){
-	MOVLW      0
-	XORWF      FARG_processSpeaker_mode+1, 0
-	BTFSS      STATUS+0, 2
-	GOTO       L__processSpeaker79
-	MOVLW      2
-	XORWF      FARG_processSpeaker_mode+0, 0
-L__processSpeaker79:
-	BTFSS      STATUS+0, 2
-	GOTO       L_processSpeaker46
-;Slave_Temp_humid.c,283 :: 		turnOnSpeaker();
-	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,284 :: 		Delay_ms(200);
-	MOVLW      6
+;Slave_Temp_humid.c,269 :: 		turnOffSpeaker();
+	CALL       _turnOffSpeaker+0
+;Slave_Temp_humid.c,270 :: 		Delay_ms(100);
+	MOVLW      3
 	MOVWF      R11+0
-	MOVLW      19
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      173
+	MOVLW      85
+	MOVWF      R13+0
+L_processSpeaker46:
+	DECFSZ     R13+0, 1
+	GOTO       L_processSpeaker46
+	DECFSZ     R12+0, 1
+	GOTO       L_processSpeaker46
+	DECFSZ     R11+0, 1
+	GOTO       L_processSpeaker46
+	NOP
+	NOP
+;Slave_Temp_humid.c,271 :: 		turnOnSpeaker();
+	CALL       _turnOnSpeaker+0
+;Slave_Temp_humid.c,272 :: 		Delay_ms(100);
+	MOVLW      3
+	MOVWF      R11+0
+	MOVLW      138
+	MOVWF      R12+0
+	MOVLW      85
 	MOVWF      R13+0
 L_processSpeaker47:
 	DECFSZ     R13+0, 1
@@ -979,14 +978,14 @@ L_processSpeaker47:
 	GOTO       L_processSpeaker47
 	NOP
 	NOP
-;Slave_Temp_humid.c,285 :: 		turnOffSpeaker();
+;Slave_Temp_humid.c,273 :: 		turnOffSpeaker();
 	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,286 :: 		Delay_ms(200);
-	MOVLW      6
+;Slave_Temp_humid.c,274 :: 		Delay_ms(100);
+	MOVLW      3
 	MOVWF      R11+0
-	MOVLW      19
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      173
+	MOVLW      85
 	MOVWF      R13+0
 L_processSpeaker48:
 	DECFSZ     R13+0, 1
@@ -997,27 +996,21 @@ L_processSpeaker48:
 	GOTO       L_processSpeaker48
 	NOP
 	NOP
-;Slave_Temp_humid.c,287 :: 		turnOnSpeaker();
+;Slave_Temp_humid.c,275 :: 		}
+L_processSpeaker44:
+;Slave_Temp_humid.c,276 :: 		if(mode == 2){
+	MOVLW      0
+	XORWF      FARG_processSpeaker_mode+1, 0
+	BTFSS      STATUS+0, 2
+	GOTO       L__processSpeaker83
+	MOVLW      2
+	XORWF      FARG_processSpeaker_mode+0, 0
+L__processSpeaker83:
+	BTFSS      STATUS+0, 2
+	GOTO       L_processSpeaker49
+;Slave_Temp_humid.c,277 :: 		turnOnSpeaker();
 	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,288 :: 		Delay_ms(200);
-	MOVLW      6
-	MOVWF      R11+0
-	MOVLW      19
-	MOVWF      R12+0
-	MOVLW      173
-	MOVWF      R13+0
-L_processSpeaker49:
-	DECFSZ     R13+0, 1
-	GOTO       L_processSpeaker49
-	DECFSZ     R12+0, 1
-	GOTO       L_processSpeaker49
-	DECFSZ     R11+0, 1
-	GOTO       L_processSpeaker49
-	NOP
-	NOP
-;Slave_Temp_humid.c,289 :: 		turnOffSpeaker();
-	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,290 :: 		Delay_ms(200);
+;Slave_Temp_humid.c,278 :: 		Delay_ms(200);
 	MOVLW      6
 	MOVWF      R11+0
 	MOVLW      19
@@ -1033,26 +1026,32 @@ L_processSpeaker50:
 	GOTO       L_processSpeaker50
 	NOP
 	NOP
-;Slave_Temp_humid.c,291 :: 		}
-L_processSpeaker46:
-;Slave_Temp_humid.c,292 :: 		if(mode == 3){
-	MOVLW      0
-	XORWF      FARG_processSpeaker_mode+1, 0
-	BTFSS      STATUS+0, 2
-	GOTO       L__processSpeaker80
-	MOVLW      3
-	XORWF      FARG_processSpeaker_mode+0, 0
-L__processSpeaker80:
-	BTFSS      STATUS+0, 2
-	GOTO       L_processSpeaker51
-;Slave_Temp_humid.c,293 :: 		turnOnSpeaker();
-	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,294 :: 		Delay_ms(400);
-	MOVLW      11
+;Slave_Temp_humid.c,279 :: 		turnOffSpeaker();
+	CALL       _turnOffSpeaker+0
+;Slave_Temp_humid.c,280 :: 		Delay_ms(200);
+	MOVLW      6
 	MOVWF      R11+0
-	MOVLW      38
+	MOVLW      19
 	MOVWF      R12+0
-	MOVLW      93
+	MOVLW      173
+	MOVWF      R13+0
+L_processSpeaker51:
+	DECFSZ     R13+0, 1
+	GOTO       L_processSpeaker51
+	DECFSZ     R12+0, 1
+	GOTO       L_processSpeaker51
+	DECFSZ     R11+0, 1
+	GOTO       L_processSpeaker51
+	NOP
+	NOP
+;Slave_Temp_humid.c,281 :: 		turnOnSpeaker();
+	CALL       _turnOnSpeaker+0
+;Slave_Temp_humid.c,282 :: 		Delay_ms(200);
+	MOVLW      6
+	MOVWF      R11+0
+	MOVLW      19
+	MOVWF      R12+0
+	MOVLW      173
 	MOVWF      R13+0
 L_processSpeaker52:
 	DECFSZ     R13+0, 1
@@ -1063,14 +1062,14 @@ L_processSpeaker52:
 	GOTO       L_processSpeaker52
 	NOP
 	NOP
-;Slave_Temp_humid.c,295 :: 		turnOffSpeaker();
+;Slave_Temp_humid.c,283 :: 		turnOffSpeaker();
 	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,296 :: 		Delay_ms(400);
-	MOVLW      11
+;Slave_Temp_humid.c,284 :: 		Delay_ms(200);
+	MOVLW      6
 	MOVWF      R11+0
-	MOVLW      38
+	MOVLW      19
 	MOVWF      R12+0
-	MOVLW      93
+	MOVLW      173
 	MOVWF      R13+0
 L_processSpeaker53:
 	DECFSZ     R13+0, 1
@@ -1081,27 +1080,21 @@ L_processSpeaker53:
 	GOTO       L_processSpeaker53
 	NOP
 	NOP
-;Slave_Temp_humid.c,297 :: 		turnOnSpeaker();
+;Slave_Temp_humid.c,285 :: 		}
+L_processSpeaker49:
+;Slave_Temp_humid.c,286 :: 		if(mode == 3){
+	MOVLW      0
+	XORWF      FARG_processSpeaker_mode+1, 0
+	BTFSS      STATUS+0, 2
+	GOTO       L__processSpeaker84
+	MOVLW      3
+	XORWF      FARG_processSpeaker_mode+0, 0
+L__processSpeaker84:
+	BTFSS      STATUS+0, 2
+	GOTO       L_processSpeaker54
+;Slave_Temp_humid.c,287 :: 		turnOnSpeaker();
 	CALL       _turnOnSpeaker+0
-;Slave_Temp_humid.c,298 :: 		Delay_ms(400);
-	MOVLW      11
-	MOVWF      R11+0
-	MOVLW      38
-	MOVWF      R12+0
-	MOVLW      93
-	MOVWF      R13+0
-L_processSpeaker54:
-	DECFSZ     R13+0, 1
-	GOTO       L_processSpeaker54
-	DECFSZ     R12+0, 1
-	GOTO       L_processSpeaker54
-	DECFSZ     R11+0, 1
-	GOTO       L_processSpeaker54
-	NOP
-	NOP
-;Slave_Temp_humid.c,299 :: 		turnOffSpeaker();
-	CALL       _turnOffSpeaker+0
-;Slave_Temp_humid.c,300 :: 		Delay_ms(400);
+;Slave_Temp_humid.c,288 :: 		Delay_ms(400);
 	MOVLW      11
 	MOVWF      R11+0
 	MOVLW      38
@@ -1117,9 +1110,63 @@ L_processSpeaker55:
 	GOTO       L_processSpeaker55
 	NOP
 	NOP
-;Slave_Temp_humid.c,301 :: 		}
-L_processSpeaker51:
-;Slave_Temp_humid.c,303 :: 		}
+;Slave_Temp_humid.c,289 :: 		turnOffSpeaker();
+	CALL       _turnOffSpeaker+0
+;Slave_Temp_humid.c,290 :: 		Delay_ms(400);
+	MOVLW      11
+	MOVWF      R11+0
+	MOVLW      38
+	MOVWF      R12+0
+	MOVLW      93
+	MOVWF      R13+0
+L_processSpeaker56:
+	DECFSZ     R13+0, 1
+	GOTO       L_processSpeaker56
+	DECFSZ     R12+0, 1
+	GOTO       L_processSpeaker56
+	DECFSZ     R11+0, 1
+	GOTO       L_processSpeaker56
+	NOP
+	NOP
+;Slave_Temp_humid.c,291 :: 		turnOnSpeaker();
+	CALL       _turnOnSpeaker+0
+;Slave_Temp_humid.c,292 :: 		Delay_ms(400);
+	MOVLW      11
+	MOVWF      R11+0
+	MOVLW      38
+	MOVWF      R12+0
+	MOVLW      93
+	MOVWF      R13+0
+L_processSpeaker57:
+	DECFSZ     R13+0, 1
+	GOTO       L_processSpeaker57
+	DECFSZ     R12+0, 1
+	GOTO       L_processSpeaker57
+	DECFSZ     R11+0, 1
+	GOTO       L_processSpeaker57
+	NOP
+	NOP
+;Slave_Temp_humid.c,293 :: 		turnOffSpeaker();
+	CALL       _turnOffSpeaker+0
+;Slave_Temp_humid.c,294 :: 		Delay_ms(400);
+	MOVLW      11
+	MOVWF      R11+0
+	MOVLW      38
+	MOVWF      R12+0
+	MOVLW      93
+	MOVWF      R13+0
+L_processSpeaker58:
+	DECFSZ     R13+0, 1
+	GOTO       L_processSpeaker58
+	DECFSZ     R12+0, 1
+	GOTO       L_processSpeaker58
+	DECFSZ     R11+0, 1
+	GOTO       L_processSpeaker58
+	NOP
+	NOP
+;Slave_Temp_humid.c,295 :: 		}
+L_processSpeaker54:
+;Slave_Temp_humid.c,297 :: 		}
 L_end_processSpeaker:
 	RETURN
 ; end of _processSpeaker

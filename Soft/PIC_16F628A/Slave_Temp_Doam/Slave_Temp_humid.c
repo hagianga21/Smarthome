@@ -72,39 +72,55 @@ void interrupt()
 
 void main() 
 {
-     initSensor();
-     initRS485();
-     sendData[0] = 'S';
-     sendData[1] = '0';
-     sendData[2] = '0';
-     sendData[3] = 'B';
-     sendData[4] = '0';
-     sendData[5] = '1';
-     sendData[6] = 'D';
-     sendData[7] = '0';
-     sendData[8] = '1';
-     sendData[9] = '1';
-     sendData[10] = 'E';
-     RS485_send(sendData);
+     UART1_Init(9600);
+     TRISB.B3 =0;
+     //PORTB.RB3 =0;
+     Delay_ms(100);
+     RCIE_bit = 1;                        // enable interrupt on UART1 receive
+     TXIE_bit = 0;                        // disable interrupt on UART1 transmit
+     PEIE_bit = 1;                        // enable peripheral interrupts
+     GIE_bit = 1;                         // enable all interrupts
+     //TRISB.B4 = 1;
+     //Loa
+     TRISB.B5 = 0;
+     turnOnSpeaker();
+     
+     //initSensor();
+     //initRS485();
      Delay_ms(1000);
      turnOffSpeaker();
+     sendData[0] = 'S';
+     sendData[1] = '0';
+     sendData[2] = '3';
+     sendData[3] = 'C';
+     sendData[4] = '0';
+     sendData[5] = '1';
+     sendData[6] = '0';
+     sendData[7] = '0';
+     sendData[8] = 'G';
+     sendData[9] = 'G';
+     sendData[10] = 'E';
+     RS485_send(sendData);
+     sendTemp();
      while(1)
      {
           if(flagReceivedAllData==1){
                flagReceivedAllData = 0;
                //receive S13 C01 000 HE
-               if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'C' && receiveData[4] == '0' && receiveData[5] == '1')
+               if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'T')
                {
-                     if(receiveData[9] == 'T'){
-                           sendTemp();
-                     }
-                     if(receiveData[9] == 'H'){
-                           sendHumid();
-                     }
+                     sendTemp();
                      Delay_ms(100);
+                     sendTemp();
+               }
+               if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'H'){
+                     sendHumid();
+                     Delay_ms(100);
+                     sendHumid();
                }
           }
           
+
           if (Button(&PORTB, 4, 1, 0)) {
               gasStatus = 1;
           }
@@ -145,6 +161,7 @@ void main()
                   countGas = 30;
               }
           }
+
      }
 }
 
@@ -159,25 +176,22 @@ void RS485_send (char dat[])
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
-    Delay_ms(100);
+    Delay_ms(200);
     PORTB.RB3 =0;
 }
 
 void initSensor(void){
      //Cam bien khi gas
      TRISB4_bit = 1;
-     //Cam bien chuyen dong
-     TRISB5_bit = 1;
      //Loa
      TRISB.B5 = 0;
      turnOnSpeaker();
-     //TRISA.B0 = 0;
-     //turnOffSpeaker();
 }
 
 void initRS485(void){
      UART1_Init(9600);
      TRISB.B3 =0;
+     PORTB.RB3 =0;
      Delay_ms(100);
      RCIE_bit = 1;                        // enable interrupt on UART1 receive
      TXIE_bit = 0;                        // disable interrupt on UART1 transmit

@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=..\..\..\..\..\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Test_Slave\Test_Slave_887.c
+Value=Slave_CA3.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -24,9 +24,8 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=2
+Count=1
 File0=Slave_CA3.c
-File1=..\..\..\..\..\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Test_Slave\Test_Slave_887.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

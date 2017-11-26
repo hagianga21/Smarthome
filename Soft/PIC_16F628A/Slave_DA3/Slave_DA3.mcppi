@@ -33,12 +33,13 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=5
+Count=6
 Path0=F:\Mikroelektronika\mikroC PRO for PIC\Defs\
 Path1=F:\Mikroelektronika\mikroC PRO for PIC\Uses\P16\
-Path2=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_DA3\
-Path3=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
-Path4=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT22\Uses\
+Path2=E:\LVTN\Smarthome\Soft\PIC_16F628A\Slave_DA3\
+Path3=E:\MYPROJECTINHCMUT\Doan1\Testcode\PIC\Slave_DA3\
+Path4=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT11 Library\Uses\
+Path5=F:\Mikroelektronika\mikroC PRO for PIC\Packages\DHT22\Uses\
 [HEADER_PATH]
 Count=0
 [HEADERS]

@@ -55,38 +55,54 @@ void interrupt()
 
 void main()
 {
- initSensor();
- initRS485();
- sendData[0] = 'S';
- sendData[1] = '0';
- sendData[2] = '0';
- sendData[3] = 'B';
- sendData[4] = '0';
- sendData[5] = '1';
- sendData[6] = 'D';
- sendData[7] = '0';
- sendData[8] = '1';
- sendData[9] = '1';
- sendData[10] = 'E';
- RS485_send(sendData);
+ UART1_Init(9600);
+ TRISB.B3 =0;
+
+ Delay_ms(100);
+ RCIE_bit = 1;
+ TXIE_bit = 0;
+ PEIE_bit = 1;
+ GIE_bit = 1;
+
+
+ TRISB.B5 = 0;
+ turnOnSpeaker();
+
+
+
  Delay_ms(1000);
  turnOffSpeaker();
+ sendData[0] = 'S';
+ sendData[1] = '0';
+ sendData[2] = '3';
+ sendData[3] = 'C';
+ sendData[4] = '0';
+ sendData[5] = '1';
+ sendData[6] = '0';
+ sendData[7] = '0';
+ sendData[8] = 'G';
+ sendData[9] = 'G';
+ sendData[10] = 'E';
+ RS485_send(sendData);
+ sendTemp();
  while(1)
  {
  if(flagReceivedAllData==1){
  flagReceivedAllData = 0;
 
- if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'C' && receiveData[4] == '0' && receiveData[5] == '1')
+ if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'T')
  {
- if(receiveData[9] == 'T'){
+ sendTemp();
+ Delay_ms(100);
  sendTemp();
  }
- if(receiveData[9] == 'H'){
+ if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[9] == 'H'){
+ sendHumid();
+ Delay_ms(100);
  sendHumid();
  }
- Delay_ms(100);
  }
- }
+
 
  if (Button(&PORTB, 4, 1, 0)) {
  gasStatus = 1;
@@ -128,10 +144,10 @@ void main()
  countGas = 30;
  }
  }
-#line 168 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
+
  }
 }
-#line 174 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 171 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
 void RS485_send (char dat[])
 {
  int i;
@@ -140,7 +156,7 @@ void RS485_send (char dat[])
  while(UART1_Tx_Idle()==0);
  UART1_Write(dat[i]);
  }
- Delay_ms(100);
+ Delay_ms(200);
  PORTB.RB3 =0;
 }
 
@@ -148,17 +164,14 @@ void initSensor(void){
 
  TRISB4_bit = 1;
 
- TRISB5_bit = 1;
-
  TRISB.B5 = 0;
  turnOnSpeaker();
-
-
 }
 
 void initRS485(void){
  UART1_Init(9600);
  TRISB.B3 =0;
+ PORTB.RB3 =0;
  Delay_ms(100);
  RCIE_bit = 1;
  TXIE_bit = 0;

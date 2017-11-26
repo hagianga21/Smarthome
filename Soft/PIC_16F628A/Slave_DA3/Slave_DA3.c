@@ -73,6 +73,13 @@ void main() {
   PEIE_bit = 1;                        // enable peripheral interrupts
   GIE_bit = 1;                         // enable all interrupts
 
+  addressDevice1[0] = '0';
+  addressDevice1[1] = '1';
+  addressDevice2[0] = '0';
+  addressDevice2[1] = '2';
+  addressDevice3[0] = '0';
+  addressDevice3[1] = '3';
+  /*
   addressDevice1[0] = EEPROM_Read(0x04);
   addressDevice1[1] = EEPROM_Read(0x05);
   addressDevice2[0] = EEPROM_Read(0x08);
@@ -80,9 +87,10 @@ void main() {
   addressDevice3[0] = EEPROM_Read(0x0C);
   addressDevice3[1] = EEPROM_Read(0x0D);
   //Delay_ms(1000);
-
+  */
   //RS485_send(send);
   Delay_ms(100);
+  /*
   //Luc dau xin Master set ma vat ly cua cong tac chum 3: S 02 0000 3 1E
   if (addressDevice1[0]==0xff || addressDevice2[0]==0xff || addressDevice3[0]==0xff){
      sendData[0] = 'S';
@@ -98,11 +106,14 @@ void main() {
      sendData[10] = 'E';
      RS485_send(sendData);
   }
+  */
   Delay_ms(1000);
   while(1)
   {
+
      if(flagReceivedAllData==1){
          flagReceivedAllData = 0;
+         /*
          //S12 D01 000 1 E
          if(receiveData[1] == '1' && receiveData[2] == '2'){
              if(receiveData[9] == '1'){
@@ -124,6 +135,7 @@ void main() {
                  EEPROM_Write(0x0D,addressDevice3[1]);
              }
          }
+         */
          //S10 D01 000 1 E
          if(receiveData[1] == '1' && receiveData[2] == '0' && receiveData[3] == 'D'){
              if(receiveData[4] == addressDevice1[0] && receiveData[5] == addressDevice1[1]){
@@ -151,8 +163,6 @@ void main() {
                  }
              }
          }
-             
-         
      }
 
   }
@@ -166,6 +176,6 @@ void RS485_send (char dat[])
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
-    Delay_ms(200);
+    Delay_ms(100);
     PORTB.RB3 =0;
 }
