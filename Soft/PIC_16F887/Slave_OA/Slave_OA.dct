@@ -418,6 +418,7 @@ compare_double
 cos
 cose3
 cosh
+count
 cren
 cren_bit
 csrc
@@ -522,6 +523,7 @@ fabs
 ferr
 ferr_bit
 fixsign32
+flagreceivedalldata
 flash_read
 flash_write
 floattostr
@@ -614,6 +616,7 @@ inte
 inte_bit
 intedg
 intedg_bit
+interrupt
 intf
 intf_bit
 inttohex
@@ -971,6 +974,7 @@ re3_bit
 read_ade7753
 read_write
 read_write_bit
+receivedata
 res032
 rh_byte1
 rh_byte2
@@ -978,6 +982,7 @@ rp0
 rp0_bit
 rp1
 rp1_bit
+rs485_send
 rs485master_init
 rs485master_receive
 rs485master_send
@@ -1069,8 +1074,12 @@ scs_bit
 sdiv3232l
 sen
 sen_bit
+sendampe
 sendb
 sendb_bit
+senddata
+sendpower
+sendvolt
 setfdz32
 setfov32
 setfun32
@@ -1404,6 +1413,7 @@ t6963c_writecommand
 t6963c_writedata
 tan
 tanh
+tempreceivedata
 test
 time_datetoepoch
 time_epochtodate

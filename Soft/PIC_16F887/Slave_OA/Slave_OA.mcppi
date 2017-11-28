@@ -24,8 +24,9 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=1
+Count=2
 File0=Slave_OA.c
+File1=..\..\PIC_16F628A\Slave_CA3\Slave_CA3.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
