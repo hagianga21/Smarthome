@@ -1,0 +1,7 @@
+[PROJECTS]
+Count=3
+Project0=..\..\PIC_16F887\Slave_OA\Slave_OA.mcppi
+Project1=..\Slave_CA3\Slave_CA3.mcppi
+Project2=..\Slave_DA3\Slave_DA3.mcppi
+[ActiveProject]
+Index=0

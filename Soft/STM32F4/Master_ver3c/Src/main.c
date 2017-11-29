@@ -30,6 +30,7 @@ uint8_t receiveDataFromDS3231[7], sendDataToDS3231[7];
 uint8_t second,minute,hour,day,date,month,year;
 uint8_t oldsecond,oldminute,oldhour,oldday,olddate,oldmonth,oldyear;
 uint8_t receiveDataFromEEPROM[2], sendDataToEEPROM[2];
+uint8_t statusSend = 1;
 //UART1 System
 uint8_t numberOfButton = 1, numberOfDevice = 1;
 uint8_t count1 = 0, tempdataReceiveFromSystem, flagReceiveAllDataFromSystem = 0;
@@ -132,9 +133,11 @@ int main(void)
   while (1)
   {
 		//My code-----------------------------------------------------------------------------//
+		
 		HAL_I2C_Mem_Read_DMA(&hi2c1,DS3231_ADD<<1,0,I2C_MEMADD_SIZE_8BIT,receiveDataFromDS3231,7);
 		checkTimeToReadSensor();
 		checkSetTime();
+		
 		if(flagReceiveAllDataFromSystem == 1)
 		{
 			flagReceiveAllDataFromSystem = 0;
@@ -532,7 +535,53 @@ void checkSetTime(void){
 
 void checkTimeToReadSensor(void){
 	if(minute != oldminute){
-		if(minute%2 == 0){
+		if(statusSend == 1){
+				strcpy((char *)dataSendtoSystem,"S13C01000TE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+				statusSend++;
+		}
+		else if(statusSend == 2){
+				strcpy((char *)dataSendtoSystem,"S13C01000HE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+				statusSend++;
+		}
+		else if(statusSend == 3){
+				strcpy((char *)dataSendtoSystem,"S13D04000VE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+				statusSend++;
+		}
+		else if(statusSend == 4){
+				strcpy((char *)dataSendtoSystem,"S13D04000IE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+				statusSend++;
+		}
+		else if(statusSend == 5){
+				strcpy((char *)dataSendtoSystem,"S13D04000PE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+				statusSend = 1;
+		}
+		/*
+		if(minute%5 == 0){
+				strcpy((char *)dataSendtoSystem,"S13D04000PE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+		}
+		else if(minute%4 == 0){
+				strcpy((char *)dataSendtoSystem,"S13D04000IE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+		}
+		else if(minute%3 == 0){
+				strcpy((char *)dataSendtoSystem,"S13D04000VE");
+				HAL_Delay(100);
+				sendRS485toSystem();
+		}
+		else if(minute%2 == 0){
 				strcpy((char *)dataSendtoSystem,"S13C01000TE");
 				HAL_Delay(100);
 				sendRS485toSystem();
@@ -542,6 +591,7 @@ void checkTimeToReadSensor(void){
 				sendRS485toSystem();
 				HAL_Delay(100);
 		}
+		*/
 		oldminute = minute;
 	}
 }

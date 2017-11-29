@@ -415,6 +415,7 @@ cm2con0
 cm2con1
 comfrem
 compare_double
+config_senddata
 cos
 cose3
 cosh
@@ -769,6 +770,7 @@ nrm3232
 nrm4032
 oerr
 oerr_bit
+oldstate
 option_reg
 osccon
 osctune
@@ -975,6 +977,7 @@ read_ade7753
 read_write
 read_write_bit
 receivedata
+relaystatus
 res032
 rh_byte1
 rh_byte2
@@ -1549,6 +1552,8 @@ tun3
 tun3_bit
 tun4
 tun4_bit
+turnoffrelay
+turnonrelay
 tx8_9
 tx8_9_bit
 tx9

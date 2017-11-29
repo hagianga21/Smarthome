@@ -54,6 +54,8 @@ float voltage, ampe, activepower;
 char flagReceivedAllData = 0;
 char count = 0, tempReceiveData,receiveData[11];
 char sendData[11];
+bit oldstate;
+int relayStatus = 0;
 /**************************************
  * DEFINE SUBROUTINES
  **************************************/
@@ -71,6 +73,9 @@ void sendVolt(float so);
 void sendAmpe(float so);
 void sendPower(float so);
 void RS485_send (char dat[]);
+void turnOnRelay(void);
+void turnOffRelay(void);
+void Config_sendData(void);
 
 void interrupt()
 {
@@ -106,57 +111,103 @@ void interrupt()
  **************************************/
 void main()
 {
-     sendData[0]  = 'S';
-     sendData[1]  = '0';
-     sendData[2]  = '3';
-     sendData[3]  = 'D';
-     sendData[4]  = '0';
-     sendData[5]  = '4';
-     sendData[6]  = '0';
-     sendData[7]  = '0';
-     sendData[8]  = '0';
-     sendData[9]  = 'V';
-     sendData[10] = 'E';
-     
-     voltage = 0;
-     ampe = 0;
-     activepower = 0;
+     ANSEL  = 0;
+     ANSELH = 0;
+     C1ON_bit = 0;
+     C2ON_bit = 0;
+     oldstate = 0;
+     //Button
+     TRISB.B0 = 1;
+     oldstate = 0;
+     //RS485
+     TRISD.B4 = 0;
+     //Relay
+     TRISD.B5 = 0;
+     turnOffRelay();
+     Config_sendData();
+     voltage = 220;
+     ampe = 1.3;
+     activepower = 132;
+     //
      TRISC.B0 = 0;
      PORTC.B0 = 1;
+     //UART
      UART1_Init(9600);
+     RCIE_bit = 1;
+     TXIE_bit = 0;
+     PEIE_bit = 1;
+     GIE_bit = 1;
      Delay_ms(200);
      SPI1_Init_Advanced(_SPI_MASTER_OSC_DIV64, _SPI_DATA_SAMPLE_MIDDLE, _SPI_CLK_IDLE_LOW, _SPI_HIGH_2_LOW);
      Delay_ms(200);
-
      Write_ADE7753(GAIN,0x0,1);
      Write_ADE7753(MODE,0x008C,2);                      //0b0000000010001100
      //Write_ADE7753(APOS,0x998E,2);                      //0b1001100110001110
      //Write_ADE7753(VRMSOS,0xF900,2);                    //0b1111100000000000
      //Write_ADE7753(IRMSOS,0xFEBE,2);                    //0b1111111010111110
-
-     Delay_ms(200);
+     Delay_ms(1000);
      //Test();
-     while(1)
-     {
+     while(1){
+       if(flagReceivedAllData == 1){
+         flagReceivedAllData = 0;
+         Delay_ms(20);
+         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D' && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0' && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'V'){
+             //voltage = getVRMS();
+             sendVolt(voltage);
+             Delay_ms(1000);
+         }
+         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
+         && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+         && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'I'){
+             //ampe = getIRMS();
+             sendAmpe(ampe);
+             Delay_ms(1000);
+         }
+         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
+         && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+         && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
+             //activepower = getAPOWER();
+             sendPower(activepower);
+             Delay_ms(1000);
+         }
 
-     UART1_Write_Text("\nDien ap: ");
+       }
+       if (Button(&PORTB, 0, 1, 1)) {
+         oldstate = 1;
+       }
+       if (oldstate && Button(&PORTB, 0, 1, 0)) {
+
+         if(relayStatus == 0){
+            turnOnRelay();
+            relayStatus++;
+         }
+         else{
+            turnOffRelay();
+            relayStatus = 0;
+         }
+         oldstate = 0;
+         Delay_ms(300);
+       }
+
+     /*
+     //UART1_Write_Text("\nDien ap: ");
      voltage = getVRMS();
      sendVolt(voltage);
      //Hienthisofloat(voltage);
-     Delay_ms(1000);
+     Delay_ms(5000);
 
-     UART1_Write_Text("\nDong dien: ");
+     //UART1_Write_Text("\nDong dien: ");
      ampe = getIRMS();
      sendAmpe(ampe);
      //Hienthisofloat(ampe);
-     Delay_ms(500);
+     Delay_ms(5000);
 
-     UART1_Write_Text("\nCong suat: ");
+     //UART1_Write_Text("\nCong suat: ");
      activepower = getAPOWER();
      sendPower(activepower);
      //Hienthisofloat(activepower);
-     Delay_ms(500);
-
+     Delay_ms(5000);
+     */
      }
 }
 
@@ -220,35 +271,11 @@ void HienthiUART (long outputADE, int bytes_to_write)
 /**************************************
  * DISLAY FLOAT TO UART
  **************************************/
-void Hienthisofloat (float so)
-{
+void Hienthisofloat (float so){
      char kq[15];
      char a[4];
      FloatToStr(so,kq);
      UART1_Write_Text(kq);
-     /*
-     if(kq[8] == 'e' && kq[9] == '-'){
-           if(kq[10] == '1'){
-              a[0] = '0';
-              a[1] = '.';
-              a[2] = kq[0];
-              a[3] = kq[2];
-           }
-           else if(kq[10] == '2'){
-              a[0] = '0';
-              a[1] = '.';
-              a[2] = '0';
-              a[3] = kq[0];
-           }
-     }
-     else{
-           a[0] = kq[0];
-           a[1] = kq[1];
-           a[2] = kq[2];
-           a[3] = kq[3];
-     }
-     UART1_Write_Text(a);
-     */
 }
 
 void sendVolt(float so){
@@ -268,8 +295,16 @@ void sendVolt(float so){
          sendData[9]  = 'V';
          sendData[10] = 'E';
      }
-     Delay_ms(10);
+     if(so !=0 && so > 100){
+         sendData[6]  = kq[0];
+         sendData[7]  = kq[1];
+         sendData[8]  = kq[2];
+         sendData[9]  = 'V';
+         sendData[10] = 'E';
+     }
+     Delay_ms(100);
      RS485_send(sendData);
+     Delay_ms(300);
 }
 
 void sendAmpe(float so){
@@ -296,8 +331,9 @@ void sendAmpe(float so){
          sendData[9]  = 'I';
          sendData[10] = 'E';
      }
-     Delay_ms(10);
+     Delay_ms(100);
      RS485_send(sendData);
+     Delay_ms(300);
 }
 
 void sendPower(float so){
@@ -331,8 +367,9 @@ void sendPower(float so){
          sendData[9]  = 'P';
          sendData[10] = 'E';
      }
-     Delay_ms(10);
+     Delay_ms(100);
      RS485_send(sendData);
+     Delay_ms(300);
 }
 /**************************************
  * RESET INTERRUPT
@@ -357,6 +394,7 @@ float getVRMS (void)
       totalv = 0;
       j = 0;
       Write_ADE7753(IRQEN,0x0010,2);
+      Delay_ms(20);
       for(i=0;i<10;i++)
       {
           getresetInterruptStatus();
@@ -397,6 +435,7 @@ float getIRMS(void)
      totali = 0;
      j = 0;
      Write_ADE7753(IRQEN,0x0010,2);
+     Delay_ms(20);
      for(i=0;i<10;i++)
      {
           getresetInterruptStatus();
@@ -482,15 +521,49 @@ void Test (void)
     HienthiUART(outputADE,2);
 }
 
+/**************************************
+ * SEND RS485
+ **************************************/
 void RS485_send (char dat[])
 {
     int i;
-    PORTB.RB3 =1;
-    Delay_ms(100);
+    PORTD.RD4 =1;
+    Delay_ms(300);
     for (i=0; i<=10;i++){
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
+    Delay_ms(30);
     }
-    Delay_ms(10);
-    PORTB.RB3 =0;
+    Delay_ms(200);
+    PORTD.RD4 =0;
+}
+/**************************************
+ * CONFIG SEND_DATA
+ **************************************/
+void Config_sendData(void){
+    sendData[0]  = 'S';
+    sendData[1]  = '0';
+    sendData[2]  = '3';
+    sendData[3]  = 'D';
+    sendData[4]  = '0';
+    sendData[5]  = '4';
+    sendData[6]  = '0';
+    sendData[7]  = '0';
+    sendData[8]  = '0';
+    sendData[9]  = 'V';
+    sendData[10] = 'E';
+}
+ 
+/**************************************
+ * TURN ON RELAY
+ **************************************/
+void turnOnRelay(void){
+    PORTD.RD5 =1;
+}
+
+/**************************************
+ * TURN OFF RELAY
+ **************************************/
+void turnOffRelay(void){
+    PORTD.RD5 =0;
 }

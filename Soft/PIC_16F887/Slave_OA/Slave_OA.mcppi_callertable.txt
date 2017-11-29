@@ -1,52 +1,12 @@
 main
 	__CC2DW
 		____DoICP
+	turnOffRelay
+	Config_sendData
 	UART1_Init
 	SPI1_Init_Advanced
 	Write_ADE7753
 		SPI1_Write
-	UART1_Write_Text
-		UART1_Write
-	getVRMS
-		Write_ADE7753
-			SPI1_Write
-		getresetInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		getInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		Read_ADE7753
-			SPI1_Write
-			SPI1_Read
-		Div_32x32_S
-			SDIV3232L
-			COMFREM
-		longint2double
-			NRM4032
-				RES032
-				SETFUN32
-				FIXSIGN32
-				SETFOV32
-		Mul_32x32_FP
-			RES032
-			SETFOV32
-			SETFUN32
-		Sub_32x32_FP
-			Add_32x32_FP
-				NRM4032
-					RES032
-					SETFUN32
-					FIXSIGN32
-					SETFOV32
-				NRM3232
-					RES032
-					SETFUN32
-					FIXSIGN32
-				SETFOV32
-		Compare_Double
 	sendVolt
 		FloatToStr
 			strcpy
@@ -61,46 +21,6 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
-	getIRMS
-		Write_ADE7753
-			SPI1_Write
-		getresetInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		getInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		Read_ADE7753
-			SPI1_Write
-			SPI1_Read
-		Div_32x32_S
-			SDIV3232L
-			COMFREM
-		longint2double
-			NRM4032
-				RES032
-				SETFUN32
-				FIXSIGN32
-				SETFOV32
-		Mul_32x32_FP
-			RES032
-			SETFOV32
-			SETFUN32
-		Sub_32x32_FP
-			Add_32x32_FP
-				NRM4032
-					RES032
-					SETFUN32
-					FIXSIGN32
-					SETFOV32
-				NRM3232
-					RES032
-					SETFUN32
-					FIXSIGN32
-				SETFOV32
-		Compare_Double
 	sendAmpe
 		FloatToStr
 			strcpy
@@ -115,42 +35,6 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
-	getAPOWER
-		Write_ADE7753
-			SPI1_Write
-		getresetInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		getInterruptStatus
-			Read_ADE7753
-				SPI1_Write
-				SPI1_Read
-		Read_ADE7753
-			SPI1_Write
-			SPI1_Read
-		longint2double
-			NRM4032
-				RES032
-				SETFUN32
-				FIXSIGN32
-				SETFOV32
-		Mul_32x32_FP
-			RES032
-			SETFOV32
-			SETFUN32
-		Add_32x32_FP
-			NRM4032
-				RES032
-				SETFUN32
-				FIXSIGN32
-				SETFOV32
-			NRM3232
-				RES032
-				SETFUN32
-				FIXSIGN32
-			SETFOV32
-		Compare_Double
 	sendPower
 		FloatToStr
 			strcpy
@@ -165,6 +49,9 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
+	Button
+		Delay_500us
+	turnOnRelay
 interrupt
 	UART1_Data_Ready
 	UART1_Read
