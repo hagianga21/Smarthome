@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Master_ver3c\Master_ver3c.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Master_ver3c\Master_ver3c.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Thu Nov 30 02:03:20 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Fri Dec 01 00:02:31 2017
 <BR><P>
 <H3>Maximum Stack Usage =        184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -136,7 +136,7 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[10d]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[10f]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[6a]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -146,15 +146,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[10e]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[110]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[10f]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[111]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[110]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[112]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[111]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[113]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[112]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[114]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
@@ -373,24 +373,24 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>WWDG_IRQHandler</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[10a]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
+<P><STRONG><a name="[10c]"></a>strstr</STRONG> (Thumb, 36 bytes, Stack size 12 bytes, strstr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = strstr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 </UL>
 
-<P><STRONG><a name="[10c]"></a>strcmp</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, strcmp.o(.text))
+<P><STRONG><a name="[10e]"></a>strcmp</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, strcmp.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = strcmp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 </UL>
 
-<P><STRONG><a name="[100]"></a>strcpy</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, strcpy.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
+<P><STRONG><a name="[102]"></a>strcpy</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, strcpy.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
 </UL>
 
-<P><STRONG><a name="[113]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
+<P><STRONG><a name="[115]"></a>__aeabi_uidiv</STRONG> (Thumb, 0 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
 
 <P><STRONG><a name="[ec]"></a>__aeabi_uidivmod</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
@@ -402,7 +402,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[114]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[116]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
 <P><STRONG><a name="[6d]"></a>BSP_SD_GetCardInfo</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, bsp_driver_sd.o(i.BSP_SD_GetCardInfo))
 <BR><BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_GetCardInfo
@@ -493,7 +493,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_FATFS_Init
 </UL>
 
-<P><STRONG><a name="[115]"></a>FATFS_LinkDriverEx</STRONG> (Thumb, 60 bytes, Stack size 12 bytes, ff_gen_drv.o(i.FATFS_LinkDriverEx), UNUSED)
+<P><STRONG><a name="[117]"></a>FATFS_LinkDriverEx</STRONG> (Thumb, 60 bytes, Stack size 12 bytes, ff_gen_drv.o(i.FATFS_LinkDriverEx), UNUSED)
 
 <P><STRONG><a name="[a7]"></a>HAL_DMA_Abort_IT</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
@@ -534,19 +534,20 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromSensorToInternet
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromPowerToInternet
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Initsim900A
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
 <LI><a href="#[aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_SD_InitCard
 </UL>
 
@@ -575,11 +576,11 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[d4]"></a>HAL_GPIO_WritePin</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin))
-<BR><BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<BR><BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 <LI><a href="#[d3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
 </UL>
 
 <P><STRONG><a name="[7a]"></a>HAL_GetTick</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, stm32f4xx_hal.o(i.HAL_GetTick))
@@ -991,11 +992,12 @@ Global Symbols
 
 <P><STRONG><a name="[c2]"></a>HAL_UART_Transmit_IT</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_IT))
 <BR><BR>[Called By]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromSensorToInternet
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromPowerToInternet
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Initsim900A
 <LI><a href="#[c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
 </UL>
@@ -1362,21 +1364,21 @@ Global Symbols
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_printf_core
 </UL>
 
-<P><STRONG><a name="[116]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
+<P><STRONG><a name="[118]"></a>__1sprintf$1</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1), UNUSED)
 
-<P><STRONG><a name="[103]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1))
+<P><STRONG><a name="[105]"></a>__2sprintf</STRONG> (Thumb, 0 bytes, Stack size 24 bytes, printf1.o(i.__0sprintf$1))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
+<BR>[Called By]<UL><LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
 </UL>
 
-<P><STRONG><a name="[117]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[119]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[118]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[11a]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[119]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[11b]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
-<P><STRONG><a name="[ed]"></a>answerSystem</STRONG> (Thumb, 182 bytes, Stack size 16 bytes, main.o(i.answerSystem))
+<P><STRONG><a name="[ed]"></a>answerSystem</STRONG> (Thumb, 220 bytes, Stack size 16 bytes, main.o(i.answerSystem))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = answerSystem &rArr; setIDforDevice &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
@@ -1384,43 +1386,45 @@ Global Symbols
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
 <LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromSensorToInternet
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendDataFromPowerToInternet
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertStringToNum3
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertStringToNum
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;controlDevice
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f5]"></a>checkLCD</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, main.o(i.checkLCD))
+<P><STRONG><a name="[f7]"></a>checkLCD</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, main.o(i.checkLCD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = checkLCD &rArr; lcd_HomePage &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_3_page
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_2_page
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_1_page
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
+<BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
+<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_3_page
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_2_page
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_1_page
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[fb]"></a>checkSetTime</STRONG> (Thumb, 282 bytes, Stack size 40 bytes, main.o(i.checkSetTime))
+<P><STRONG><a name="[fd]"></a>checkSetTime</STRONG> (Thumb, 282 bytes, Stack size 40 bytes, main.o(i.checkSetTime))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = checkSetTime &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateDevicesState
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[ff]"></a>checkTimeToReadSensor</STRONG> (Thumb, 100 bytes, Stack size 8 bytes, main.o(i.checkTimeToReadSensor))
+<P><STRONG><a name="[101]"></a>checkTimeToReadSensor</STRONG> (Thumb, 84 bytes, Stack size 8 bytes, main.o(i.checkTimeToReadSensor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = checkTimeToReadSensor &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -1428,134 +1432,138 @@ Global Symbols
 <P><STRONG><a name="[ee]"></a>controlDevice</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, main.o(i.controlDevice))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = controlDevice &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
-<P><STRONG><a name="[fd]"></a>convertNumToStringLSB</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(i.convertNumToStringLSB))
+<P><STRONG><a name="[ff]"></a>convertNumToStringLSB</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(i.convertNumToStringLSB))
 <BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 </UL>
 
-<P><STRONG><a name="[fc]"></a>convertNumToStringMSB</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.convertNumToStringMSB))
+<P><STRONG><a name="[fe]"></a>convertNumToStringMSB</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.convertNumToStringMSB))
 <BR><BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 </UL>
 
 <P><STRONG><a name="[f4]"></a>convertStringToNum</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.convertStringToNum))
 <BR><BR>[Called By]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateDevicesState
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
-<P><STRONG><a name="[101]"></a>deleteSMS</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(i.deleteSMS))
+<P><STRONG><a name="[f6]"></a>convertStringToNum3</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, main.o(i.convertStringToNum3))
+<BR><BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
+</UL>
+
+<P><STRONG><a name="[103]"></a>deleteSMS</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(i.deleteSMS))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = deleteSMS &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f7]"></a>lcd_HomePage</STRONG> (Thumb, 336 bytes, Stack size 32 bytes, lcddisplay.o(i.lcd_HomePage))
+<P><STRONG><a name="[f9]"></a>lcd_HomePage</STRONG> (Thumb, 336 bytes, Stack size 32 bytes, lcddisplay.o(i.lcd_HomePage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = lcd_HomePage &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
-<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
+<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 </UL>
 
-<P><STRONG><a name="[104]"></a>lcd_Intro</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Intro))
+<P><STRONG><a name="[106]"></a>lcd_Intro</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Intro))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = lcd_Intro &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f8]"></a>lcd_Mode_1_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_1_page))
+<P><STRONG><a name="[fa]"></a>lcd_Mode_1_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_1_page))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = lcd_Mode_1_page &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 </UL>
 
-<P><STRONG><a name="[f9]"></a>lcd_Mode_2_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_2_page))
+<P><STRONG><a name="[fb]"></a>lcd_Mode_2_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_2_page))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = lcd_Mode_2_page &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 </UL>
 
-<P><STRONG><a name="[fa]"></a>lcd_Mode_3_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_3_page))
+<P><STRONG><a name="[fc]"></a>lcd_Mode_3_page</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, lcddisplay.o(i.lcd_Mode_3_page))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = lcd_Mode_3_page &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 </UL>
 
-<P><STRONG><a name="[f6]"></a>lcd_clear</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, lcd_txt.o(i.lcd_clear))
+<P><STRONG><a name="[f8]"></a>lcd_clear</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, lcd_txt.o(i.lcd_clear))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = lcd_clear &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
+<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
+<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 </UL>
 
-<P><STRONG><a name="[106]"></a>lcd_init</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, lcd_txt.o(i.lcd_init))
+<P><STRONG><a name="[108]"></a>lcd_init</STRONG> (Thumb, 116 bytes, Stack size 8 bytes, lcd_txt.o(i.lcd_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = lcd_init &rArr; lcd_write &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[102]"></a>lcd_puts</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, lcd_txt.o(i.lcd_puts))
+<P><STRONG><a name="[104]"></a>lcd_puts</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, lcd_txt.o(i.lcd_puts))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
+<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_write
 </UL>
-<BR>[Called By]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_3_page
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_2_page
-<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_1_page
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
+<BR>[Called By]<UL><LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_3_page
+<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_2_page
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Mode_1_page
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
 </UL>
 
-<P><STRONG><a name="[105]"></a>lcd_write</STRONG> (Thumb, 218 bytes, Stack size 16 bytes, lcd_txt.o(i.lcd_write))
+<P><STRONG><a name="[107]"></a>lcd_write</STRONG> (Thumb, 218 bytes, Stack size 16 bytes, lcd_txt.o(i.lcd_write))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = lcd_write &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
+<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
+<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
 
 <P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 402 bytes, Stack size 16 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 160<LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
-<LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
+<BR>[Calls]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init
+<LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_Intro
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_HomePage
 <LI><a href="#[d1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_FATFS_Init
 <LI><a href="#[c1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Receive_IT
 <LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
@@ -1564,13 +1572,13 @@ Global Symbols
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_I2C_Mem_Read_DMA
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
-<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkLCD
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Initsim900A
@@ -1579,41 +1587,50 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
-<P><STRONG><a name="[108]"></a>processDataFromInternet</STRONG> (Thumb, 180 bytes, Stack size 24 bytes, main.o(i.processDataFromInternet))
+<P><STRONG><a name="[10a]"></a>processDataFromInternet</STRONG> (Thumb, 180 bytes, Stack size 24 bytes, main.o(i.processDataFromInternet))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = processDataFromInternet &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateDevicesState
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertStringToNum
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[109]"></a>processDataFromSim</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, main.o(i.processDataFromSim))
+<P><STRONG><a name="[10b]"></a>processDataFromSim</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, main.o(i.processDataFromSim))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = processDataFromSim &rArr; processDetailSms &rArr; sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
-<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
-<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;deleteSMS
+<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strstr
 </UL>
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[10b]"></a>processDetailSms</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(i.processDetailSms))
+<P><STRONG><a name="[10d]"></a>processDetailSms</STRONG> (Thumb, 92 bytes, Stack size 8 bytes, main.o(i.processDetailSms))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = processDetailSms &rArr; sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;updateStateToInternet
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
-<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
-<LI><a href="#[10c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendMessage
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcpy
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;strcmp
 </UL>
-<BR>[Called By]<UL><LI><a href="#[109]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromSim
+</UL>
+
+<P><STRONG><a name="[f5]"></a>sendDataFromPowerToInternet</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, main.o(i.sendDataFromPowerToInternet))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = sendDataFromPowerToInternet &rArr; HAL_Delay
+</UL>
+<BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
 <P><STRONG><a name="[f3]"></a>sendDataFromSensorToInternet</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, main.o(i.sendDataFromSensorToInternet))
@@ -1625,17 +1642,17 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
-<P><STRONG><a name="[107]"></a>sendMessage</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, main.o(i.sendMessage))
+<P><STRONG><a name="[109]"></a>sendMessage</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, main.o(i.sendMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = sendMessage &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[fe]"></a>sendRS485toSystem</STRONG> (Thumb, 82 bytes, Stack size 16 bytes, main.o(i.sendRS485toSystem))
+<P><STRONG><a name="[100]"></a>sendRS485toSystem</STRONG> (Thumb, 88 bytes, Stack size 16 bytes, main.o(i.sendRS485toSystem))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
@@ -1644,20 +1661,20 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforDevice
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setIDforButton
-<LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
-<LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;controlDevice
-<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkTimeToReadSensor
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 </UL>
 
 <P><STRONG><a name="[f1]"></a>setIDforButton</STRONG> (Thumb, 120 bytes, Stack size 16 bytes, main.o(i.setIDforButton))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = setIDforButton &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
+<LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
@@ -1665,9 +1682,9 @@ Global Symbols
 <P><STRONG><a name="[f2]"></a>setIDforDevice</STRONG> (Thumb, 100 bytes, Stack size 16 bytes, main.o(i.setIDforDevice))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = setIDforDevice &rArr; sendRS485toSystem &rArr; HAL_Delay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
-<LI><a href="#[fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
-<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
+<BR>[Calls]<UL><LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendRS485toSystem
+<LI><a href="#[fe]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringMSB
+<LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertNumToStringLSB
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
@@ -1677,8 +1694,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;convertStringToNum
 </UL>
-<BR>[Called By]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<BR>[Called By]<UL><LI><a href="#[10a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDataFromInternet
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 
@@ -1688,8 +1705,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[c2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit_IT
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[10b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
-<LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
+<BR>[Called By]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;processDetailSms
+<LI><a href="#[fd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;checkSetTime
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;answerSystem
 </UL>
 <P>

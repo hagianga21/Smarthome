@@ -35,11 +35,12 @@ uint8_t statusSend = 1;
 uint8_t numberOfButton = 1, numberOfDevice = 1;
 uint8_t count1 = 0, tempdataReceiveFromSystem, flagReceiveAllDataFromSystem = 0;
 uint8_t dataReceiveFromSystem[11], dataSendtoSystem[11];
-uint8_t countSensor = 1 ,temperature = 0, humid = 0, gasDetection = 0, humanDetection = 0;
+uint8_t countSensor = 1 ,temperature = 0, humid = 0, gasDetection = 0, humanDetection = 0, power = 0;
 //UART2 Internet
 uint8_t count2 = 0, flagReceiveAllDataFromInternet = 0, tempdataReceiveFromInternet;
 uint8_t dataReceiveFromInternet[18], devicesStateUpdateToInternet[18] = "S0000000000000000E";
 uint8_t dataFromSensorToInternet[11] = "S03C01000TE";
+uint8_t dataFromPowerToInternet[11] = "S03D04000PE";
 //UART3 Module sim 800A
 uint8_t dataReceiveFromSim800[100], tempdataReceiveFromSim800;
 uint8_t count3 = 0, flagReceiveAllDataFromSim800 = 0, flagSms = 0;
@@ -70,6 +71,7 @@ void controlDevice(void);
 void updateStateToInternet(void);
 void updateDevicesState(void);
 void sendDataFromSensorToInternet(void);
+void sendDataFromPowerToInternet(void);
 void answerSystem(void);
 void processDataFromInternet(void);
 void checkSetTime(void);
@@ -84,6 +86,7 @@ void checkLCD(void);
 uint8_t convertNumToStringMSB(uint8_t number);
 uint8_t convertNumToStringLSB(uint8_t number);
 uint8_t convertStringToNum(uint8_t MSB, uint8_t LSB);
+uint8_t convertStringToNum3(uint8_t MSB1, uint8_t MSB, uint8_t LSB);
 //-------------------------------------------------------------------------------------//
 
 int main(void)
@@ -298,6 +301,12 @@ uint8_t convertStringToNum(uint8_t MSB, uint8_t LSB){
 	return (MSB*10+LSB);
 }
 
+uint8_t convertStringToNum3(uint8_t MSB1, uint8_t MSB, uint8_t LSB){
+	MSB1 = MSB1 - 48;
+	MSB = MSB - 48;
+	LSB = LSB - 48;
+	return (MSB1*100 + MSB*10 +LSB);
+}
 
 void writeDataToDS3132(void){
 	sendDataToDS3231[0] = DEC2BCD(0);
@@ -314,9 +323,10 @@ void writeDataToDS3132(void){
 void sendRS485toSystem(void){
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_12,GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_SET);
+	HAL_Delay(100);
 	HAL_UART_Transmit_IT(&huart1,dataSendtoSystem,11);
 	HAL_UART_Transmit_IT(&huart4,dataSendtoSystem,11);
-	HAL_Delay(150);
+	HAL_Delay(100);
 	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_5,GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_12,GPIO_PIN_RESET);
 }
@@ -393,6 +403,11 @@ void sendDataFromSensorToInternet(void){
 	HAL_UART_Transmit_IT(&huart2,dataFromSensorToInternet,11);
 	HAL_Delay(100);
 }
+
+void sendDataFromPowerToInternet(void){
+	HAL_UART_Transmit_IT(&huart2,dataFromPowerToInternet,11);
+	HAL_Delay(100);
+}
 void answerSystem(void){
 	//control device
 	if(dataReceiveFromSystem[2] == '0'){
@@ -438,6 +453,13 @@ void answerSystem(void){
 			dataFromSensorToInternet[8] = dataReceiveFromSystem[8];
 			sendDataFromSensorToInternet();
 			humanDetection = convertStringToNum(dataReceiveFromSystem[7],dataReceiveFromSystem[8]);
+		}
+		if(dataReceiveFromSystem[9] == 'P'){
+			dataFromPowerToInternet[6] = dataReceiveFromSystem[6];
+			dataFromPowerToInternet[7] = dataReceiveFromSystem[7];
+			dataFromPowerToInternet[8] = dataReceiveFromSystem[8];
+			sendDataFromPowerToInternet();
+			power = convertStringToNum3(dataReceiveFromSystem[6],dataReceiveFromSystem[7],dataReceiveFromSystem[8]);
 		}
 	}
 	
@@ -548,11 +570,12 @@ void checkTimeToReadSensor(void){
 				statusSend++;
 		}
 		else if(statusSend == 3){
-				strcpy((char *)dataSendtoSystem,"S13D04000VE");
+				strcpy((char *)dataSendtoSystem,"S13D04000PE");
 				HAL_Delay(100);
 				sendRS485toSystem();
-				statusSend++;
+				statusSend = 1;
 		}
+		/*
 		else if(statusSend == 4){
 				strcpy((char *)dataSendtoSystem,"S13D04000IE");
 				HAL_Delay(100);
@@ -565,6 +588,7 @@ void checkTimeToReadSensor(void){
 				sendRS485toSystem();
 				statusSend = 1;
 		}
+		*/
 		/*
 		if(minute%5 == 0){
 				strcpy((char *)dataSendtoSystem,"S13D04000PE");

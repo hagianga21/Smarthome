@@ -1,16 +1,16 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>
 WiFiClient client;
-/*
+
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
-const char* host = "192.168.100.20";
-*/
+const char* host = "192.168.100.6";
 
+/*
 const char* ssid     = "Ptnktd";
 const char* password = "hoilamgivay";
 const char* host = "192.168.1.30";
-
+*/
 const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
@@ -61,7 +61,7 @@ void loop() {
     if(Serial.available() > 0){
        stateFromSystemToInternet = Serial.readString();
        //Serial.println(stateFromSystemToInternet);
-       //processDataFromSystem();
+       processDataFromSystem();
     }
     
 }
@@ -362,6 +362,10 @@ void sendDataFromSensorToInternet(String type, int value){
       url += "readHumidFromSystem?humid=";
       url += value;
     }
+    if(type == "Power"){
+      url += "readPowerFromSystem?Power=";
+      url += value;
+    }
     if(type == "Gas"){
       url += "readGasFromSystem?gasDetection=";
       if(value == 1)
@@ -387,7 +391,7 @@ void sendDataFromSensorToInternet(String type, int value){
 }
 
 void processDataFromSystem(void){
-    int Temp, Humid, Gas, Human;
+    int Temp, Humid, Gas, Human, Power;
     if(stateFromSystemToInternet[1] == '0'){
        if(stateFromSystemToInternet[2] == '1' && stateFromSystemToInternet[2] != devicesState[2]){
           devicesState[2] = stateFromSystemToInternet[2];
@@ -430,6 +434,10 @@ void processDataFromSystem(void){
         if(stateFromSystemToInternet[9] == 'G'){
           Gas = (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
           sendDataFromSensorToInternet("Gas",Gas);
+        }
+        if(stateFromSystemToInternet[9] == 'P'){
+          Power = (stateFromSystemToInternet[6]-48)*100 + (stateFromSystemToInternet[7]-48)*10 + (stateFromSystemToInternet[8]-48);
+          sendDataFromSensorToInternet("Power",Power);
         }
     }
 }

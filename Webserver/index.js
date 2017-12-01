@@ -18,17 +18,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var date = new Date();
-var hour = date.getHours();
-var min  = date.getMinutes();
 
 var temperature = 30;
 var humid = 30;
 var gasDetection = "NO";
 var humanDetection = "NO";
 var securityStatus = "UNARMED";
+var Power = 0;
 var chartTime = [];
-var chartTime2 = [1.00,3.30,4.15,6.15,7.15,8.15];
+var chartPower = [];
+var chartTime2 = ['1.00','3.30','4.15','6.15','7.15','8.15'];
 //var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
 var chartCount = 0;
 //https://stackoverflow.com/questions/7357734/how-do-i-get-the-time-of-day-in-javascript-node-js
@@ -76,16 +75,17 @@ function FetchData(){
 MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     assert.equal(null,err);
     console.log("Successfully connect MongoDB");
-    var projection = {"time" :1, "P":1, "_id":0}; //"deviceID": 1, 
-    //db.collection('test1').insertOne({"deviceID": "D01", "time": hour + ":" + min, "V": 220, "P": 60, "I": 10})
+    var projection = {"date" :1, "year" :1,"month" :1, "time" :1, "P":1, "_id":0}; //"deviceID": 1, 
+    //db.collection('test2').insertOne({"deviceID": "D04", "date": d.getDate(), "month": d.getMonth(), "year": d.getFullYear(), "time": d.getHours() + "." + d.getMinutes(), "P": req.query.Power})
     
-    var cursor = db.collection('test1').find({time: {$gt: '1:28'}})
+    var cursor = db.collection('test2').find({time: {$gt: '1.20'}})
     cursor.project(projection)
     cursor.forEach(
         function(doc) {
             chartTime[chartCount] = doc.time;
+            chartPower[chartCount] = doc.P;
             chartCount++;
-            console.log(doc.time);
+            console.log(doc.year);
         },
         function(err) {
             assert.equal(err, null);
@@ -213,7 +213,18 @@ app.get('/readGasFromSystem', function (req, res) {
 app.get('/readHumanFromSystem', function (req, res) {
     humanDetection = req.query.humanDetection;
 });
+app.get('/readPowerFromSystem', function (req, res) {
+    var d = new Date();
+    Power = req.query.Power;
+    MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
+        assert.equal(null,err);
+        db.collection('test2').insertOne({"deviceID": "D04", "date": d.getDate(), "month": d.getMonth(), "year": d.getFullYear(), "time": d.getHours() + "." + d.getMinutes(), "P": req.query.Power})
+    });
+});
 
+app.get('/Power', function (req, res) {
+    res.end(JSON.stringify(Power));
+});
 
 //Trang Json trạng thái các thiết bị
 app.get('/state', function (req, res) {
@@ -319,7 +330,10 @@ app.get('/camera', function (req, res) {
 
 app.get('/chart', function (req, res) {
     if(loginFlag === true){
-        res.render('chart',{chartTime: chartTime2});
+        res.render('chart',{
+            chartTime: chartTime,
+            chartPower: chartPower
+        });
     }
     else
         res.redirect('/');

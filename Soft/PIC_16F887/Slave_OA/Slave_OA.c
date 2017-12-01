@@ -125,9 +125,10 @@ void main()
      TRISD.B5 = 0;
      turnOffRelay();
      Config_sendData();
-     voltage = 220;
-     ampe = 1.3;
-     activepower = 132;
+     RS485_send(sendData);
+     voltage = 10;
+     ampe = 0.2;
+     activepower = 10;
      //
      TRISC.B0 = 0;
      PORTC.B0 = 1;
@@ -148,10 +149,14 @@ void main()
      Delay_ms(1000);
      //Test();
      while(1){
+     //voltage = getVRMS();
+     //ampe = getIRMS();
+     activepower = getAPOWER();
        if(flagReceivedAllData == 1){
          flagReceivedAllData = 0;
          Delay_ms(20);
          if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D' && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0' && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'V'){
+             Delay_ms(500);
              //voltage = getVRMS();
              sendVolt(voltage);
              Delay_ms(1000);
@@ -159,6 +164,7 @@ void main()
          if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
          && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
          && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'I'){
+             Delay_ms(500);
              //ampe = getIRMS();
              sendAmpe(ampe);
              Delay_ms(1000);
@@ -166,6 +172,7 @@ void main()
          if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
          && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
          && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
+             Delay_ms(500);
              //activepower = getAPOWER();
              sendPower(activepower);
              Delay_ms(1000);
