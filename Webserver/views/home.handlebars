@@ -96,17 +96,20 @@
         </div>
 
         <div class = "boxDistance">
-            <div class="col-md-12 col-sm-12 col-xs-12">                     
+            <div class="col-xs-8 col-md-11">                     
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Area Chart
+                        Live Power Consumption
                     </div>
                     <div class="panel-body">
-                        <div id="chartContainer" style="height: 300px; width:100%;"></div>
+                        <div style="width:25%, height:25%">
+                            <canvas id="myChart"></canvas>
+                        </div>
                     </div>
                 </div>            
             </div>
         </div>
+
 
         <div class = "boxDistance">
             <div class="col-xs-6 col-md-2">
@@ -173,59 +176,43 @@
     </div>    
 </div>
 
-<script type="text/javascript">
-	window.onload = function () {
+<script>
+    //var xdata = ['1:00','3:30','4:15','6:15','7:15','8:15'];
+    var xdata = [{{chartTime}}];
+    var ydata = [{{chartPower}}];
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: xdata,
+            datasets: [{
+                label: 'Power',
+                data: ydata,
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                borderColor:'rgba(255, 159, 64, 1)',
+                borderWidth: 3,
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                    },
+                    scaleLabel: {
+                            display: true,
+                            labelString: 'Power (W)'
+                    }
+                }],
+            }
+        }
+    });
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-		var dps = []; // dataPoints
-
-		var chart = new CanvasJS.Chart("chartContainer",{
-			title :{
-				text: "Live Power Consumption"
-			},
-            axisY:{
-                title: "Power (W)"
-            },
-            axisX:{
-                title: "Time"
-            },			
-			data: [{
-				type: "line",
-				dataPoints: dps 
-			}]
-		});
-
-		var xVal = 0;
-		var yVal = 100;	
-		var updateInterval = 100;
-		var dataLength = 500; // number of dataPoints visible at any point
-
-		var updateChart = function (count) {
-			count = count || 1;
-			// count is number of times loop runs to generate random dataPoints.
-			
-			for (var j = 0; j < count; j++) {	
-				yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
-				dps.push({
-					x: xVal,
-					y: yVal
-				});
-				xVal++;
-			};
-			if (dps.length > dataLength)
-			{
-				dps.shift();				
-			}
-			
-			chart.render();		
-
-		};
-
-		// generates first set of dataPoints
-		updateChart(dataLength); 
-
-		// update chart after specified time. 
-		setInterval(function(){updateChart()}, updateInterval); 
-
-	}
-	</script>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

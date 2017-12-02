@@ -25,11 +25,20 @@ var gasDetection = "NO";
 var humanDetection = "NO";
 var securityStatus = "UNARMED";
 var Power = 0;
+
+var d1 = new Date();
+dateNow =  d1.getDate();
+monthNow = d1.getMonth() + 1;
+yearNow =  d1.getFullYear();
+var dateFilter = dateNow;
+var monthFilter = monthNow;
+var yearFilter = yearNow;
+
 var chartTime = [];
 var chartPower = [];
-var chartTime2 = ['1.00','3.30','4.15','6.15','7.15','8.15'];
-//var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
 var chartCount = 0;
+//var chartTime2 = ["1:00","3:30","4:15","6:15","7:15","8:15"];
+
 //https://stackoverflow.com/questions/7357734/how-do-i-get-the-time-of-day-in-javascript-node-js
 //Login variables
 var username = "giang";
@@ -77,8 +86,8 @@ MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
     console.log("Successfully connect MongoDB");
     var projection = {"date" :1, "year" :1,"month" :1, "time" :1, "P":1, "_id":0}; //"deviceID": 1, 
     //db.collection('test2').insertOne({"deviceID": "D04", "date": d.getDate(), "month": d.getMonth(), "year": d.getFullYear(), "time": d.getHours() + "." + d.getMinutes(), "P": req.query.Power})
-    
-    var cursor = db.collection('test2').find({time: {$gt: '1.20'}})
+    var d = new Date();
+    var cursor = db.collection('test2').find({time: {$gt: '1.20'},date: {$eq: d.getDate()},month: {$eq: d.getMonth()+1},year: {$eq: d.getFullYear()}})
     cursor.project(projection)
     cursor.forEach(
         function(doc) {
@@ -104,7 +113,7 @@ app.get('/', function (req, res) {
 */
 
 app.get('/', function (req, res) {
-    console.log(chartTime);
+    //console.log(chartTime);
     res.redirect('/login');
 });
 
@@ -140,8 +149,32 @@ app.get('/logincheckNodeMCU', function(req,res){
 
 //HOME
 app.get('/home', function (req, res) {
-    if(loginFlag === true){
+    if(loginFlag === true){ 
+        MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
+            chartCount = 0;
+            chartTime = [];
+            chartPower = [];
+            assert.equal(null,err);
+            var projection = {"date" :1, "year" :1,"month" :1, "time" :1, "P":1, "_id":0};
+            var d = new Date();
+            var cursor = db.collection('test2').find({time: {$gt: '1.20'},date: {$eq: d.getDate()},month: {$eq: d.getMonth()+1},year: {$eq: d.getFullYear()}})
+            cursor.project(projection)
+            cursor.forEach(
+                function(doc) {
+                    chartTime[chartCount] = doc.time;
+                    chartPower[chartCount] = doc.P;
+                    chartCount++;
+                    console.log(doc.year);
+                },
+                function(err) {
+                    assert.equal(err, null);
+                    return db.close();
+                }
+            ); 
+        })
         res.render('home',{
+            chartTime: chartTime,
+            chartPower: chartPower,
             insideTemperature: temperature,
             insideHumidity: humid,
             gasDetection: gasDetection,
@@ -152,6 +185,7 @@ app.get('/home', function (req, res) {
             letterInsideHumandetectionBox: (humanDetection === "YES") ? "red": "green",
             letterInsideSecurityBox: (securityStatus === "ARMED") ? "red": "green",
         });
+        
     }
     else 
         res.redirect('/');
@@ -218,7 +252,7 @@ app.get('/readPowerFromSystem', function (req, res) {
     Power = req.query.Power;
     MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
         assert.equal(null,err);
-        db.collection('test2').insertOne({"deviceID": "D04", "date": d.getDate(), "month": d.getMonth(), "year": d.getFullYear(), "time": d.getHours() + "." + d.getMinutes(), "P": req.query.Power})
+        db.collection('test2').insertOne({"deviceID": "D04", "date": d.getDate(), "month": d.getMonth()+1, "year": d.getFullYear(), "time": d.getHours() + "." + d.getMinutes(), "P": req.query.Power})
     });
 });
 
@@ -330,7 +364,32 @@ app.get('/camera', function (req, res) {
 
 app.get('/chart', function (req, res) {
     if(loginFlag === true){
+        MongoClient.connect('mongodb://localhost:27017/LVTNtest', function(err, db){
+            assert.equal(null,err);
+            chartCount = 0;
+            chartTime = [];
+            chartPower = [];
+            var projection = {"date" :1, "year" :1,"month" :1, "time" :1, "P":1, "_id":0};
+            var d = new Date();
+            var cursor = db.collection('test2').find({date: {$eq: dateFilter},month: {$eq: monthFilter},year: {$eq: yearFilter}  })
+            cursor.project(projection)
+            cursor.forEach(
+                function(doc) {
+                    chartTime[chartCount] = doc.time;
+                    chartPower[chartCount] = doc.P;
+                    chartCount++;
+                    console.log(doc.year);
+                },
+                function(err) {
+                    assert.equal(err, null);
+                    return db.close();
+                }
+            ); 
+        })
         res.render('chart',{
+            date: dateFilter,
+            month: monthFilter,
+            year: yearFilter,
             chartTime: chartTime,
             chartPower: chartPower
         });
@@ -338,5 +397,15 @@ app.get('/chart', function (req, res) {
     else
         res.redirect('/');
 });
+
+app.get('/filterPower', function (req, res) {
+    var a = req.query.chartChooseMonth + " " + req.query.chartChooseDate + " " + req.query.chartChooseYear;
+    var b = new Date(a);
+    dateFilter = b.getDate();
+    monthFilter = b.getMonth()+1;
+    yearFilter = b.getFullYear();
+    res.redirect('/chart');
+});
+
 
 app.listen(9000)
