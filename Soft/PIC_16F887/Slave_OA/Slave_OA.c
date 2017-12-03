@@ -126,9 +126,9 @@ void main()
      turnOffRelay();
      Config_sendData();
      RS485_send(sendData);
-     voltage = 10;
-     ampe = 0.2;
-     activepower = 10;
+     //voltage = 10;
+     //ampe = 0.2;
+     activepower = 0;
      //
      TRISC.B0 = 0;
      PORTC.B0 = 1;
@@ -155,6 +155,7 @@ void main()
        if(flagReceivedAllData == 1){
          flagReceivedAllData = 0;
          Delay_ms(20);
+         /*
          if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D' && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0' && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'V'){
              Delay_ms(500);
              //voltage = getVRMS();
@@ -169,6 +170,7 @@ void main()
              sendAmpe(ampe);
              Delay_ms(1000);
          }
+         */
          if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
          && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
          && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
@@ -557,7 +559,7 @@ void Config_sendData(void){
     sendData[6]  = '0';
     sendData[7]  = '0';
     sendData[8]  = '0';
-    sendData[9]  = 'V';
+    sendData[9]  = 'P';
     sendData[10] = 'E';
 }
  
