@@ -9,6 +9,7 @@ char sendData[11];
 
 long value;
 int temp,hum;
+
 int a,b;
 int gasStatus = 0, countGas = 0;
 
@@ -83,8 +84,8 @@ void main()
  sendData[8] = 'G';
  sendData[9] = 'G';
  sendData[10] = 'E';
- RS485_send(sendData);
- sendTemp();
+
+
  while(1)
  {
  if(flagReceivedAllData==1){
@@ -147,7 +148,7 @@ void main()
 
  }
 }
-#line 171 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
+#line 172 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_Temp_Doam/Slave_Temp_humid.c"
 void RS485_send (char dat[])
 {
  int i;
@@ -156,7 +157,7 @@ void RS485_send (char dat[])
  while(UART1_Tx_Idle()==0);
  UART1_Write(dat[i]);
  }
- Delay_ms(200);
+ Delay_ms(100);
  PORTB.RB3 =0;
 }
 

@@ -1,7 +1,8 @@
 [PROJECTS]
-Count=3
+Count=4
 Project0=..\..\PIC_16F887\Slave_OA\Slave_OA.mcppi
 Project1=..\Slave_CA3\Slave_CA3.mcppi
 Project2=..\Slave_DA3\Slave_DA3.mcppi
+Project3=..\Slave_Temp_Doam\Slave_Temp_humid.mcppi
 [ActiveProject]
-Index=0
+Index=1

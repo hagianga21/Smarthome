@@ -4,9 +4,6 @@ main
 	UART1_Init
 	turnOnSpeaker
 	turnOffSpeaker
-	RS485_send
-		UART1_Tx_Idle
-		UART1_Write
 	sendTemp
 		DHT11_Read
 		Div_16x16_S

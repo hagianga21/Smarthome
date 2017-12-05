@@ -26,6 +26,7 @@ char sendData[11];
 
 long value;
 int temp,hum;
+//int temp1, temp2;
 int a,b;
 int gasStatus = 0, countGas = 0;
 
@@ -100,8 +101,8 @@ void main()
      sendData[8] = 'G';
      sendData[9] = 'G';
      sendData[10] = 'E';
-     RS485_send(sendData);
-     sendTemp();
+     //RS485_send(sendData);
+     //sendTemp();
      while(1)
      {
           if(flagReceivedAllData==1){
@@ -176,7 +177,7 @@ void RS485_send (char dat[])
     while(UART1_Tx_Idle()==0);
     UART1_Write(dat[i]);
     }
-    Delay_ms(200);
+    Delay_ms(100);
     PORTB.RB3 =0;
 }
 

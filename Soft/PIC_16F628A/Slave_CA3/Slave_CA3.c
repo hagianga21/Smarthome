@@ -25,6 +25,7 @@ char receive[11];                                // buffer for receving
 char WTF[11];
 
 int stt1 =1, stt2 =1,stt3 = 1;
+int busy = 0;
 char flagReceivedAllData = 0;
 char count = 0, tempReceiveData,receiveData[11];
 char sendData[11];
@@ -44,7 +45,8 @@ void interrupt()
         tempReceiveData = UART1_Read();
         if(tempReceiveData == 'S')
         {
-           count=0;
+           busy = 1;
+           count = 0;
            receiveData[count] = tempReceiveData;
            count++;
         }
@@ -58,6 +60,7 @@ void interrupt()
           receiveData[count] = tempReceiveData;
           count=0;
           flagReceivedAllData = 1;
+          busy = 0;
         }
      }
   }
@@ -181,15 +184,23 @@ void main() {
          sendData[1] = '0';
          sendData[2] = '0';
          sendData[3] = 'B';
-         sendData[4] = addressButton1[0];
-         sendData[5] = addressButton1[1];
+         sendData[4] = '0';
+         sendData[5] = '1';
+         //sendData[4] = addressButton1[0];
+         //sendData[5] = addressButton1[1];
          sendData[6] = 'D';
-         sendData[7] = addressDevice1[0];
-         sendData[8] = addressDevice1[1];
+         sendData[7] = '0';
+         sendData[8] = '1';
+         //sendData[7] = addressDevice1[0];
+         //sendData[8] = addressDevice1[1];
          sendData[9] = '0';
          sendData[10] = 'E';
          checkstt(stt1);
          stt1++;
+         while(busy == 1){
+            ;
+         }
+         Delay_ms(10);
          RS485_send(sendData);
          Delay_ms(100);
          //RS485_send(sendData);                            // Invert PORTC
@@ -219,6 +230,9 @@ void main() {
          sendData[10] = 'E';
          checkstt(stt2);
          stt2++;
+         while(busy == 1){
+            ;
+         }
          RS485_send(sendData);
          Delay_ms(100);  
          //RS485_send(sendData);                          // Invert PORTC
@@ -249,6 +263,9 @@ void main() {
          sendData[10] = 'E';
          checkstt(stt3);
          stt3++;
+         while(busy == 1){
+            ;
+         }
          RS485_send(sendData);
          Delay_ms(100);
          //RS485_send(sendData);

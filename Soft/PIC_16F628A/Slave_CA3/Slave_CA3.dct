@@ -89,6 +89,7 @@ bcd2dec16
 boot16_delay_5ms
 brgh
 brgh_bit
+busy
 button
 byte2double
 bytetohex

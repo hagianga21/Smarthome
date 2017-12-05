@@ -9,7 +9,7 @@ void lcd_Intro(void){
 	lcd_puts(3,0,(int8_t*)"GVHD:TRINH HOANG HON");
 }
 
-void lcd_HomePage(int day,int date,int month,int year,int hour,int minute,int second){
+void lcd_HomePage(int day,int date,int month,int year,int hour,int minute,int second, int temperature, int power){
 	char lcd_buffer[2];
 	lcd_puts(0,5,(int8_t*)"SMART HOME");
 	switch(day){
@@ -104,7 +104,14 @@ void lcd_HomePage(int day,int date,int month,int year,int hour,int minute,int se
 	else{
 		lcd_puts(2,9,(int8_t*)lcd_buffer);
 	}
-	lcd_puts(3,0,(int8_t*)"Temp: 30 C");
+	
+	sprintf(lcd_buffer,"%d",temperature);
+	lcd_puts(3,0,(int8_t*)"Temp:");
+	lcd_puts(3,5,(int8_t*)lcd_buffer);
+	
+	sprintf(lcd_buffer,"%d",power);
+	lcd_puts(3,7,(int8_t*)"Power:");
+	lcd_puts(3,13,(int8_t*)lcd_buffer);
 }
 
 void lcd_Mode_1_page(void){
