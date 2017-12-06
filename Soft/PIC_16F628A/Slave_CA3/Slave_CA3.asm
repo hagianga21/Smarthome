@@ -62,7 +62,7 @@ L_interrupt4:
 	XORLW      69
 	BTFSC      STATUS+0, 2
 	GOTO       L_interrupt7
-L__interrupt59:
+L__interrupt61:
 ;Slave_CA3.c,55 :: 		receiveData[count] = tempReceiveData;
 	MOVF       _count+0, 0
 	ADDLW      _receiveData+0
@@ -100,7 +100,7 @@ L_interrupt3:
 L_interrupt0:
 ;Slave_CA3.c,67 :: 		}
 L_end_interrupt:
-L__interrupt67:
+L__interrupt69:
 	MOVF       ___savePCLATH+0, 0
 	MOVWF      PCLATH+0
 	SWAPF      ___saveSTATUS+0, 0
@@ -235,7 +235,7 @@ L_main13:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main16
-L__main65:
+L__main67:
 ;Slave_CA3.c,180 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
@@ -265,7 +265,7 @@ L_main17:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main20
-L__main64:
+L__main66:
 ;Slave_CA3.c,183 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
@@ -314,10 +314,10 @@ L_main21:
 	MOVLW      0
 	XORWF      _busy+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main69
+	GOTO       L__main71
 	MOVLW      1
 	XORWF      _busy+0, 0
-L__main69:
+L__main71:
 	BTFSS      STATUS+0, 2
 	GOTO       L_main22
 ;Slave_CA3.c,202 :: 		}
@@ -406,7 +406,7 @@ L_main26:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main29
-L__main63:
+L__main65:
 ;Slave_CA3.c,217 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
@@ -437,7 +437,7 @@ L_main30:
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
 	GOTO       L_main33
-L__main62:
+L__main64:
 ;Slave_CA3.c,220 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
@@ -450,79 +450,72 @@ L__main62:
 ;Slave_CA3.c,223 :: 		sendData[3] = 'B';
 	MOVLW      66
 	MOVWF      _sendData+3
-;Slave_CA3.c,224 :: 		sendData[4] = addressButton2[0];
-	MOVF       _addressButton2+0, 0
+;Slave_CA3.c,228 :: 		sendData[4] = '0';
+	MOVLW      48
 	MOVWF      _sendData+4
-;Slave_CA3.c,225 :: 		sendData[5] = addressButton2[1];
-	MOVF       _addressButton2+1, 0
+;Slave_CA3.c,229 :: 		sendData[5] = '2';
+	MOVLW      50
 	MOVWF      _sendData+5
-;Slave_CA3.c,226 :: 		sendData[6] = 'D';
+;Slave_CA3.c,230 :: 		sendData[6] = 'D';
 	MOVLW      68
 	MOVWF      _sendData+6
-;Slave_CA3.c,227 :: 		sendData[7] = addressDevice2[0];
-	MOVF       _addressDevice2+0, 0
+;Slave_CA3.c,235 :: 		sendData[7] = '0';
+	MOVLW      48
 	MOVWF      _sendData+7
-;Slave_CA3.c,228 :: 		sendData[8] = addressDevice2[1];
-	MOVF       _addressDevice2+1, 0
+;Slave_CA3.c,236 :: 		sendData[8] = '2';
+	MOVLW      50
 	MOVWF      _sendData+8
-;Slave_CA3.c,229 :: 		sendData[9] = '0';
+;Slave_CA3.c,237 :: 		sendData[9] = '0';
 	MOVLW      48
 	MOVWF      _sendData+9
-;Slave_CA3.c,230 :: 		sendData[10] = 'E';
+;Slave_CA3.c,238 :: 		sendData[10] = 'E';
 	MOVLW      69
 	MOVWF      _sendData+10
-;Slave_CA3.c,231 :: 		checkstt(stt2);
+;Slave_CA3.c,239 :: 		checkstt(stt2);
 	MOVF       _stt2+0, 0
 	MOVWF      FARG_checkstt_stt+0
 	MOVF       _stt2+1, 0
 	MOVWF      FARG_checkstt_stt+1
 	CALL       _checkstt+0
-;Slave_CA3.c,232 :: 		stt2++;
+;Slave_CA3.c,240 :: 		stt2++;
 	INCF       _stt2+0, 1
 	BTFSC      STATUS+0, 2
 	INCF       _stt2+1, 1
-;Slave_CA3.c,233 :: 		while(busy == 1){
+;Slave_CA3.c,241 :: 		while(busy == 1){
 L_main34:
 	MOVLW      0
 	XORWF      _busy+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main70
+	GOTO       L__main72
 	MOVLW      1
 	XORWF      _busy+0, 0
-L__main70:
+L__main72:
 	BTFSS      STATUS+0, 2
 	GOTO       L_main35
-;Slave_CA3.c,235 :: 		}
+;Slave_CA3.c,243 :: 		}
 	GOTO       L_main34
 L_main35:
-;Slave_CA3.c,236 :: 		RS485_send(sendData);
-	MOVLW      _sendData+0
-	MOVWF      FARG_RS485_send_dat+0
-	CALL       _RS485_send+0
-;Slave_CA3.c,237 :: 		Delay_ms(100);
-	MOVLW      3
-	MOVWF      R11+0
-	MOVLW      138
+;Slave_CA3.c,244 :: 		Delay_ms(10);
+	MOVLW      65
 	MOVWF      R12+0
-	MOVLW      85
+	MOVLW      238
 	MOVWF      R13+0
 L_main36:
 	DECFSZ     R13+0, 1
 	GOTO       L_main36
 	DECFSZ     R12+0, 1
 	GOTO       L_main36
-	DECFSZ     R11+0, 1
-	GOTO       L_main36
 	NOP
-	NOP
-;Slave_CA3.c,239 :: 		oldstate = 0;
-	BCF        _oldstate+0, BitPos(_oldstate+0)
-;Slave_CA3.c,240 :: 		Delay_ms(500);
-	MOVLW      13
+;Slave_CA3.c,245 :: 		RS485_send(sendData);
+	MOVLW      _sendData+0
+	MOVWF      FARG_RS485_send_dat+0
+	CALL       _RS485_send+0
+;Slave_CA3.c,246 :: 		Delay_ms(100);
+	MOVLW      3
 	MOVWF      R11+0
-	MOVLW      175
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      182
+	MOVLW      85
 	MOVWF      R13+0
 L_main37:
 	DECFSZ     R13+0, 1
@@ -532,11 +525,29 @@ L_main37:
 	DECFSZ     R11+0, 1
 	GOTO       L_main37
 	NOP
-;Slave_CA3.c,241 :: 		}                              // Update flag
+	NOP
+;Slave_CA3.c,248 :: 		oldstate = 0;
+	BCF        _oldstate+0, BitPos(_oldstate+0)
+;Slave_CA3.c,249 :: 		Delay_ms(500);
+	MOVLW      13
+	MOVWF      R11+0
+	MOVLW      175
+	MOVWF      R12+0
+	MOVLW      182
+	MOVWF      R13+0
+L_main38:
+	DECFSZ     R13+0, 1
+	GOTO       L_main38
+	DECFSZ     R12+0, 1
+	GOTO       L_main38
+	DECFSZ     R11+0, 1
+	GOTO       L_main38
+	NOP
+;Slave_CA3.c,250 :: 		}                              // Update flag
 L_main33:
-;Slave_CA3.c,242 :: 		}
+;Slave_CA3.c,251 :: 		}
 L_main29:
-;Slave_CA3.c,245 :: 		if (Button(&PORTB, 5, 1, 1)) {               // Detect logical one
+;Slave_CA3.c,254 :: 		if (Button(&PORTB, 5, 1, 1)) {               // Detect logical one
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      5
@@ -548,14 +559,14 @@ L_main29:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main38
-;Slave_CA3.c,246 :: 		oldstate = 1;                              // Update flag
+	GOTO       L_main39
+;Slave_CA3.c,255 :: 		oldstate = 1;                              // Update flag
 	BSF        _oldstate+0, BitPos(_oldstate+0)
-;Slave_CA3.c,247 :: 		}
-L_main38:
-;Slave_CA3.c,249 :: 		if (oldstate && Button(&PORTB, 5, 1, 0)) {   // Detect one-to-zero transition
+;Slave_CA3.c,256 :: 		}
+L_main39:
+;Slave_CA3.c,258 :: 		if (oldstate && Button(&PORTB, 5, 1, 0)) {   // Detect one-to-zero transition
 	BTFSS      _oldstate+0, BitPos(_oldstate+0)
-	GOTO       L_main41
+	GOTO       L_main42
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      5
@@ -566,27 +577,27 @@ L_main38:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main41
-L__main61:
-;Slave_CA3.c,250 :: 		Delay_ms(100);
+	GOTO       L_main42
+L__main63:
+;Slave_CA3.c,259 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
 	MOVWF      R12+0
 	MOVLW      85
 	MOVWF      R13+0
-L_main42:
+L_main43:
 	DECFSZ     R13+0, 1
-	GOTO       L_main42
+	GOTO       L_main43
 	DECFSZ     R12+0, 1
-	GOTO       L_main42
+	GOTO       L_main43
 	DECFSZ     R11+0, 1
-	GOTO       L_main42
+	GOTO       L_main43
 	NOP
 	NOP
-;Slave_CA3.c,251 :: 		if (oldstate && Button(&PORTB, 5, 1, 0))
+;Slave_CA3.c,260 :: 		if (oldstate && Button(&PORTB, 5, 1, 0))
 	BTFSS      _oldstate+0, BitPos(_oldstate+0)
-	GOTO       L_main45
+	GOTO       L_main46
 	MOVLW      PORTB+0
 	MOVWF      FARG_Button_port+0
 	MOVLW      5
@@ -597,195 +608,211 @@ L_main42:
 	CALL       _Button+0
 	MOVF       R0+0, 0
 	BTFSC      STATUS+0, 2
-	GOTO       L_main45
-L__main60:
-;Slave_CA3.c,253 :: 		sendData[0] = 'S';
+	GOTO       L_main46
+L__main62:
+;Slave_CA3.c,262 :: 		sendData[0] = 'S';
 	MOVLW      83
 	MOVWF      _sendData+0
-;Slave_CA3.c,254 :: 		sendData[1] = '0';
+;Slave_CA3.c,263 :: 		sendData[1] = '0';
 	MOVLW      48
 	MOVWF      _sendData+1
-;Slave_CA3.c,255 :: 		sendData[2] = '0';
+;Slave_CA3.c,264 :: 		sendData[2] = '0';
 	MOVLW      48
 	MOVWF      _sendData+2
-;Slave_CA3.c,256 :: 		sendData[3] = 'B';
+;Slave_CA3.c,265 :: 		sendData[3] = 'B';
 	MOVLW      66
 	MOVWF      _sendData+3
-;Slave_CA3.c,257 :: 		sendData[4] = addressButton3[0];
-	MOVF       _addressButton3+0, 0
+;Slave_CA3.c,270 :: 		sendData[4] = '0';
+	MOVLW      48
 	MOVWF      _sendData+4
-;Slave_CA3.c,258 :: 		sendData[5] = addressButton3[1];
-	MOVF       _addressButton3+1, 0
+;Slave_CA3.c,271 :: 		sendData[5] = '3';
+	MOVLW      51
 	MOVWF      _sendData+5
-;Slave_CA3.c,259 :: 		sendData[6] = 'D';
+;Slave_CA3.c,272 :: 		sendData[6] = 'D';
 	MOVLW      68
 	MOVWF      _sendData+6
-;Slave_CA3.c,260 :: 		sendData[7] = addressDevice3[0];
-	MOVF       _addressDevice3+0, 0
+;Slave_CA3.c,277 :: 		sendData[7] = '0';
+	MOVLW      48
 	MOVWF      _sendData+7
-;Slave_CA3.c,261 :: 		sendData[8] = addressDevice3[1];
-	MOVF       _addressDevice3+1, 0
+;Slave_CA3.c,278 :: 		sendData[8] = '3';
+	MOVLW      51
 	MOVWF      _sendData+8
-;Slave_CA3.c,262 :: 		sendData[9] = '0';
+;Slave_CA3.c,279 :: 		sendData[9] = '0';
 	MOVLW      48
 	MOVWF      _sendData+9
-;Slave_CA3.c,263 :: 		sendData[10] = 'E';
+;Slave_CA3.c,280 :: 		sendData[10] = 'E';
 	MOVLW      69
 	MOVWF      _sendData+10
-;Slave_CA3.c,264 :: 		checkstt(stt3);
+;Slave_CA3.c,281 :: 		checkstt(stt3);
 	MOVF       _stt3+0, 0
 	MOVWF      FARG_checkstt_stt+0
 	MOVF       _stt3+1, 0
 	MOVWF      FARG_checkstt_stt+1
 	CALL       _checkstt+0
-;Slave_CA3.c,265 :: 		stt3++;
+;Slave_CA3.c,282 :: 		stt3++;
 	INCF       _stt3+0, 1
 	BTFSC      STATUS+0, 2
 	INCF       _stt3+1, 1
-;Slave_CA3.c,266 :: 		while(busy == 1){
-L_main46:
+;Slave_CA3.c,283 :: 		while(busy == 1){
+L_main47:
 	MOVLW      0
 	XORWF      _busy+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__main71
+	GOTO       L__main73
 	MOVLW      1
 	XORWF      _busy+0, 0
-L__main71:
+L__main73:
 	BTFSS      STATUS+0, 2
+	GOTO       L_main48
+;Slave_CA3.c,285 :: 		}
 	GOTO       L_main47
-;Slave_CA3.c,268 :: 		}
-	GOTO       L_main46
-L_main47:
-;Slave_CA3.c,269 :: 		RS485_send(sendData);
-	MOVLW      _sendData+0
-	MOVWF      FARG_RS485_send_dat+0
-	CALL       _RS485_send+0
-;Slave_CA3.c,270 :: 		Delay_ms(100);
-	MOVLW      3
-	MOVWF      R11+0
-	MOVLW      138
-	MOVWF      R12+0
-	MOVLW      85
-	MOVWF      R13+0
 L_main48:
-	DECFSZ     R13+0, 1
-	GOTO       L_main48
-	DECFSZ     R12+0, 1
-	GOTO       L_main48
-	DECFSZ     R11+0, 1
-	GOTO       L_main48
-	NOP
-	NOP
-;Slave_CA3.c,272 :: 		oldstate = 0;
-	BCF        _oldstate+0, BitPos(_oldstate+0)
-;Slave_CA3.c,273 :: 		Delay_ms(500);
-	MOVLW      13
-	MOVWF      R11+0
-	MOVLW      175
+;Slave_CA3.c,286 :: 		Delay_ms(10);
+	MOVLW      65
 	MOVWF      R12+0
-	MOVLW      182
+	MOVLW      238
 	MOVWF      R13+0
 L_main49:
 	DECFSZ     R13+0, 1
 	GOTO       L_main49
 	DECFSZ     R12+0, 1
 	GOTO       L_main49
-	DECFSZ     R11+0, 1
-	GOTO       L_main49
 	NOP
-;Slave_CA3.c,274 :: 		}
-L_main45:
-;Slave_CA3.c,275 :: 		}
-L_main41:
-;Slave_CA3.c,277 :: 		}
-	GOTO       L_main11
-;Slave_CA3.c,278 :: 		}
-L_end_main:
-	GOTO       $+0
-; end of _main
-
-_RS485_send:
-
-;Slave_CA3.c,280 :: 		void RS485_send (char dat[])
-;Slave_CA3.c,283 :: 		PORTB.RB3 =1;
-	BSF        PORTB+0, 3
-;Slave_CA3.c,284 :: 		Delay_ms(100);
+;Slave_CA3.c,287 :: 		RS485_send(sendData);
+	MOVLW      _sendData+0
+	MOVWF      FARG_RS485_send_dat+0
+	CALL       _RS485_send+0
+;Slave_CA3.c,288 :: 		Delay_ms(100);
 	MOVLW      3
 	MOVWF      R11+0
 	MOVLW      138
 	MOVWF      R12+0
 	MOVLW      85
 	MOVWF      R13+0
-L_RS485_send50:
+L_main50:
 	DECFSZ     R13+0, 1
-	GOTO       L_RS485_send50
+	GOTO       L_main50
 	DECFSZ     R12+0, 1
-	GOTO       L_RS485_send50
+	GOTO       L_main50
 	DECFSZ     R11+0, 1
-	GOTO       L_RS485_send50
+	GOTO       L_main50
 	NOP
 	NOP
-;Slave_CA3.c,285 :: 		for (i=0; i<=10;i++){
+;Slave_CA3.c,290 :: 		oldstate = 0;
+	BCF        _oldstate+0, BitPos(_oldstate+0)
+;Slave_CA3.c,291 :: 		Delay_ms(500);
+	MOVLW      13
+	MOVWF      R11+0
+	MOVLW      175
+	MOVWF      R12+0
+	MOVLW      182
+	MOVWF      R13+0
+L_main51:
+	DECFSZ     R13+0, 1
+	GOTO       L_main51
+	DECFSZ     R12+0, 1
+	GOTO       L_main51
+	DECFSZ     R11+0, 1
+	GOTO       L_main51
+	NOP
+;Slave_CA3.c,292 :: 		}
+L_main46:
+;Slave_CA3.c,293 :: 		}
+L_main42:
+;Slave_CA3.c,295 :: 		}
+	GOTO       L_main11
+;Slave_CA3.c,296 :: 		}
+L_end_main:
+	GOTO       $+0
+; end of _main
+
+_RS485_send:
+
+;Slave_CA3.c,298 :: 		void RS485_send (char dat[])
+;Slave_CA3.c,301 :: 		PORTB.RB3 =1;
+	BSF        PORTB+0, 3
+;Slave_CA3.c,302 :: 		Delay_ms(100);
+	MOVLW      3
+	MOVWF      R11+0
+	MOVLW      138
+	MOVWF      R12+0
+	MOVLW      85
+	MOVWF      R13+0
+L_RS485_send52:
+	DECFSZ     R13+0, 1
+	GOTO       L_RS485_send52
+	DECFSZ     R12+0, 1
+	GOTO       L_RS485_send52
+	DECFSZ     R11+0, 1
+	GOTO       L_RS485_send52
+	NOP
+	NOP
+;Slave_CA3.c,303 :: 		for (i=0; i<=10;i++){
 	CLRF       RS485_send_i_L0+0
 	CLRF       RS485_send_i_L0+1
-L_RS485_send51:
+L_RS485_send53:
 	MOVLW      128
 	MOVWF      R0+0
 	MOVLW      128
 	XORWF      RS485_send_i_L0+1, 0
 	SUBWF      R0+0, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__RS485_send73
+	GOTO       L__RS485_send75
 	MOVF       RS485_send_i_L0+0, 0
 	SUBLW      10
-L__RS485_send73:
+L__RS485_send75:
 	BTFSS      STATUS+0, 0
-	GOTO       L_RS485_send52
-;Slave_CA3.c,286 :: 		while(UART1_Tx_Idle()==0);
-L_RS485_send54:
+	GOTO       L_RS485_send54
+;Slave_CA3.c,304 :: 		while(UART1_Tx_Idle()==0);
+L_RS485_send56:
 	CALL       _UART1_Tx_Idle+0
 	MOVF       R0+0, 0
 	XORLW      0
 	BTFSS      STATUS+0, 2
-	GOTO       L_RS485_send55
-	GOTO       L_RS485_send54
-L_RS485_send55:
-;Slave_CA3.c,287 :: 		UART1_Write(dat[i]);
+	GOTO       L_RS485_send57
+	GOTO       L_RS485_send56
+L_RS485_send57:
+;Slave_CA3.c,305 :: 		UART1_Write(dat[i]);
 	MOVF       RS485_send_i_L0+0, 0
 	ADDWF      FARG_RS485_send_dat+0, 0
 	MOVWF      FSR
 	MOVF       INDF+0, 0
 	MOVWF      FARG_UART1_Write_data_+0
 	CALL       _UART1_Write+0
-;Slave_CA3.c,285 :: 		for (i=0; i<=10;i++){
+;Slave_CA3.c,303 :: 		for (i=0; i<=10;i++){
 	INCF       RS485_send_i_L0+0, 1
 	BTFSC      STATUS+0, 2
 	INCF       RS485_send_i_L0+1, 1
-;Slave_CA3.c,288 :: 		}
-	GOTO       L_RS485_send51
-L_RS485_send52:
-;Slave_CA3.c,289 :: 		Delay_ms(10);
-	MOVLW      65
+;Slave_CA3.c,306 :: 		}
+	GOTO       L_RS485_send53
+L_RS485_send54:
+;Slave_CA3.c,307 :: 		Delay_ms(100);
+	MOVLW      3
+	MOVWF      R11+0
+	MOVLW      138
 	MOVWF      R12+0
-	MOVLW      238
+	MOVLW      85
 	MOVWF      R13+0
-L_RS485_send56:
+L_RS485_send58:
 	DECFSZ     R13+0, 1
-	GOTO       L_RS485_send56
+	GOTO       L_RS485_send58
 	DECFSZ     R12+0, 1
-	GOTO       L_RS485_send56
+	GOTO       L_RS485_send58
+	DECFSZ     R11+0, 1
+	GOTO       L_RS485_send58
 	NOP
-;Slave_CA3.c,290 :: 		PORTB.RB3 =0;
+	NOP
+;Slave_CA3.c,308 :: 		PORTB.RB3 =0;
 	BCF        PORTB+0, 3
-;Slave_CA3.c,291 :: 		}
+;Slave_CA3.c,309 :: 		}
 L_end_RS485_send:
 	RETURN
 ; end of _RS485_send
 
 _checkstt:
 
-;Slave_CA3.c,293 :: 		void checkstt (int stt)
-;Slave_CA3.c,295 :: 		if (stt % 2 == 0)
+;Slave_CA3.c,311 :: 		void checkstt (int stt)
+;Slave_CA3.c,313 :: 		if (stt % 2 == 0)
 	MOVLW      2
 	MOVWF      R4+0
 	MOVLW      0
@@ -802,22 +829,22 @@ _checkstt:
 	MOVLW      0
 	XORWF      R0+1, 0
 	BTFSS      STATUS+0, 2
-	GOTO       L__checkstt75
+	GOTO       L__checkstt77
 	MOVLW      0
 	XORWF      R0+0, 0
-L__checkstt75:
+L__checkstt77:
 	BTFSS      STATUS+0, 2
-	GOTO       L_checkstt57
-;Slave_CA3.c,296 :: 		sendData[9] = '0';
+	GOTO       L_checkstt59
+;Slave_CA3.c,314 :: 		sendData[9] = '0';
 	MOVLW      48
 	MOVWF      _sendData+9
-	GOTO       L_checkstt58
-L_checkstt57:
-;Slave_CA3.c,298 :: 		sendData[9] = '1';
+	GOTO       L_checkstt60
+L_checkstt59:
+;Slave_CA3.c,316 :: 		sendData[9] = '1';
 	MOVLW      49
 	MOVWF      _sendData+9
-L_checkstt58:
-;Slave_CA3.c,299 :: 		}
+L_checkstt60:
+;Slave_CA3.c,317 :: 		}
 L_end_checkstt:
 	RETURN
 ; end of _checkstt

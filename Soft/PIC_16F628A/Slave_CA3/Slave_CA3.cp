@@ -131,11 +131,13 @@ void main() {
  sendData[1] = '0';
  sendData[2] = '0';
  sendData[3] = 'B';
- sendData[4] = addressButton2[0];
- sendData[5] = addressButton2[1];
+#line 228 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_CA3/Slave_CA3.c"
+ sendData[4] = '0';
+ sendData[5] = '2';
  sendData[6] = 'D';
- sendData[7] = addressDevice2[0];
- sendData[8] = addressDevice2[1];
+#line 235 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_CA3/Slave_CA3.c"
+ sendData[7] = '0';
+ sendData[8] = '2';
  sendData[9] = '0';
  sendData[10] = 'E';
  checkstt(stt2);
@@ -143,6 +145,7 @@ void main() {
  while(busy == 1){
  ;
  }
+ Delay_ms(10);
  RS485_send(sendData);
  Delay_ms(100);
 
@@ -164,11 +167,13 @@ void main() {
  sendData[1] = '0';
  sendData[2] = '0';
  sendData[3] = 'B';
- sendData[4] = addressButton3[0];
- sendData[5] = addressButton3[1];
+#line 270 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_CA3/Slave_CA3.c"
+ sendData[4] = '0';
+ sendData[5] = '3';
  sendData[6] = 'D';
- sendData[7] = addressDevice3[0];
- sendData[8] = addressDevice3[1];
+#line 277 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_CA3/Slave_CA3.c"
+ sendData[7] = '0';
+ sendData[8] = '3';
  sendData[9] = '0';
  sendData[10] = 'E';
  checkstt(stt3);
@@ -176,6 +181,7 @@ void main() {
  while(busy == 1){
  ;
  }
+ Delay_ms(10);
  RS485_send(sendData);
  Delay_ms(100);
 
@@ -196,7 +202,7 @@ void RS485_send (char dat[])
  while(UART1_Tx_Idle()==0);
  UART1_Write(dat[i]);
  }
- Delay_ms(10);
+ Delay_ms(100);
  PORTB.RB3 =0;
 }
 

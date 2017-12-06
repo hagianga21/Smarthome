@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Master_ver3c\Master_ver3c.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Master_ver3c\Master_ver3c.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Tue Dec 05 17:13:36 2017
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Dec 06 13:34:13 2017
 <BR><P>
 <H3>Maximum Stack Usage =        184 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1394,7 +1394,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f7]"></a>checkLCD</STRONG> (Thumb, 98 bytes, Stack size 32 bytes, main.o(i.checkLCD))
+<P><STRONG><a name="[f7]"></a>checkLCD</STRONG> (Thumb, 102 bytes, Stack size 32 bytes, main.o(i.checkLCD))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = checkLCD &rArr; lcd_HomePage &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_clear
@@ -1471,7 +1471,7 @@ Global Symbols
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[f9]"></a>lcd_HomePage</STRONG> (Thumb, 390 bytes, Stack size 40 bytes, lcddisplay.o(i.lcd_HomePage))
+<P><STRONG><a name="[f9]"></a>lcd_HomePage</STRONG> (Thumb, 466 bytes, Stack size 40 bytes, lcddisplay.o(i.lcd_HomePage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = lcd_HomePage &rArr; lcd_puts &rArr; lcd_write &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
@@ -1557,7 +1557,7 @@ Global Symbols
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_puts
 </UL>
 
-<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 412 bytes, Stack size 24 bytes, main.o(i.main))
+<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 416 bytes, Stack size 24 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = main &rArr; SystemClock_Config &rArr; HAL_RCC_ClockConfig &rArr; HAL_InitTick &rArr; HAL_NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;lcd_init

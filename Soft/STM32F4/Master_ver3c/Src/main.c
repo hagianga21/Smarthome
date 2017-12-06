@@ -126,7 +126,7 @@ int main(void)
 	lcd_Intro();
 	HAL_Delay(1000);
 	lcd_clear();
-	lcd_HomePage(day,date,month,year,hour,minute,second,temperature,power);
+	lcd_HomePage(day,date,month,year,hour,minute,second,temperature,humid,power);
 	HAL_Delay(500);
 
 	//sprintf(buffer,"%0.4f",var);
@@ -699,7 +699,7 @@ void checkLCD(void){
 		old_lcd_mode = lcd_mode;
 	}
 	if(lcd_mode == 0){
-		lcd_HomePage(day,date,month,year,hour,minute,second,temperature,power);
+		lcd_HomePage(day,date,month,year,hour,minute,second,temperature,humid,power);
 	}
 	if(lcd_mode == 1){
 		lcd_Mode_1_page();
