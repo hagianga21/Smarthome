@@ -56,6 +56,7 @@ char count = 0, tempReceiveData,receiveData[11];
 char sendData[11];
 bit oldstate;
 int relayStatus = 0;
+int buttonPush = 0;
 /**************************************
  * DEFINE SUBROUTINES
  **************************************/
@@ -79,6 +80,11 @@ void Config_sendData(void);
 
 void interrupt()
 {
+  if(INTCON.INTF == 1){
+     buttonPush = 1;
+     INTCON.INTF = 0;
+  }
+
   if(PIR1.RCIF)
   {
      while(uart1_data_ready()==0);
@@ -125,13 +131,16 @@ void main()
      TRISD.B5 = 0;
      turnOffRelay();
      Config_sendData();
-     RS485_send(sendData);
+     //RS485_send(sendData);
      //voltage = 10;
      //ampe = 0.2;
      activepower = 0;
      //
      TRISC.B0 = 0;
      PORTC.B0 = 1;
+     OPTION_REG.INTEDG = 1;
+     INTCON.INTE = 1;
+     INTCON.GIE = 1;
      //UART
      UART1_Init(9600);
      RCIE_bit = 1;
@@ -181,6 +190,20 @@ void main()
          }
 
        }
+       
+       if(buttonPush == 1){
+         buttonPush = 0;
+         if(relayStatus == 0){
+            turnOnRelay();
+            relayStatus++;
+         }
+         else{
+            turnOffRelay();
+            relayStatus = 0;
+         }
+         Delay_ms(300);
+       }
+       /*
        if (Button(&PORTB, 0, 1, 1)) {
          oldstate = 1;
        }
@@ -197,6 +220,7 @@ void main()
          oldstate = 0;
          Delay_ms(300);
        }
+       */
 
      /*
      //UART1_Write_Text("\nDien ap: ");

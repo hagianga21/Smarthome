@@ -7,7 +7,8 @@ char count = 0, tempReceiveData,receiveData[11];
 char sendData[11];
 bit oldstate;
 int relayStatus = 0;
-#line 62 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+int buttonPush = 0;
+#line 63 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void Write_ADE7753(char add, long write_buffer, int bytes_to_write);
 long Read_ADE7753(char add, char bytes_to_read);
 void HienthiUART (long outputADE, int bytes_to_write);
@@ -28,6 +29,11 @@ void Config_sendData(void);
 
 void interrupt()
 {
+ if(INTCON.INTF == 1){
+ buttonPush = 1;
+ INTCON.INTF = 0;
+ }
+
  if(PIR1.RCIF)
  {
  while(uart1_data_ready()==0);
@@ -54,7 +60,7 @@ void interrupt()
  }
  }
 }
-#line 112 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 118 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void main()
 {
  ANSEL = 0;
@@ -71,13 +77,16 @@ void main()
  TRISD.B5 = 0;
  turnOffRelay();
  Config_sendData();
- RS485_send(sendData);
+
 
 
  activepower = 0;
 
  TRISC.B0 = 0;
  PORTC.B0 = 1;
+ OPTION_REG.INTEDG = 1;
+ INTCON.INTE = 1;
+ INTCON.GIE = 1;
 
  UART1_Init(9600);
  RCIE_bit = 1;
@@ -101,7 +110,7 @@ void main()
  if(flagReceivedAllData == 1){
  flagReceivedAllData = 0;
  Delay_ms(20);
-#line 174 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 183 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
  if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
  && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
  && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
@@ -112,11 +121,9 @@ void main()
  }
 
  }
- if (Button(&PORTB, 0, 1, 1)) {
- oldstate = 1;
- }
- if (oldstate && Button(&PORTB, 0, 1, 0)) {
 
+ if(buttonPush == 1){
+ buttonPush = 0;
  if(relayStatus == 0){
  turnOnRelay();
  relayStatus++;
@@ -125,13 +132,12 @@ void main()
  turnOffRelay();
  relayStatus = 0;
  }
- oldstate = 0;
  Delay_ms(300);
  }
-#line 220 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 244 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
  }
 }
-#line 226 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 250 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void Write_ADE7753(char add, long write_buffer, int bytes_to_write)
 {
  char cmd;
@@ -151,7 +157,7 @@ void Write_ADE7753(char add, long write_buffer, int bytes_to_write)
  }
   PORTC.B0 =1;
 }
-#line 248 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 272 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 long Read_ADE7753(char add, char bytes_to_read)
 {
  long result;
@@ -171,7 +177,7 @@ long Read_ADE7753(char add, char bytes_to_read)
   PORTC.B0  = 1;
  return result;
 }
-#line 270 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 294 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void HienthiUART (long outputADE, int bytes_to_write)
 {
  int i;
@@ -182,7 +188,7 @@ void HienthiUART (long outputADE, int bytes_to_write)
  UART1_Write(this_write);
  }
 }
-#line 283 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 307 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void Hienthisofloat (float so){
  char kq[15];
  char a[4];
@@ -283,15 +289,15 @@ void sendPower(float so){
  RS485_send(sendData);
  Delay_ms(300);
 }
-#line 386 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 410 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 long getresetInterruptStatus(void){
  return Read_ADE7753( 0x0C ,2);
 }
-#line 392 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 416 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 long getInterruptStatus(void){
  return Read_ADE7753( 0x0B ,2);
 }
-#line 398 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 422 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 float getVRMS (void)
 {
  int i, j;
@@ -330,7 +336,7 @@ float getVRMS (void)
  }
  return vrmsreal;
 }
-#line 439 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 463 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 float getIRMS(void)
 {
  int i, j;
@@ -414,14 +420,14 @@ float getAPOWER(void)
  }
  return apreal;
 }
-#line 526 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 550 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void Test (void)
 {
  Write_ADE7753( 0x1C ,0xABEF,2);
  outputADE = Read_ADE7753( 0x1C ,2);
  HienthiUART(outputADE,2);
 }
-#line 536 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 560 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void RS485_send (char dat[])
 {
  int i;
@@ -435,7 +441,7 @@ void RS485_send (char dat[])
  Delay_ms(200);
  PORTD.RD4 =0;
 }
-#line 552 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 576 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void Config_sendData(void){
  sendData[0] = 'S';
  sendData[1] = '0';
@@ -449,11 +455,11 @@ void Config_sendData(void){
  sendData[9] = 'P';
  sendData[10] = 'E';
 }
-#line 569 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 593 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void turnOnRelay(void){
  PORTD.RD5 =1;
 }
-#line 576 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
+#line 600 "E:/LVTN/Smarthome/Soft/PIC_16F887/Slave_OA/Slave_OA.c"
 void turnOffRelay(void){
  PORTD.RD5 =0;
 }

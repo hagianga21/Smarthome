@@ -286,6 +286,7 @@ brg9_bit
 brgh
 brgh_bit
 button
+buttonpush
 byte2double
 bytetohex
 bytetostr

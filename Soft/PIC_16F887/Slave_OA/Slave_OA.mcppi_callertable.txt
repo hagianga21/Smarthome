@@ -3,9 +3,6 @@ main
 		____DoICP
 	turnOffRelay
 	Config_sendData
-	RS485_send
-		UART1_Tx_Idle
-		UART1_Write
 	UART1_Init
 	SPI1_Init_Advanced
 	Write_ADE7753
@@ -60,8 +57,6 @@ main
 		RS485_send
 			UART1_Tx_Idle
 			UART1_Write
-	Button
-		Delay_500us
 	turnOnRelay
 interrupt
 	UART1_Data_Ready

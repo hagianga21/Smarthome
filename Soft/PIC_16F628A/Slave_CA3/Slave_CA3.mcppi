@@ -6,7 +6,7 @@ Value=0
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Slave_CA3.c
+Value=..\..\PIC_16F887\Slave_OA\Slave_OA.c
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -46,7 +46,7 @@ Count=0
 [PLDS]
 Count=0
 [Useses]
-Count=44
+Count=45
 File0=Button
 File1=Compact_Flash
 File2=Conversions
@@ -91,6 +91,7 @@ File40=SPI_Lcd8
 File41=SPI_T6963C
 File42=TouchPanel
 File43=__Lib_DHT11
+File44=
 [EXPANDED_NODES]
 Node0=Sources
 Count=1
