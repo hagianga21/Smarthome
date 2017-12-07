@@ -79,6 +79,17 @@
             background-color: white;
         }
 
+        div.box .letterInsideButtonState4 {
+            display: block;
+            position: absolute;
+            font-size: 26px;
+            top: 18px;
+            width: 100px;
+            color: {{device4ButtonColor}};
+            border: none;
+            background-color: white;
+        }
+
         button.buttonSetTime{
             float: right;
             width: 50px; 
@@ -212,6 +223,47 @@
         </div>
     </div>
 
+    <div class="col-xs-6 col-md-2">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <form action = "/device4", method = "post">
+                    <h4> DEVICE 4 </h4>
+                    <div class="box">
+                        <button type="submit" class="letterInsideButtonState4" id = "device4">{{device4state}}</button>
+                    </div>
+                </form>
+                
+                <button class ="buttonSetTime" data-toggle="modal" data-target="#myModal4">
+                    <img src="./img/alarmclock.png" class ="alarmClockIcon">
+                </button>
+                <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action = "/submitTheTimeDevice4", method = "get">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">SET TIME FOR DEVICE</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4> Set time when turn device on </h4>
+                                    <input type="time" name="setTimeOn">
+                                    <h4> Set time when turn device off </h4>
+                                    <input type="time" name="setTimeOff">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>    
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 <script>
@@ -243,6 +295,14 @@
                 if(result.device3 === "off"){ 
                     $("#device3").text("OFF");
                     $("#device3").css("color","red");
+                }
+                if(result.device4 === "on"){ 
+                    $("#device4").text("ON");
+                    $("#device4").css("color","green");
+                }
+                if(result.device4 === "off"){ 
+                    $("#device4").text("OFF");
+                    $("#device4").css("color","red");
                 }
                 setTimeout(function(){
                     updateData()

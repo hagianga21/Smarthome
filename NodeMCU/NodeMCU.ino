@@ -2,16 +2,16 @@
 #include <ArduinoJson.h>
 WiFiClient client;
 
-/*
+
 const char* ssid     = "P811";
 const char* password = "tumotdenchin";
 const char* host = "192.168.100.13";
-*/
 
+/*
 const char* ssid     = "Ptnktd";
 const char* password = "hoilamgivay";
 const char* host = "192.168.1.31";
-
+*/
 const int httpPort = 9000;
 int updateFlag = 0;
 int receiveFromSystemFlag = 0;
@@ -21,7 +21,7 @@ String stateFromSystemToInternet;
 char oldstateFromSystemToInternet[18];
 char devicesState[18];
 char setTimeFromInternetToSystem[11];
-char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5];
+char tempDeviceTime[5],flagUpdateSetTime[11],device1TimeOn[5],device1TimeOff[5],device2TimeOn[5],device2TimeOff[5],device3TimeOn[5],device3TimeOff[5],device4TimeOn[5],device4TimeOff[5];
 
 void wifiInit(void);
 void configState(void);
@@ -106,6 +106,8 @@ void configState(void){
     strcpy(device2TimeOff,device1TimeOn);
     strcpy(device3TimeOn,device1TimeOn);
     strcpy(device3TimeOff,device1TimeOn);
+    strcpy(device4TimeOn,device1TimeOn);
+    strcpy(device4TimeOff,device1TimeOn);
     setTimeFromInternetToSystem[0] = 'S';
     setTimeFromInternetToSystem[1] = '1';
     setTimeFromInternetToSystem[2] = 'D';
@@ -216,6 +218,14 @@ void readJSONFromStatePage (void)
             //Serial.println("Thiet bi 2 ON");
             stateFromInternetToSystem[4]  = '0';
         }
+        if (strcmp(json_parsed["device4"], "on") == 0) { 
+            //Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[5]  = '1';
+        }
+        if (strcmp(json_parsed["device4"], "off") == 0) { 
+            //Serial.println("Thiet bi 2 ON");
+            stateFromInternetToSystem[5]  = '0';
+        }
         strcpy(tempDeviceTime, json_parsed["device1TimeOn"]);
         if (strcmp(device1TimeOn,tempDeviceTime) != 0){
           strcpy(device1TimeOn, json_parsed["device1TimeOn"]);
@@ -249,6 +259,17 @@ void readJSONFromStatePage (void)
         if (strcmp(device3TimeOff,tempDeviceTime) !=0){
           strcpy(device3TimeOff, json_parsed["device3TimeOff"]);
           flagUpdateSetTime[3] = 1;
+        }
+
+        strcpy(tempDeviceTime, json_parsed["device4TimeOn"]);
+        if (strcmp(device4TimeOn,tempDeviceTime) !=0){
+          strcpy(device4TimeOn, json_parsed["device4TimeOn"]);
+          flagUpdateSetTime[4] = 1;
+        }
+        strcpy(tempDeviceTime, json_parsed["device4TimeOff"]);
+        if (strcmp(device4TimeOff,tempDeviceTime) !=0){
+          strcpy(device4TimeOff, json_parsed["device4TimeOff"]);
+          flagUpdateSetTime[4] = 1;
         }
         /*
         Serial.println(device1TimeOn);
@@ -329,6 +350,27 @@ void sendSetTimeFromInternetToSystem(void){
       setTimeFromInternetToSystem[6]=device3TimeOff[1];
       setTimeFromInternetToSystem[7]=device3TimeOff[3];
       setTimeFromInternetToSystem[8]=device3TimeOff[4];
+      setTimeFromInternetToSystem[9]='0';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+    }
+    //Device 4 set time on
+    if(flagUpdateSetTime[4] == 1){
+      flagUpdateSetTime[4] = 0;
+      setTimeFromInternetToSystem[4]='4';
+      setTimeFromInternetToSystem[5]=device4TimeOn[0];
+      setTimeFromInternetToSystem[6]=device4TimeOn[1];
+      setTimeFromInternetToSystem[7]=device4TimeOn[3];
+      setTimeFromInternetToSystem[8]=device4TimeOn[4];
+      setTimeFromInternetToSystem[9]='1';
+      Serial.println(setTimeFromInternetToSystem);
+      delay(200);
+      //
+      setTimeFromInternetToSystem[4]='4';
+      setTimeFromInternetToSystem[5]=device4TimeOff[0];
+      setTimeFromInternetToSystem[6]=device4TimeOff[1];
+      setTimeFromInternetToSystem[7]=device4TimeOff[3];
+      setTimeFromInternetToSystem[8]=device4TimeOff[4];
       setTimeFromInternetToSystem[9]='0';
       Serial.println(setTimeFromInternetToSystem);
       delay(200);
@@ -417,6 +459,14 @@ void processDataFromSystem(void){
        if(stateFromSystemToInternet[4] == '0' && stateFromSystemToInternet[4] != devicesState[4]){
           controlDevice("device3","off");
           devicesState[4] = stateFromSystemToInternet[4];
+       }
+       if(stateFromSystemToInternet[5] == '1' && stateFromSystemToInternet[5] != devicesState[5]){
+          devicesState[5] = stateFromSystemToInternet[5];
+          controlDevice("device4","on");
+       }
+       if(stateFromSystemToInternet[5] == '0' && stateFromSystemToInternet[5] != devicesState[5]){
+          controlDevice("device4","off");
+          devicesState[5] = stateFromSystemToInternet[5];
        }
     }
     if(stateFromSystemToInternet[2] == '3'){

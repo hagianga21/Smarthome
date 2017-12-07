@@ -52,6 +52,7 @@ var deviceState = {};
 deviceState.device1 = "off";
 deviceState.device2 = "off";
 deviceState.device3 = "off";
+deviceState.device4 = "off";
 
 deviceState.device1TimeOn = "00:00";
 deviceState.device1TimeOff = "00:00";
@@ -59,6 +60,8 @@ deviceState.device2TimeOn = "00:00";
 deviceState.device2TimeOff = "00:00";
 deviceState.device3TimeOn = "00:00";
 deviceState.device3TimeOff = "00:00";
+deviceState.device4TimeOn = "00:00";
+deviceState.device4TimeOff = "00:00";
 
 var scenes = {};
 scenes.iAmHome = "off";
@@ -198,9 +201,12 @@ app.get('/control', function (req, res) {
             device1state: (deviceState.device1 === "on") ? 'ON' : 'OFF',
             device2state: (deviceState.device2 === "on") ? 'ON' : 'OFF',
             device3state: (deviceState.device3 === "on") ? 'ON' : 'OFF',
+            device4state: (deviceState.device4 === "on") ? 'ON' : 'OFF',
+
             device1ButtonColor: (deviceState.device1 === "on") ? "green" : "red",
             device2ButtonColor: (deviceState.device2 === "on") ? "green" : "red",
             device3ButtonColor: (deviceState.device3 === "on") ? "green" : "red",
+            device4ButtonColor: (deviceState.device4 === "on") ? "green" : "red",
         })
     }
     else 
@@ -223,6 +229,11 @@ app.post('/device3', function (req, res) {
     checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
+app.post('/device4', function (req, res) {
+    deviceState.device4 = (deviceState.device4 === "on") ? "off" : "on";
+    checkChangedFlag.changedFlagStatus = "true";
+    res.redirect('/control');
+});
 
 //Đọc trạng thái về từ hệ thống
 app.get('/readStateFromSystem', function (req, res) {
@@ -232,6 +243,8 @@ app.get('/readStateFromSystem', function (req, res) {
         deviceState.device2 = req.query.device2;
     if(req.query.device3)
         deviceState.device3 = req.query.device3;
+    if(req.query.device4)
+        deviceState.device4 = req.query.device4;
 });
 
 //Đọc nhiệt độ từ hệ thống 
@@ -289,6 +302,12 @@ app.get('/submitTheTimeDevice2', function(req,res){
 app.get('/submitTheTimeDevice3', function(req,res){
     deviceState.device3TimeOn = req.query.setTimeOn;
     deviceState.device3TimeOff = req.query.setTimeOff;
+    checkChangedFlag.changedFlagStatus = "true";
+    res.redirect('/control');
+});
+app.get('/submitTheTimeDevice4', function(req,res){
+    deviceState.device4TimeOn = req.query.setTimeOn;
+    deviceState.device4TimeOff = req.query.setTimeOff;
     checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/control');
 });
