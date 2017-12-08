@@ -1082,6 +1082,7 @@ sendampe
 sendb
 sendb_bit
 senddata
+senddata2
 sendpower
 sendvolt
 setfdz32

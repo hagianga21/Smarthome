@@ -54,6 +54,7 @@ float voltage, ampe, activepower;
 char flagReceivedAllData = 0;
 char count = 0, tempReceiveData,receiveData[11];
 char sendData[11];
+char sendData2[11];
 bit oldstate;
 int relayStatus = 0;
 int buttonPush = 0;
@@ -156,53 +157,82 @@ void main()
      //Write_ADE7753(VRMSOS,0xF900,2);                    //0b1111100000000000
      //Write_ADE7753(IRMSOS,0xFEBE,2);                    //0b1111111010111110
      Delay_ms(1000);
+     turnOffRelay();
+     buttonPush = 0;
+     relayStatus = 0;
      //Test();
      while(1){
      //voltage = getVRMS();
      //ampe = getIRMS();
      activepower = getAPOWER();
-       if(flagReceivedAllData == 1){
-         flagReceivedAllData = 0;
-         Delay_ms(20);
-         /*
-         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D' && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0' && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'V'){
-             Delay_ms(500);
-             //voltage = getVRMS();
-             sendVolt(voltage);
-             Delay_ms(1000);
-         }
-         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
-         && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
-         && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'I'){
-             Delay_ms(500);
-             //ampe = getIRMS();
-             sendAmpe(ampe);
-             Delay_ms(1000);
-         }
-         */
-         if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
-         && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
-         && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
-             Delay_ms(500);
-             //activepower = getAPOWER();
-             sendPower(activepower);
-             Delay_ms(1000);
-         }
+     if(flagReceivedAllData == 1){
+       flagReceivedAllData = 0;
+       Delay_ms(20);
+       /*
+       if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D' && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0' && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'V'){
+           Delay_ms(500);
+           //voltage = getVRMS();
+           sendVolt(voltage);
+           Delay_ms(1000);
+       }
+       if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
+       && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+       && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'I'){
+           Delay_ms(500);
+           //ampe = getIRMS();
+           sendAmpe(ampe);
+           Delay_ms(1000);
+       }
+       */
+       if(receiveData[1] == '1' && receiveData[2] == '3' && receiveData[3] == 'D'
+       && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+       && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == 'P'){
+           Delay_ms(500);
+           //activepower = getAPOWER();
+           sendPower(activepower);
+           Delay_ms(1000);
+       }
 
+       //S10 D04 000 1 E
+       if(receiveData[1] == '1' && receiveData[2] == '0' && receiveData[3] == 'D'
+       && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+       && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == '1'){
+           turnOnRelay();
+           relayStatus = 1;
+           Delay_ms(500);
        }
        
-       if(buttonPush == 1){
-         buttonPush = 0;
-         if(relayStatus == 0){
-            turnOnRelay();
-            relayStatus++;
-         }
-         else{
-            turnOffRelay();
-            relayStatus = 0;
-         }
-         Delay_ms(300);
+       if(receiveData[1] == '1' && receiveData[2] == '0' && receiveData[3] == 'D'
+       && receiveData[4] == '0' && receiveData[5] == '4' && receiveData[6] == '0'
+       && receiveData[7] == '0' && receiveData[8] == '0' && receiveData[9] == '0'){
+           turnOffRelay();
+           relayStatus = 0;
+           Delay_ms(500);
        }
+
+
+     }
+       
+     if(buttonPush == 1){
+       buttonPush = 0;
+       if(relayStatus == 0){
+          turnOnRelay();
+          relayStatus++;
+          sendData2[9] = '1';
+          Delay_ms(100);
+          RS485_send(sendData2);
+          Delay_ms(300);
+       }
+       else{
+          turnOffRelay();
+          relayStatus = 0;
+          sendData2[9] = '0';
+          Delay_ms(100);
+          RS485_send(sendData2);
+          Delay_ms(300);
+       }
+       Delay_ms(300);
+     }
        /*
        if (Button(&PORTB, 0, 1, 1)) {
          oldstate = 1;
@@ -585,6 +615,28 @@ void Config_sendData(void){
     sendData[8]  = '0';
     sendData[9]  = 'P';
     sendData[10] = 'E';
+    receiveData[0] = 'S';
+    receiveData[1] = '0';
+    receiveData[2] = '0';
+    receiveData[3] = '0';
+    receiveData[4] = '0';
+    receiveData[5] = '0';
+    receiveData[6] = '0';
+    receiveData[7] = '0';
+    receiveData[8] = '0';
+    receiveData[9] = '0';
+    receiveData[10] = 'E';
+    sendData2[0]  = 'S';
+    sendData2[1]  = '0';
+    sendData2[2]  = '0';
+    sendData2[3]  = 'B';
+    sendData2[4]  = '0';
+    sendData2[5]  = '4';
+    sendData2[6]  = 'D';
+    sendData2[7]  = '0';
+    sendData2[8]  = '4';
+    sendData2[9]  = '0';
+    sendData2[10] = 'E';
 }
  
 /**************************************
