@@ -65,12 +65,19 @@ void main() {
  Delay_ms(100);
 #line 110 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_DA3/Slave_DA3.c"
  Delay_ms(1000);
+ PORTB.RB0 =1;
+ PORTB.RB4 =1;
+ PORTB.RB5 =1;
+ Delay_ms(500);
+ PORTB.RB0 =0;
+ PORTB.RB4 =0;
+ PORTB.RB5 =0;
  while(1)
  {
 
  if(flagReceivedAllData==1){
  flagReceivedAllData = 0;
-#line 140 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_DA3/Slave_DA3.c"
+#line 147 "E:/LVTN/Smarthome/Soft/PIC_16F628A/Slave_DA3/Slave_DA3.c"
  if(receiveData[1] == '1' && receiveData[2] == '0' && receiveData[3] == 'D'){
  if(receiveData[4] == addressDevice1[0] && receiveData[5] == addressDevice1[1]){
  if(receiveData[9] == '1'){

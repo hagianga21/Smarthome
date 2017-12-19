@@ -108,6 +108,13 @@ void main() {
   }
   */
   Delay_ms(1000);
+  PORTB.RB0 =1;
+  PORTB.RB4 =1;
+  PORTB.RB5 =1;
+  Delay_ms(500);
+  PORTB.RB0 =0;
+  PORTB.RB4 =0;
+  PORTB.RB5 =0;
   while(1)
   {
 

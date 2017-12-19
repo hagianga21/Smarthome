@@ -104,21 +104,18 @@ int main(void)
   MX_FATFS_Init();
 
 	//My code-----------------------------------------------------------------------------//
-	
 	HAL_UART_Receive_IT(&huart1,&receive_data2,1);
 	HAL_UART_Receive_IT(&huart2,&receive_data2,1);
 	HAL_UART_Receive_IT(&huart3,&receive_data2,1);
 	HAL_UART_Receive_IT(&huart4,&receive_data2,1);
 	
-	//HAL_UART_Transmit_IT(&huart1,&send_data,1);
-	//HAL_UART_Transmit_IT(&huart2,&send_data,1);
-	//HAL_UART_Transmit_IT(&huart3,"AT\r\n",4);
-	//HAL_UART_Transmit_IT(&huart4,&send_data,1);
 	HAL_Delay(300);
 	Initsim900A();
 	deleteSMS();
-	//Call();
-	sendMessage("Giang dep trai",14);
+	HAL_Delay(300);
+	Initsim900A();
+	deleteSMS();
+	sendMessage("System is ready",15);
 	
 	
 	//Init LCD
@@ -131,7 +128,7 @@ int main(void)
 
 	//sprintf(buffer,"%0.4f",var);
 	//lcd_puts(1,0,(int8_t*)buffer);
-
+	//writeDataToDS3132();
 	//-------------------------------------------------------------------------------------//
   while (1)
   {
@@ -310,12 +307,12 @@ uint8_t convertStringToNum3(uint8_t MSB1, uint8_t MSB, uint8_t LSB){
 
 void writeDataToDS3132(void){
 	sendDataToDS3231[0] = DEC2BCD(0);
-	sendDataToDS3231[1] = DEC2BCD(46);
-	sendDataToDS3231[2] = DEC2BCD(10);
+	sendDataToDS3231[1] = DEC2BCD(48);
+	sendDataToDS3231[2] = DEC2BCD(12);
 	
 	sendDataToDS3231[3] = DEC2BCD(5);
-	sendDataToDS3231[4] = DEC2BCD(21);
-	sendDataToDS3231[5] = DEC2BCD(9);
+	sendDataToDS3231[4] = DEC2BCD(15);
+	sendDataToDS3231[5] = DEC2BCD(12);
 	sendDataToDS3231[6] = DEC2BCD(17);
 	HAL_I2C_Mem_Write_IT(&hi2c1,DS3231_ADD<<1,0,I2C_MEMADD_SIZE_8BIT,sendDataToDS3231,7);
 }
@@ -668,6 +665,48 @@ void processDetailSms (void){
 		updateStateToInternet();
 		sendMessage("System turned off device 1",26);
 	}
+	if(strcmp((const char *)smsDetail,"Turn on device 2") == 0){
+		devicesState[2]='1';
+		strcpy((char *)dataSendtoSystem,"S10D020001E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned on device 2",25);
+	}
+	if(strcmp((const char *)smsDetail,"Turn off device 2") == 0){
+		devicesState[2]='0';
+		strcpy((char *)dataSendtoSystem,"S10D020000E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned off device 2",26);
+	}
+	if(strcmp((const char *)smsDetail,"Turn on device 3") == 0){
+		devicesState[3]='1';
+		strcpy((char *)dataSendtoSystem,"S10D030001E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned on device 3",25);
+	}
+	if(strcmp((const char *)smsDetail,"Turn off device 3") == 0){
+		devicesState[3]='0';
+		strcpy((char *)dataSendtoSystem,"S10D030000E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned off device 3",26);
+	}
+	if(strcmp((const char *)smsDetail,"Turn on device 4") == 0){
+		devicesState[4]='1';
+		strcpy((char *)dataSendtoSystem,"S10D040001E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned on device 4",25);
+	}
+	if(strcmp((const char *)smsDetail,"Turn off device 4") == 0){
+		devicesState[4]='0';
+		strcpy((char *)dataSendtoSystem,"S10D040000E");
+		sendRS485toSystem();
+		updateStateToInternet();
+		sendMessage("System turned off device 4",26);
+	}
 }
 	
 void processDataFromSim(void){
@@ -677,7 +716,6 @@ void processDataFromSim(void){
 		for(i=0;i<100;i++){
 			smsDetail[i]=0;
 		}
-		
 	}
 	if(flagSms == 1){
 		HAL_UART_Transmit_IT(&huart3,(uint8_t *)"AT+CMGR=1\r\n",11);
@@ -690,7 +728,6 @@ void processDataFromSim(void){
 		deleteSMS();
 		processDetailSms();
 	}
-	
 }
 
 void checkLCD(void){

@@ -346,6 +346,10 @@ app.post('/goodmorning', function (req, res) {
     scenes.iAmHome = "off";
     scenes.goodnight = "off";
     scenes.security = "off";
+    deviceState.device1 = "on";
+    deviceState.device2 = "on";
+    deviceState.device3 = "off";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/scenes');
 });
 app.post('/iamhome', function (req, res) {
@@ -353,6 +357,10 @@ app.post('/iamhome', function (req, res) {
     scenes.goodmorning = "off";
     scenes.goodnight = "off";
     scenes.security = "off";
+    deviceState.device1 = "on";
+    deviceState.device2 = "on";
+    deviceState.device3 = "on";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/scenes');
 });
 app.post('/goodnight', function (req, res) {
@@ -360,6 +368,10 @@ app.post('/goodnight', function (req, res) {
     scenes.goodmorning = "off";
     scenes.iAmHome = "off";
     scenes.security = "off";
+    deviceState.device1 = "off";
+    deviceState.device2 = "off";
+    deviceState.device3 = "off";
+    checkChangedFlag.changedFlagStatus = "true";
     res.redirect('/scenes');
 });
 app.post('/security', function (req, res) {
