@@ -40,6 +40,7 @@ class Control extends Component {
         this.props.dispatch(changeState("device1",responseData.device1));
         this.props.dispatch(changeState("device2",responseData.device2));
         this.props.dispatch(changeState("device3",responseData.device3));
+        this.props.dispatch(changeState("device4",responseData.device4));
     })
     .catch((error) => {
         console.error(error);
@@ -133,6 +134,10 @@ class Control extends Component {
         this.props.dispatch(changeState("device3","on"));
         this.controlDevice('device3');
       }
+      if(this.state.result.result.parameters.number === "4" && this.props.device[4].switch === false){
+        this.props.dispatch(changeState("device4","on"));
+        this.controlDevice('device4');
+      }
     }
 
     if(this.state.result.result.action === "turnOffDevice"){
@@ -141,12 +146,16 @@ class Control extends Component {
         this.controlDevice('device1');
       }
       if(this.state.result.result.parameters.number === "2" && this.props.device[2].switch === true){
-        this.props.dispatch(changeState("device1","off"));
+        this.props.dispatch(changeState("device2","off"));
         this.controlDevice('device2');
       }
       if(this.state.result.result.parameters.number === "3" && this.props.device[3].switch === true){
-        this.props.dispatch(changeState("device1","off"));
+        this.props.dispatch(changeState("device3","off"));
         this.controlDevice('device3');
+      }
+      if(this.state.result.result.parameters.number === "4" && this.props.device[4].switch === true){
+        this.props.dispatch(changeState("device4","off"));
+        this.controlDevice('device4');
       }
     }
 
@@ -262,6 +271,33 @@ class Control extends Component {
             />
           </View>
         </View>
+
+        <View style={{alignItems:'center',marginTop:15}}>
+          <View style={styles.Box}>
+            <Text style ={styles.labelOfDevice}>Device 4</Text>
+            <Switch
+              onValueChange={() => {
+                if(this.props.device[4].state === "on")
+                  this.props.dispatch(changeState("device4","off"));
+                else 
+                  this.props.dispatch(changeState("device4","on"));
+                this.controlDevice('device4');
+              }}
+              value={this.props.device[4].switch}
+              style = {{marginLeft: 110}}
+            />
+            <Text style = {styles.textOnOff}>{this.props.device[4].switch ? 'ON' : 'OFF'}</Text>
+            <Icon
+              onPress ={()=>{this.setModalVisible(4)}}
+              name = "alarm"
+              color = "black"
+              size = {35}
+              underlayColor = "#273779"
+              style = {{marginLeft: 15}}
+            />
+          </View>
+        </View>      
+
         
         <Text>{"Listening State: " + this.state.listeningState}</Text>
         <Text>{"Audio Level: " + this.state.audioLevel}</Text>
@@ -324,6 +360,14 @@ class Control extends Component {
                                   (date) => {this.props.dispatch(changeTimeOn("device3",date))},
                                   this.props.device[3].timeOff,
                                   (date) => {this.props.dispatch(changeTimeOff("device3",date))}
+                                  )}
+        </Modal>
+
+        <Modal isVisible={this.state.modalVisible === 4}>
+          {this.renderModalContent('4',this.props.device[4].timeOn,
+                                  (date) => {this.props.dispatch(changeTimeOn("device4",date))},
+                                  this.props.device[4].timeOff,
+                                  (date) => {this.props.dispatch(changeTimeOff("device4",date))}
                                   )}
         </Modal>
       </View>

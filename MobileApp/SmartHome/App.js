@@ -16,13 +16,17 @@ export default class App extends Component {
 
 //defaultState
 const defaultState={
-  serverURL: "192.168.1.29:9000",
+  serverURL: "192.168.100.13:9000",
   device: [
     {id:0, name: "device0", label: "device0", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
     {id:1, name: "device1", label: "device1", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
     {id:2, name: "device2", label: "device2", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
     {id:3, name: "device3", label: "device3", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
+    {id:4, name: "device4", label: "device4", state: "off", switch: false, timeOn: "00:00", timeOff: "00:00"},
   ],
+  temperature:20,
+  humid:20,
+  gas:"YES",
 };
 
 //reducer -> tien doan action
@@ -61,7 +65,21 @@ const reducer = (state = defaultState,action) => {
           return {...e, timeOff: action.time};
       })
     };
+    case 'TempChanged': return {
+      ...state,
+      temperature: action.temp,
+    };
+
+    case 'HumidChanged': return {
+      ...state,
+      humid: action.humid,
+    };
     
+    case 'GasChanged': return {
+      ...state,
+      gas: action.gas,
+    };
+
     default:
         return state;
   }

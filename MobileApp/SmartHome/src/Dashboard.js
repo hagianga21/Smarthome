@@ -1,9 +1,55 @@
 import React, { Component } from 'react';
 import {StyleSheet,Text,View,TouchableOpacity} from 'react-native';
 import { Header, Icon } from 'react-native-elements';
+import {connect} from 'react-redux';
+import {changeTemp, changeHumid, changeGas} from './Action';
 
-export default class Dashboard extends Component {
-    render() {
+class Dashboard extends Component {  
+  fetchTemp(){
+    var url = 'http://'+ this.props.webserverURL + '/temp'; 
+    fetch(url)
+    .then((response) => response.json())
+    .then((responseData) => {
+        this.props.dispatch(changeTemp(responseData));
+    })
+    .catch((error) => {
+        console.error(error);
+     })
+    .done();
+  }
+
+  fetchHumid(){
+    var url = 'http://'+ this.props.webserverURL + '/humid'; 
+    fetch(url)
+    .then((response) => response.json())
+    .then((responseData) => {
+        this.props.dispatch(changeHumid(responseData));
+    })
+    .catch((error) => {
+        console.error(error);
+     })
+    .done();
+  }
+
+  fetchGas(){
+    var url = 'http://'+ this.props.webserverURL + '/gas'; 
+    fetch(url)
+    .then((response) => response.json())
+    .then((responseData) => {
+        this.props.dispatch(changeGas(responseData));
+    })
+    .catch((error) => {
+        console.error(error);
+     })
+    .done();
+  }
+
+  componentDidMount(){
+    this.fetchTemp();
+    this.fetchHumid();
+    this.fetchGas();
+  }
+  render() {
     return (
         <View style={{flex:1, backgroundColor: "aliceblue"}}>
           <View>
@@ -35,18 +81,18 @@ export default class Dashboard extends Component {
           <View style={{flexDirection: 'row',justifyContent:'center'}}>
             <View style = {styles.box}>
               <Text style = {styles.labelOfBox}>Temperature</Text>
-              <Text style = {styles.valueOfBox}>36&#8451;</Text>
+              <Text style = {styles.valueOfBox}>{this.props.temperature}&#8451;</Text>
             </View>
             <View style = {styles.box}>
-              <Text style = {styles.labelOfBox}>Gas Detection</Text>
-              <Text style = {styles.valueOfBox}>NO</Text>
+              <Text style = {styles.labelOfBox}>Humidity</Text>
+              <Text style = {styles.valueOfBox}>{this.props.humid}%</Text>
             </View>
           </View>
 
           <View style={{flexDirection: 'row',justifyContent:'center'}}>
             <View style = {styles.box}>
-              <Text style = {styles.labelOfBox}>Human</Text>
-              <Text style = {styles.valueOfBox}>YES</Text>
+              <Text style = {styles.labelOfBox}>Gas Detection</Text>
+              <Text style = {styles.valueOfBox}>{this.props.gas}</Text>
             </View>
             <View style = {styles.box}>
               <Text style = {styles.labelOfBox}>Security</Text>
@@ -58,6 +104,16 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state){
+  return {webserverURL: state.serverURL,      
+          temperature: state.temperature,
+          humid: state.humid,
+          gas: state.gas,
+  }
+}
+export default connect(mapStateToProps)(Dashboard);
 
 const styles = StyleSheet.create({
   box:{

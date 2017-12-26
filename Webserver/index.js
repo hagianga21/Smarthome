@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 
 var temperature = 30;
-var humid = 30;
+var humid = 40;
 var gasDetection = "NO";
 var humanDetection = "NO";
 var securityStatus = "UNARMED";
@@ -248,6 +248,15 @@ app.get('/readStateFromSystem', function (req, res) {
 });
 
 //Đọc nhiệt độ từ hệ thống 
+app.get('/temp', function (req, res) {
+    res.end(JSON.stringify(temperature));
+});
+app.get('/humid', function (req, res) {
+    res.end(JSON.stringify(humid));
+});
+app.get('/gas', function (req, res) {
+    res.end(JSON.stringify(gasDetection));
+});
 app.get('/readTempFromSystem', function (req, res) {
     temperature = req.query.temperature;
 });
