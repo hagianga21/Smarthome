@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight, Image} from 'react-native';
+import {StyleSheet,Text,View,TouchableOpacity,Switch, TouchableHighlight, Image, Alert} from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 import {connect} from 'react-redux';
 import {changeState, changeTimeOn, changeTimeOff} from './Action';
@@ -32,6 +32,13 @@ class Control extends Component {
     this.setState({modalVisible: visible});
   }
 
+  sendError(){
+    Alert.alert(
+      'Network Error',
+      'Connect to system failed, please try again',
+    )
+  }
+
   fetchData(){
     var url = 'http://'+ this.props.webserverURL + '/state'; 
     fetch(url)
@@ -43,7 +50,7 @@ class Control extends Component {
         this.props.dispatch(changeState("device4",responseData.device4));
     })
     .catch((error) => {
-        console.error(error);
+        this.sendError();
      })
     .done();
   }
@@ -57,6 +64,9 @@ class Control extends Component {
           'Content-Type': 'application/json',
       },
     })
+    .catch((error) => {
+      this.sendError();
+    })
   };
 
   sendSetTimetoServer(id,TimeOn,TimeOff){
@@ -65,7 +75,7 @@ class Control extends Component {
     var url = 'http://'+ this.props.webserverURL + '/submitTheTimeDevice' + id + '?setTimeOn=' + TimeOn + '&setTimeOff=' + TimeOff;
     fetch(url)
     .catch((error) => {
-      console.error(error);
+      this.sendError();
     })
     .done();
   };
@@ -305,7 +315,7 @@ class Control extends Component {
         <Text>{"Result: " + this.state.result.result.fulfillment.speech}</Text>
         <Text>{"Action: " + this.state.result.result.action + this.state.result.result.parameters.number }</Text>
 
-        <View style = {{marginLeft:300, marginTop:200}}>
+        <View style = {{marginLeft:300, marginTop:150}}>
           <TouchableOpacity onPress={() => {
                     ApiAi.onListeningStarted(() => {
                         this.setState({listeningState: "started"});

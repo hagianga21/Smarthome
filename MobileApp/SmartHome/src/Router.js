@@ -26,6 +26,7 @@ export const SideMenu = DrawerNavigator({
             ),
         }
     },
+    /*
     Bluetooth:{
         screen: Bluetooth,
         navigationOptions:{
@@ -34,6 +35,7 @@ export const SideMenu = DrawerNavigator({
             ),
         }
     },
+    */
     Scenes:{
         screen: Scenes,
         navigationOptions:{

@@ -10,14 +10,27 @@ import {StyleSheet,
         ActivityIndicator,
         ScrollView,
         Image,
-        WebView 
+        WebView,
+        Alert
         } from 'react-native';
 
 export default class Test extends Component {
+  sendNotifi(){
+    Alert.alert(
+      'Alert Title',
+      'My Alert Msg',
+    )
+  }
+
+  componentDidMount(){
+    this.sendNotifi();
+  }
+
   render() {
     return (
       <View style = {{flex:1}}>
           <Text> Test something new</Text>
+         
       </View>
     );
   }
