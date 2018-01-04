@@ -8,6 +8,7 @@ import Scenes from './Scenes';
 import AI from './AI';
 import Setting from './Setting';
 import Test from './Test';
+import Login from './Login';
 
 export const SideMenu = DrawerNavigator({
     Dashboard:{
@@ -26,16 +27,6 @@ export const SideMenu = DrawerNavigator({
             ),
         }
     },
-    /*
-    Bluetooth:{
-        screen: Bluetooth,
-        navigationOptions:{
-            drawerIcon: ({ tintColor }) => (
-                <MaterialIcons name="bluetooth" size={24} style={{ color: tintColor }} />
-            ),
-        }
-    },
-    */
     Scenes:{
         screen: Scenes,
         navigationOptions:{
@@ -68,4 +59,19 @@ export const SideMenu = DrawerNavigator({
             ),
         }
     },
+})
+
+export const UserStart = StackNavigator({
+    Manhinh_Login:{
+        screen: Login,
+        navigationOptions:{
+            header: null,
+        }
+    },
+    Manhinh_Home:{
+        screen: SideMenu,
+        navigationOptions:{
+            header: null,
+        }
+    }
 })

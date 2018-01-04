@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,View} from 'react-native';
-import {SideMenu} from './src/Router'
+import {UserStart} from './src/Router'
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 
@@ -8,7 +8,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store = {store}>
-        <SideMenu/>
+        <UserStart/>
       </Provider>
     );
   }

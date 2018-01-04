@@ -11,30 +11,21 @@ import {StyleSheet,
         ScrollView,
         Image,
         WebView,
-        Alert
+        Alert,
+        TextInput
         } from 'react-native';
 
 export default class Test extends Component {
-  sendNotifi(){
-    Alert.alert(
-      'Alert Title',
-      'My Alert Msg',
-    )
-  }
-
-  componentDidMount(){
-    this.sendNotifi();
-  }
-
   render() {
     return (
       <View style = {{flex:1}}>
-          <Text> Test something new</Text>
-         
+        <Text> Test something new</Text>
+
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
