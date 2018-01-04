@@ -1,0 +1,8 @@
+Added Component: Designator=P61(Header 2)
+Added Pin To Net: NetName=CS Pin=ATMEGA328-16
+Added Pin To Net: NetName=DIN Pin=ATMEGA328-17
+Added Pin To Net: NetName=DOUT Pin=ATMEGA328-18
+Added Pin To Net: NetName=SCLK Pin=ATMEGA328-19
+Added Pin To Net: NetName=RXD Pin=P61-1
+Added Pin To Net: NetName=TXD Pin=P61-2
+Added Member To Class: ClassName=Slave_ver1 Member=Component P61 Header 2

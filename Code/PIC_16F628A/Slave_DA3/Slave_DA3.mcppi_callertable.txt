@@ -1,0 +1,7 @@
+main
+	__CC2DW
+		____DoICP
+	UART1_Init
+interrupt
+	UART1_Data_Ready
+	UART1_Read

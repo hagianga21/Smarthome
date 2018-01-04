@@ -1,2 +1,0 @@
-USE_STDPERIPH_DRIVER, HSE_VALUE=8000000
-.\Vidu2_Matlab;..\STM32F4xx_DSP_StdPeriph_Lib_V1.0.1\Libraries\STM32F4xx_StdPeriph_Driver\inc;.\Matlab;C:\Program%20Files\MATLAB\R2011a\extern\include;C:\Program%20Files\MATLAB\R2011a\simulink\include;C:\Program%20Files\MATLAB\R2011a\rtw\c\ert;C:\Program%20Files\MATLAB\R2011a\rtw\c\src;C:\Program%20Files\MATLAB\R2011a\rtw\c\src\ext_mode\common

@@ -1,0 +1,36 @@
+main
+	__CC2DW
+		____DoICP
+	UART1_Init
+	turnOnSpeaker
+	turnOffSpeaker
+	sendTemp
+		DHT11_Read
+		Div_16x16_S
+			Div_16x16_S_L
+		Mul_16X16_U
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+	sendHumid
+		DHT11_Read
+		Div_16x16_S
+			Div_16x16_S_L
+		Mul_16X16_U
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+	Button
+		Delay_500us
+	processSpeaker
+		turnOnSpeaker
+		turnOffSpeaker
+	Div_16x16_S
+		Div_16x16_S_L
+	sendGasStatus
+		RS485_send
+			UART1_Tx_Idle
+			UART1_Write
+interrupt
+	UART1_Data_Ready
+	UART1_Read

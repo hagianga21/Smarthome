@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=AVDD Pin=P?-1
+Removed Pin From Net: NetName=A_GND Pin=P?-2
+Removed Pin From Net: NetName=DIN Pin=P?-3
+Removed Pin From Net: NetName=DOUT Pin=P?-4
+Removed Pin From Net: NetName=SCLK Pin=P?-5
+Removed Pin From Net: NetName=CS Pin=P?-6
+Removed Pin From Net: NetName=RELAY Pin=P?-7
+Removed Pin From Net: NetName=12V Pin=P?-8
+Added Pin To Net: NetName=12V Pin=P?-1
+Added Pin To Net: NetName=AVDD Pin=P?-2
+Added Pin To Net: NetName=A_GND Pin=P?-3
+Added Pin To Net: NetName=DIN Pin=P?-4
+Added Pin To Net: NetName=DOUT Pin=P?-5
+Added Pin To Net: NetName=SCLK Pin=P?-6
+Added Pin To Net: NetName=CS Pin=P?-7
+Added Pin To Net: NetName=RELAY Pin=P?-8

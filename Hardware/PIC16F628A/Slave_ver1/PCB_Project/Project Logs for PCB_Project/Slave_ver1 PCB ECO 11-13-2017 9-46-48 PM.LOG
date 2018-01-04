@@ -1,0 +1,5 @@
+Change Component DesignItemId : Designator=P? Old DesignItemId=Header 7 New DesignItemId=Header 8
+Change Component Footprint: Designator=P? Old Footprint=Header 7 New Footprint=Header 8
+Change Component Comment : Designator=CT1 Old Comment=Header 2x2 New Comment=2000:1
+Change Component Comment : Designator=P? Old Comment=Header 7 New Comment=Header 8
+Added Pin To Net: NetName=12V Pin=P?-8
